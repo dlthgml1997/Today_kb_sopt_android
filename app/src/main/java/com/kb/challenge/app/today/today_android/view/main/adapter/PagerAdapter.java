@@ -3,10 +3,12 @@ package com.kb.challenge.app.today.today_android.view.main.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.kb.challenge.app.today.today_android.view.coin.CoinFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainFragment;
+import com.kb.challenge.app.today.today_android.view.main.RootFragment;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
 
 /**
@@ -22,7 +24,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return MainFragment.newInstance();
+                return new RootFragment();
             case 1:
                 return CommunityFragment.newInstance();
             case 2:

@@ -1,28 +1,30 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
+import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
 
 /**
- * Created by shineeseo on 2018. 11. 6..
+ * Created by shineeseo on 2018. 11. 7..
  */
 
-public class MainFragment extends Fragment {
+public class MainGoodFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,11 +34,11 @@ public class MainFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final String TAG = "MainFragment";
+    private static final String TAG = "MainGoodFragment";
 
-    private OnFragmentInteractionListener mListener;
+    private MainGoodFragment.OnFragmentInteractionListener mListener;
 
-    public MainFragment() {
+    public MainGoodFragment() {
         // Required empty public constructor
     }
 
@@ -47,8 +49,8 @@ public class MainFragment extends Fragment {
      * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainFragment newInstance(/*String param1, String param2*/) {
-        MainFragment fragment = new MainFragment();
+    public static MainGoodFragment newInstance(/*String param1, String param2*/) {
+        MainGoodFragment fragment = new MainGoodFragment();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -76,29 +78,49 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //감정 기록이 없을 경우 나타나는 main fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Button btn_go_to_main = (Button) view.findViewById(R.id.btn_go_to_main);
+        View view = inflater.inflate(R.layout.main_record_good, container, false);
 
-        btn_go_to_main.setOnClickListener(new View.OnClickListener() {
+        Spinner deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
+        //스피너 어댑터 설정
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),R.array.deposit,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        deposit_spinner.setAdapter(adapter);
+
+        //스피너 이벤트 발생
+        deposit_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //각 항목 클릭시 포지션값을 토스트에 띄운다.
+                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Button btn_main_deposit = (Button) view.findViewById(R.id.btn_main_deposit);
+
+        btn_main_deposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //fragment 교체
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                transaction.replace(R.id.root_frame, new MainGoodFragment());
+                transaction.replace(R.id.root_frame, new MainDepositFragment());
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
 
 /** * Fragment의 변경사항을 반영시킨다. */
                 transaction.commit();
-
             }
         });
+
         return view;
 
     }
@@ -112,8 +134,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof MainGoodFragment.OnFragmentInteractionListener) {
+            mListener = (MainGoodFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -140,4 +162,5 @@ public class MainFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

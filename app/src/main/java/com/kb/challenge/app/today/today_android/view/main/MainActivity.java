@@ -3,6 +3,8 @@ package com.kb.challenge.app.today.today_android.view.main;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +24,13 @@ public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener,
         CommunityFragment.OnFragmentInteractionListener,
         CoinFragment.OnFragmentInteractionListener,
-        SettingFragment.OnFragmentInteractionListener{
+        SettingFragment.OnFragmentInteractionListener,
+        MainGoodFragment.OnFragmentInteractionListener,
+        MainDepositFragment.OnFragmentInteractionListener{
 
     Long backKeyPressedTime = 0L;
+    private PagerAdapter adapter;
+    private CustomViewPager viewPager;
 
     @Override
     public void onBackPressed() {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity
             this.finish();
 
         }
+
     }
 
     @Override
@@ -52,8 +59,8 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //tablayout, viewPager 적용
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.view_pager);
+        adapter = new PagerAdapter(getSupportFragmentManager());
+        viewPager = (CustomViewPager) findViewById(R.id.view_pager);
         viewPager.setPagingEnabled(false);
         viewPager.setAdapter(adapter);
 
@@ -149,4 +156,5 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
