@@ -54,6 +54,7 @@ public class CoinFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == 200){
+
             Log.v("yong",data.getStringExtra("result"));
         }
 

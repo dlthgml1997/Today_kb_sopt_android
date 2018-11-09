@@ -7,7 +7,7 @@
     tools:context=".view.main.MainActivity"
     android:fitsSystemWindows="true">
 
-    <com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+       <com.kb.challenge.app.today.today_android.view.main.CustomViewPager
         android:id="@+id/view_pager"
         android:layout_above="@+id/tabLayout"
         android:layout_width="match_parent"
