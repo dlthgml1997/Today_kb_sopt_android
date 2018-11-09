@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.view.coin.CoinFragment;
+import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
+import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
@@ -26,7 +28,9 @@ public class MainActivity extends AppCompatActivity
         CoinFragment.OnFragmentInteractionListener,
         SettingFragment.OnFragmentInteractionListener,
         MainGoodFragment.OnFragmentInteractionListener,
-        MainDepositFragment.OnFragmentInteractionListener{
+        MainDepositFragment.OnFragmentInteractionListener,
+        CommunityFollowingFragment.OnFragmentInteractionListener,
+        CommunityFollowerFragment.OnFragmentInteractionListener {
 
     Long backKeyPressedTime = 0L;
     private PagerAdapter adapter;

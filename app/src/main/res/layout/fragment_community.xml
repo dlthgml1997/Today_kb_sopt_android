@@ -1,5 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#ffde5f"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <EditText
+            android:id="@+id/community_search_id_edit"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19.5dp" />
+
+        <ImageView
+            android:id="@+id/community_btn_search_id"
+            android:layout_width="20.9dp"
+            android:layout_height="20.9dp"
+            android:layout_marginLeft="11.9dp"
+            android:src="@drawable/search" />
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.5dp"
+        android:id="@+id/first_relative">
+
+        <TextView
+            android:layout_marginTop="31dp"
+            android:id="@+id/community_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="21.5dp"
+            android:text="오늘은"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:id="@+id/community_id"
+            android:layout_marginLeft="18.5dp"
+            android:layout_marginTop="11dp"
+            android:layout_below="@id/community_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@today"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/community_follower_num_txt"
+            android:layout_marginTop="31dp"
+            android:layout_toRightOf="@id/community_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:textColor="#000000"
+            android:text="10"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_marginTop="11dp"
+            android:layout_marginLeft="80dp"
+            android:layout_toRightOf="@id/community_id"
+            android:layout_below="@id/community_follower_num_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="팔로워"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/community_following_num_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="72dp"
+            android:layout_marginTop="31dp"
+            android:text="2"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/following_txt"
+            android:layout_marginTop="11dp"
+            android:layout_below="@id/community_following_num_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="팔로잉"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="57dp"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/second_relative"
+        android:layout_below="@id/first_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.5dp"
+        android:layout_marginTop="35dp">
+        <ImageView
+            android:id="@+id/community_user_img"
+            android:layout_width="31dp"
+            android:layout_height="26dp"
+            />
+        <TextView
+            android:id="@+id/community_user_id_txt"
+            android:layout_toRightOf="@id/community_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘은"
+            android:layout_marginLeft="30dp"
+            />
+        <View
+            android:layout_marginLeft="81dp"
+            android:id="@+id/community_view"
+            android:layout_toRightOf="@id/community_user_id_txt"
+            android:layout_width="150dp"
+            android:layout_height="16dp"
+            android:backgroundTint="#ededed"
+            android:background="@drawable/community_button_radius"
+        />
+        <TextView
+            android:id="@+id/community_status_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/community_view"
+            android:layout_alignLeft="@id/community_view"
+            android:layout_alignRight="@id/community_view"
+            android:layout_alignTop="@id/community_view"
+            android:gravity="center"
+            android:text="건드리면 물어요"/>
+        <View
+            android:layout_marginLeft="12dp"
+            android:id="@+id/community_status_mark_view"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:background="@drawable/community_status_mark"
+            android:layout_toRightOf="@id/community_status_txt"/>
+        <TextView
+            android:id="@+id/community_status_mark_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/community_status_mark_view"
+            android:layout_alignLeft="@id/community_status_mark_view"
+            android:layout_alignRight="@id/community_status_mark_view"
+            android:layout_alignTop="@id/community_status_mark_view"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:text="-3"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="21.5dp"
+        android:id="@+id/community_line_view"
+        android:layout_width="338dp"
+        android:layout_height="1dp"
+        android:layout_below="@id/second_relative"
+        android:layout_marginLeft="18.5dp"
+        android:background="#707070"/>
+
+    <RelativeLayout
+        android:layout_marginTop="13.5dp"
+        android:layout_below="@id/community_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/community_friends_list">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </RelativeLayout>
