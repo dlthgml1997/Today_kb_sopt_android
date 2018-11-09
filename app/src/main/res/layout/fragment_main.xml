@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    tools:context=".view.main.MainActivity">
+    tools:context=".view.main.MainActivity"
+    android:backgroundTint="#ffffff"
+    >
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        >
+
+        <TextView
+            android:id="@+id/main_name_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="89dp"
+            android:lineSpacingExtra="40sp"
+            android:text="오늘은 님!"
+            android:textColor="#000000"
+            android:textSize="40sp"
+             />
+
+        <TextView
+            android:layout_below="@id/main_name_txt"
+            android:id="@+id/main_hello_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="오늘은 \n기분이 어때요?"
+            android:lineSpacingExtra="40sp"
+            android:textColor="#000000"
+            android:textSize="40sp"
+             />
+
+
+        <Button
+            android:layout_below="@id/main_hello_txt"
+            android:id="@+id/btn_go_to_main"
+            android:layout_width="261dp"
+            android:layout_height="59dp"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#ffde5f"
+            android:text="지금 감정 기록하기!"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

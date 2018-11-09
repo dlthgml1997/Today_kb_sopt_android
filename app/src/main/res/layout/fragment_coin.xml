@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="38dp">
+
+        <TextView
+            android:id="@+id/coin_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저금통 이름"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/coin_name_edit_img"
+            android:layout_marginLeft="10dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/edit"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목표액 : "
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/coin_target_money_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            tools:text="00000원 " />
+        <ImageView
+            android:id="@+id/coin_target_edit_img"
+            android:layout_marginLeft="10dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/edit"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/coin_img"
+        android:layout_width="299dp"
+        android:layout_height="201dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="17dp" />
+
+    <TextView
+        android:id="@+id/coin_cur_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25.5dp"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        tools:text="1*.***원" />
+
+    <View
+        android:layout_width="310dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="32.5dp"
+        android:layout_marginTop="11dp"
+        android:background="#707070" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/coin_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="23.5dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

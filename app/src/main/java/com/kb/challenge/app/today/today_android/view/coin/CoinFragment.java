@@ -6,12 +6,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingItem;
+import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
 import com.kb.challenge.app.today.today_android.view.main.MainFragment;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -74,7 +85,32 @@ public class CoinFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = null;
+        View view = inflater.inflate(R.layout.fragment_coin, container, false);
+
+        TextView coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
+
+        coin_name_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        ArrayList<CoinSavingItem> coinSavingItems = new ArrayList<>();
+
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
+
+        CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(),coinSavingItems);
+
+        mRecyclerView.setAdapter(coinSavingListAdapter);
         return view;
 
     }

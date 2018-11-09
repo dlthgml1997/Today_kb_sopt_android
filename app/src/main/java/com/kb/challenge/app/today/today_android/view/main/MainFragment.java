@@ -6,10 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -24,6 +31,8 @@ public class MainFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static final String TAG = "MainFragment";
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,11 +76,29 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //감정 기록이 없을 경우 나타나는 main fragment
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        View view = null;
+        Button btn_go_to_main = (Button) view.findViewById(R.id.btn_go_to_main);
+
+        btn_go_to_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //fragment 교체
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                transaction.replace(R.id.root_frame, new MainGoodFragment());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+
+/** * Fragment의 변경사항을 반영시킨다. */
+                transaction.commit();
+
+            }
+        });
         return view;
 
     }

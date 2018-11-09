@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_marginLeft="16dp">
+    <TextView
+        android:id="@+id/main_name_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="89dp"
+        android:lineSpacingExtra="40sp"
+        android:text="오늘은 님!"
+        android:textColor="#000000"
+        android:textSize="40sp" />
+
+    <TextView
+        android:layout_below="@id/main_name_txt"
+        android:id="@+id/main_recommand_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:lineSpacingExtra="40sp"
+        android:text="이거 어때요?"
+        android:textColor="#000000"
+        android:textSize="40sp" />
+
+    <ImageView
+        android:layout_width="347dp"
+        android:layout_height="278dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/main_recommand_txt"
+        android:layout_marginTop="90dp"/>
+</RelativeLayout>
