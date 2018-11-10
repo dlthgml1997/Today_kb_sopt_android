@@ -3,27 +3,41 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_above="@+id/btn_act_first_set_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <FrameLayout
-            android:layout_above="@+id/btn_act_first_set_next"
-            android:id="@+id/frag_container"
+            android:id="@+id/frag_container1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="70dp">
             <!--com.kb.challenge.app.today.today_android.view.main.CustomViewPager
-                android:id="@+id/viewpager1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                /-->
+            android:id="@+id/viewpager1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            /-->
         </FrameLayout>
 
+        <FrameLayout
+    android:id="@+id/frag_container2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+        android:id="@+id/viewpager1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /-->
+</FrameLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/btn_act_first_set_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/custom_button_radius"
         android:backgroundTint="#ffdb08"
         android:text="다음"

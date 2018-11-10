@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         login_text_go_to_signup = (TextView) findViewById(R.id.login_text_go_to_signup);
         login_text_go_to_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         login_button_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, FirstSettingActivity.class);
+                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                 startActivity(intent);
             }
         });

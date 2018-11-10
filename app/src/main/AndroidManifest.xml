@@ -10,25 +10,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.main.MainActivity">
-
         </activity>
         <activity android:name=".view.login.FirstActivity">
-        </activity>
-        <activity android:name=".view.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.login.LoginActivity">
+        </activity>
+        <activity android:name=".view.login.WelcomeActivity">
+    </activity>
         <activity android:name=".view.login.SignUpActivity">
         </activity>
         <activity android:name=".view.login.FirstSettingActivity">
     </activity>
-        <activity android:name=".view.login.SecondSettingActivity">
-        </activity>
         <activity android:name=".view.login.UserImageSettingActivity">
         </activity>
+        <activity android:name=".view.login.SplashActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            />
     </application>
 
 </manifest>

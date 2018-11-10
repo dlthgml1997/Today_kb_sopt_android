@@ -38,7 +38,7 @@
             android:textSize="15sp" />
 
         <EditText
-            android:inputType="text"
+            android:inputType="textPassword"
             android:id="@+id/signup_edit_passwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:textSize="15sp" />
 
         <EditText
-            android:inputType="text"
+            android:inputType="textPassword"
             android:id="@+id/signup_edit_passwd_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
