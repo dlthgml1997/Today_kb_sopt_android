@@ -3,37 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/ll_act_second_set_dotindicator"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/default_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/default_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/selected_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/tv_set_title_title"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -41,6 +17,7 @@
         android:textSize="24sp"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
     <EditText
+        android:inputType="text"
         android:layout_marginTop="40dp"
         android:id="@+id/et_set_title_hole"
         android:layout_below="@+id/tv_set_title_title"
@@ -49,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:inputType="text"
         android:layout_marginTop="16dp"
         android:id="@+id/et_set_title_amount"
         android:layout_below="@+id/et_set_title_hole"

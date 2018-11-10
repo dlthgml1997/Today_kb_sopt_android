@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
         }
         login_button_SignIn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                signIn();

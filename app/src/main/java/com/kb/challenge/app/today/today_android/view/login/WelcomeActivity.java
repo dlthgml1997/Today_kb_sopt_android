@@ -6,31 +6,26 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
 
-/**
- * Created by shineeseo on 2018. 11. 6..
- */
-
-public class FirstActivity extends AppCompatActivity {
-    private Button btn_login;
-
+public class WelcomeActivity extends AppCompatActivity {
+    private Button btn_act_welcome_next;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
-        startActivity(new Intent(this, SplashActivity.class));
-        btn_login = (Button) findViewById(R.id.btn_login);
+        setContentView(R.layout.activity_welcome);
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
+
+        btn_act_welcome_next = (Button) findViewById(R.id.btn_act_welcome_next);
+        btn_act_welcome_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FirstActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, FirstSettingActivity.class);
                 startActivity(intent);
             }
         });
-
 
     }
 }

@@ -3,31 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/ll_act_second_set_dotindicator"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/selected_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/default_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/default_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,6 +10,7 @@
         android:layout_alignParentTop="true">
 
         <LinearLayout
+            android:layout_marginTop="25dp"
             android:id="@+id/ll_set_title_titletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +22,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="95dp"
                 android:text="제가 "
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp" />
@@ -56,7 +31,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="95dp"
                 android:text="어떻게 "
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
@@ -67,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="95dp"
                 android:text="부를까요?"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp" />
@@ -81,9 +54,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="35dp"
-            android:src="@drawable/person" />
+            android:src="@drawable/button_profile_edit" />
 
         <EditText
+            android:inputType="text"
             android:id="@+id/et_setname_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
