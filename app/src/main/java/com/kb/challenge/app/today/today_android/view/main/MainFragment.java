@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,13 +17,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.ActivityResultEvent;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
+import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
  */
 
 public class MainFragment extends Fragment {
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,9 +66,26 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.v("onActivityResult",  requestCode + " : " + requestCode + " : " + data);
 
-        if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
+        //감정기록이 있을 경우 판별해서 각각의 fragment로 대입하는 코드 삽입
+        if(requestCode == 200){
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            int feeling_record = data.getIntExtra("feeling_record",0);
+
+            if (feeling_record < 3) {
+                transaction.replace(R.id.root_frame, new MainBadFragment());
+
+            }
+            else {
+                transaction.replace(R.id.root_frame, new MainGoodFragment());
+            }
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.addToBackStack(null);
+//
+///** * Fragment의 변경사항을 반영시킨다. */
+                transaction.commit();
+
         }
 
     }
@@ -96,12 +120,17 @@ public class MainFragment extends Fragment {
 
 /** * Fragment의 변경사항을 반영시킨다. */
                 transaction.commit();
+//                Intent intent = new Intent(getActivity(), RecordFeelingActivity.class);
+//                //감정을 기록하는 액티비티로 연결
+////                startActivity(intent);
+//                getActivity().startActivityForResult(intent, 200);
 
             }
         });
         return view;
 
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

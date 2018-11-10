@@ -16,13 +16,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.coin.CoinDetailData;
+import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse;
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingItem;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainFragment;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -37,6 +48,11 @@ public class CoinFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private NetworkService networkService;
+    private RecyclerView mRecyclerView;
+    private ArrayList<CoinSavingItem> coinSavingItems;
+    private TextView coin_cur_money;
 
     private CoinFragment.OnFragmentInteractionListener mListener;
 
@@ -65,7 +81,7 @@ public class CoinFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
+
         }
 
     }
@@ -86,30 +102,41 @@ public class CoinFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_coin, container, false);
 
-        TextView coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
 
+        TextView coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
+        TextView coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
+        coin_cur_money = (TextView)view.findViewById(R.id.coin_cur_money);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        if (SharedPreference.Companion.getInstance().getPrefIntegerData("totalMoney")< 0) {
+            Log.v("total empty", "total empty");
+
+        }
+
+        if (SharedPreference.Companion.getInstance().getPrefStringData("goal").isEmpty() || SharedPreference.Companion.getInstance().getPrefIntegerData("goalMoney")<0) {
+            Log.v("goal empty", "goal empty");
+            getSavingDetail();
+        }
+        else {
+            coin_name_txt.setText(SharedPreference.Companion.getInstance().getPrefStringData("goal"));
+            coin_target_money_txt.setText(String.valueOf(SharedPreference.Companion.getInstance().getPrefIntegerData("goalMoney")));
+        }
         coin_name_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<CoinSavingItem> coinSavingItems = new ArrayList<>();
+        getSavingList();
 
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
-        coinSavingItems.add(new CoinSavingItem("2017/11/11 17:03", 2000));
 
-        CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(),coinSavingItems);
 
-        mRecyclerView.setAdapter(coinSavingListAdapter);
         return view;
 
     }
@@ -150,5 +177,63 @@ public class CoinFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void getSavingList() {
+        Log.v("savingList process", "savingList process!!!");
+        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
+            @Override
+            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("savingList process2", "savingList process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    int totalMoney = response.body().getTotalMoney();
+                    coinSavingItems = response.body().getData();
+
+                    Log.v("totalMoney", totalMoney + " ");
+                    SharedPreference.Companion.getInstance().setPrefData("totalMoney", totalMoney);
+                    coin_cur_money.setText(String.valueOf(totalMoney));
+
+                    CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(),coinSavingItems);
+
+                    mRecyclerView.setAdapter(coinSavingListAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
+    public void getSavingDetail() {
+        Log.v("getSavingDetail process", "getSavingDetail process!!!");
+        Call<CoinDetailResponse> requestDetail = networkService.getSavingDetail(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CoinDetailResponse>() {
+            @Override
+            public void onResponse(Call<CoinDetailResponse> call, Response<CoinDetailResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getSavingDetail", "getSavingDetail process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    ArrayList<CoinDetailData> coinDetailData = response.body().getData();
+                    Log.v("coin detail", coinDetailData.toString());
+
+//                    if (coinDetailData != null) {
+//                        SharedPreference.Companion.getInstance().setPrefData("goal", coinDetailData.get(0).getGoal());
+//                        SharedPreference.Companion.getInstance().setPrefData("goalMoney", coinDetailData.get(0).getGoal_money());
+//
+//                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinDetailResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
     }
 }

@@ -18,7 +18,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 7..
@@ -36,6 +44,8 @@ public class MainGoodFragment extends Fragment {
 
     private static final String TAG = "MainGoodFragment";
 
+    private Spinner deposit_spinner;
+    private NetworkService networkService;
     private MainGoodFragment.OnFragmentInteractionListener mListener;
 
     public MainGoodFragment() {
@@ -84,7 +94,10 @@ public class MainGoodFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.main_record_good, container, false);
 
-        Spinner deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+
+        deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
         //스피너 어댑터 설정
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),R.array.deposit,android.R.layout.simple_spinner_item);
@@ -110,14 +123,8 @@ public class MainGoodFragment extends Fragment {
         btn_main_deposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                transaction.replace(R.id.root_frame, new MainDepositFragment());
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.addToBackStack(null);
+                savingMoney();
 
-/** * Fragment의 변경사항을 반영시킨다. */
-                transaction.commit();
             }
         });
 
@@ -161,6 +168,34 @@ public class MainGoodFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void savingMoney() {
+        Log.v("saving process", "saving process!!!");
+        CoinSavingData coinSavingData = new CoinSavingData(Integer.parseInt(deposit_spinner.getSelectedItem().toString()), "오늘도 화이팅!");
+        Call<BaseModel> requestDetail = networkService.savingMoney(SharedPreference.Companion.getInstance().getPrefStringData("data"), coinSavingData);
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("saving process2", "saving process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                    transaction.replace(R.id.root_frame, new MainDepositFragment());
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.addToBackStack(null);
+
+/** * Fragment의 변경사항을 반영시킨다. */
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
     }
 
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_act_second_set_dotindicator"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/default_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/default_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/selected_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_set_title_title"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="95dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="티끌모아 태산!"
+        android:textSize="24sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+    <EditText
+        android:layout_marginTop="40dp"
+        android:id="@+id/et_set_title_hole"
+        android:layout_below="@+id/tv_set_title_title"
+        android:hint="목표설정하기"
+        android:layout_marginHorizontal="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_marginTop="16dp"
+        android:id="@+id/et_set_title_amount"
+        android:layout_below="@+id/et_set_title_hole"
+        android:hint="목표금액설정하기 (최대30만원)"
+        android:layout_marginHorizontal="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+</RelativeLayout>

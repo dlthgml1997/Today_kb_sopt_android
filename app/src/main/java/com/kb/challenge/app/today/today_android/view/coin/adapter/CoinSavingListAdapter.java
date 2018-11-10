@@ -41,9 +41,9 @@ public class CoinSavingListAdapter extends RecyclerView.Adapter<CoinSavingListAd
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final int pos = i;
-        viewHolder.coin_saving_date.setText(coinSavingItems.get(i).getSaving_date());
-        viewHolder.coin_saving_amount.setText(String.valueOf(coinSavingItems.get(i).getSaving_amount()));
-
+        viewHolder.coin_saving_date.setText(coinSavingItems.get(i).getSaving_at());
+        viewHolder.coin_saving_amount.setText(String.valueOf(coinSavingItems.get(i).getSaving_money()));
+        viewHolder.coin_saving_msg.setText(coinSavingItems.get(i).getComment());
     }
 
     @Override
@@ -54,10 +54,11 @@ public class CoinSavingListAdapter extends RecyclerView.Adapter<CoinSavingListAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView coin_saving_date;
         public TextView coin_saving_amount;
+        public TextView coin_saving_msg;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            coin_saving_msg = (TextView)itemView.findViewById(R.id.coin_saving_msg);
             coin_saving_date = (TextView) itemView.findViewById(R.id.coin_saving_date);
             coin_saving_amount = (TextView) itemView.findViewById(R.id.coin_saving_amount);
         }

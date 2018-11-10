@@ -1,20 +1,11 @@
-package com.enterprise.hanjang.hanjang_android.network
+package com.kb.challenge.app.today.today_android.network
 
 import android.app.Application
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.app.Activity
 
-
-/**
- * Created by VictoryWoo
- */
 class ApplicationController : Application() {
-
-
-    //private val instance: ApplicationController? = null
-
-    //private val currentActivity: Activity? = null
 
     lateinit var networkService: NetworkService
     private var baseUrl = "https://today.apps.dev.clayon.io/api/" // 우리 주소

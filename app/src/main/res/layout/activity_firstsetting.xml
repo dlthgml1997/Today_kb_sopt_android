@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:layout_above="@+id/btn_act_first_set_next"
+            android:id="@+id/frag_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+                android:id="@+id/viewpager1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                /-->
+        </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_act_first_set_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/custom_button_radius"
+        android:backgroundTint="#ffdb08"
+        android:text="다음"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF" />
+</RelativeLayout>

@@ -1,11 +1,8 @@
-package com.enterprise.hanjang.hanjang_android.base
+package com.kb.challenge.app.today.today_android.base
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by VictoryWoo
- */
 open class BaseModel(
         @SerializedName("message")
         @Expose

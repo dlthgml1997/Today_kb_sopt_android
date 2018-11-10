@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity
         MainGoodFragment.OnFragmentInteractionListener,
         MainDepositFragment.OnFragmentInteractionListener,
         CommunityFollowingFragment.OnFragmentInteractionListener,
-        CommunityFollowerFragment.OnFragmentInteractionListener {
+        CommunityFollowerFragment.OnFragmentInteractionListener,
+        MainBadFragment.OnFragmentInteractionListener{
 
     Long backKeyPressedTime = 0L;
     private PagerAdapter adapter;
@@ -38,18 +40,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
-            toast.show();
-
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            this.finish();
-
-        }
+        super.onBackPressed();
+//        if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
+//            backKeyPressedTime = System.currentTimeMillis();
+//            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
+//            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
+//            toast.show();
+//
+//            return;
+//        }
+//        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+//            this.finish();
+//
+//        }
 
     }
 
@@ -156,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

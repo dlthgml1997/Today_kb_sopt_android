@@ -5,5 +5,5 @@ package com.kb.challenge.app.today.today_android.model.login
  */
 data class LoginData(
         var id : String,
-        var password : String
+        var passwd : String
 )
