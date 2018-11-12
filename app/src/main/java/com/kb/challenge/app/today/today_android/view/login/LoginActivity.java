@@ -37,11 +37,12 @@ public class LoginActivity extends AppCompatActivity implements Init {
     private Button login_button_SignIn;
     private NetworkService networkService;
     private TextView login_text_go_to_signup;
+
     @Override
     public void init() {
-        login_edit_id = (EditText)findViewById(R.id.login_edit_id);
-        login_edit_passwd = (EditText)findViewById(R.id.login_edit_passwd);
-        login_text_go_to_signup=(TextView)findViewById(R.id.login_text_go_to_signup);
+        login_edit_id = (EditText) findViewById(R.id.login_edit_id);
+        login_edit_passwd = (EditText) findViewById(R.id.login_edit_passwd);
+        login_text_go_to_signup = (TextView) findViewById(R.id.login_text_go_to_signup);
         login_button_SignIn = (Button) findViewById(R.id.login_button_SignIn);
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(this);
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
             @Override
             public void onClick(View view) {
-               signIn();
+                signIn();
             }
         });
 
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
         });
 
     }
+
     public void signIn() {
         Log.v("login process", "login process!!!");
         LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
@@ -90,28 +92,32 @@ public class LoginActivity extends AppCompatActivity implements Init {
                 if (response.isSuccessful()) {
                     Log.v("login process2", "login process2!!!");
                     Log.v("message", response.body().getMessage().toString());
-                    if(response.body().getMessage().equals("wrong password")) {
-                        // 하고싶은 코드
-                    }else if(response.body().getMessage().equals("wrong id")){
-
-                    }else{
-                        // 성공적일때
+                    if (response.body().getMessage().equals("wrong password")) { //패스워드 에러
+                        LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                        ll_act_login_password_error.setVisibility(View.VISIBLE);
+                    } else if (response.body().getMessage().equals("wrong id")) { //아이디 에러
+                        LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
+                        ll_act_login_id_error.setVisibility(View.VISIBLE);
+                        LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                        ll_act_login_password_error.setVisibility(View.VISIBLE);
+                    } else {
+                        // 로그인 성공
                         LoginResponse loginResponse = response.body();
 
-                        Log.v("token",loginResponse.getToken());
+                        Log.v("token", loginResponse.getToken());
                         SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
 
-                } else{
+                } else {
 
-                    LinearLayout ll_act_login_id_error = (LinearLayout)findViewById(R.id.ll_act_login_id_error);
-                        ll_act_login_id_error.setVisibility(View.VISIBLE);
+                    LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
+                    ll_act_login_id_error.setVisibility(View.VISIBLE);
 
-                    LinearLayout ll_act_login_password_error = (LinearLayout)findViewById(R.id.ll_act_login_password_error);
-                        ll_act_login_password_error.setVisibility(View.VISIBLE);
+                    LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                    ll_act_login_password_error.setVisibility(View.VISIBLE);
                 }
             }
 

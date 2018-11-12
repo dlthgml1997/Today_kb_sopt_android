@@ -7,17 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-=======
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
->>>>>>> 005940dd42f0b5338847def716e57250570bb420
 import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -27,12 +24,12 @@ import java.io.InputStream;
 
 public class FirstSettingActivity extends AppCompatActivity {
     int position = 0;
-<<<<<<< HEAD
-    private ImageView iv_setname_user_image;
-=======
-    Long backKeyPressedTime = 0L;
->>>>>>> 005940dd42f0b5338847def716e57250570bb420
 
+    private ImageView iv_setname_user_image;
+
+    Long backKeyPressedTime = 0L;
+
+/*
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
@@ -48,7 +45,7 @@ public class FirstSettingActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +59,6 @@ public class FirstSettingActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
         fragmentTransaction.commit();
 
-<<<<<<< HEAD
         iv_setname_user_image= header.findViewById(R.id.iv_setname_user_image);
         iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
 
@@ -88,8 +84,6 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         });
 */
-=======
->>>>>>> 005940dd42f0b5338847def716e57250570bb420
         Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
         btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
 
