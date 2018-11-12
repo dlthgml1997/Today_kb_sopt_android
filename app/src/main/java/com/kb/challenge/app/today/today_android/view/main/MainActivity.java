@@ -20,6 +20,7 @@ import com.kb.challenge.app.today.today_android.view.coin.CoinFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
+import com.kb.challenge.app.today.today_android.view.login.SplashActivity;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
 
@@ -41,19 +42,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
-//            backKeyPressedTime = System.currentTimeMillis();
-//            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
-//            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
-//            toast.show();
-//
-//            return;
-//        }
-//        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-//            this.finish();
-//
-//        }
+ /*       if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
+            toast.show();
 
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            this.finish();
+
+        }
+*/
     }
 
     @Override

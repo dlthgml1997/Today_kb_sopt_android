@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.login.LoginData;
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
@@ -35,12 +36,12 @@ public class LoginActivity extends AppCompatActivity implements Init {
     private EditText login_edit_passwd;
     private Button login_button_SignIn;
     private NetworkService networkService;
-
+    private TextView login_text_go_to_signup;
     @Override
     public void init() {
         login_edit_id = (EditText)findViewById(R.id.login_edit_id);
         login_edit_passwd = (EditText)findViewById(R.id.login_edit_passwd);
-
+        login_text_go_to_signup=(TextView)findViewById(R.id.login_text_go_to_signup);
         login_button_SignIn = (Button) findViewById(R.id.login_button_SignIn);
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(this);
@@ -69,6 +70,15 @@ public class LoginActivity extends AppCompatActivity implements Init {
             }
         });
 
+        login_text_go_to_signup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     public void signIn() {
         Log.v("login process", "login process!!!");
@@ -88,6 +98,13 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                } else{
+
+                    LinearLayout ll_act_login_id_error = (LinearLayout)findViewById(R.id.ll_act_login_id_error);
+                        ll_act_login_id_error.setVisibility(View.VISIBLE);
+
+                    LinearLayout ll_act_login_password_error = (LinearLayout)findViewById(R.id.ll_act_login_password_error);
+                        ll_act_login_password_error.setVisibility(View.VISIBLE);
                 }
             }
 

@@ -24,8 +24,9 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
+
         <EditText
-            android:inputType="text"
+            android:inputType="textVisiblePassword"
             android:id="@+id/login_edit_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +37,25 @@
             android:hint="아이디"
             android:textColor="#c9c9c9"
             android:textSize="15sp" />
-
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/ll_act_login_id_error"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:layout_width="14dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_warning"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginHorizontal="2dp"
+            android:text="존재하지 않는 아이디 입니다."
+            android:textColor="#ff6e6e"/>
+        </LinearLayout>
         <EditText
             android:inputType="textPassword"
             android:id="@+id/login_edit_passwd"
@@ -50,6 +69,25 @@
             android:hint="비밀번호"
             android:textColor="#c9c9c9"
             android:textSize="15sp" />
+        <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/ll_act_login_password_error"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="18dp"
+            android:layout_width="14dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_warning"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginHorizontal="2dp"
+            android:text="존재하지 않는 비밀번호입니다."
+            android:textColor="#ff6e6e"/>
+    </LinearLayout>
 
         <Button
             android:id="@+id/login_button_SignIn"
@@ -64,7 +102,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
 
         <TextView
             android:id="@+id/login_text_do_you_have_account"
@@ -72,20 +114,20 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/login_text_go_to_signup"
             android:layout_centerInParent="true"
-            android:text="계정이 없으신가요?"
-            android:textSize="13sp"
             android:layout_marginBottom="4dp"
-            android:textColor="#000000" />
+            android:text="계정이 없으신가요?"
+            android:textColor="#000000"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/login_text_go_to_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="32dp"
             android:text="오늘은 회원가입하기"
-            android:textSize="14sp"
-            android:textColor="#4a90e2" />
+            android:textColor="#4a90e2"
+            android:textSize="14sp" />
     </RelativeLayout>
 </RelativeLayout>

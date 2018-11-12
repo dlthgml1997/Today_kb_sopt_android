@@ -25,7 +25,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:inputType="text"
+            android:inputType="textVisiblePassword"
             android:id="@+id/signup_edit_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,6 +36,25 @@
             android:hint="아이디"
             android:textColor="#c9c9c9"
             android:textSize="15sp" />
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/ll_act_signup_id_error"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:layout_width="14dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_warning"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginHorizontal="2dp"
+                android:text="이미 사용 중인 아이디입니다."
+                android:textColor="#ff6e6e"/>
+        </LinearLayout>
 
         <EditText
             android:inputType="textPassword"
@@ -46,7 +65,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="5dp"
             android:hint="비밀번호"
             android:textColor="#c9c9c9"
             android:textSize="15sp" />
@@ -64,7 +83,25 @@
             android:hint="비밀번호 확인"
             android:textColor="#c9c9c9"
             android:textSize="15sp" />
-
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/ll_act_signup_password_error"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:layout_width="14dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_warning"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginHorizontal="2dp"
+                android:text="일치하지 않는 비밀번호입니다."
+                android:textColor="#ff6e6e"/>
+        </LinearLayout>
         <Button
             android:id="@+id/signup_button_SignUp"
             android:layout_width="match_parent"

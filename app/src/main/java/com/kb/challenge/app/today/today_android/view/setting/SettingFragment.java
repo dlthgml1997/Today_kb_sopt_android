@@ -2,6 +2,7 @@ package com.kb.challenge.app.today.today_android.view.setting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,14 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.kb.challenge.app.today.today_android.view.main.MainFragment;
+import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
  */
 
 public class SettingFragment extends Fragment {
+    private TextView tv_main_setting_logout;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,8 +57,8 @@ public class SettingFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
+        if (resultCode == 200) {
+            Log.v("yong", data.getStringExtra("result"));
         }
 
     }
@@ -71,11 +76,20 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_mainsetting, container, false);
 
-        View view = null;
+
+        tv_main_setting_logout = view.findViewById(R.id.tv_main_setting_logout);
+        tv_main_setting_logout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
         return view;
-
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
