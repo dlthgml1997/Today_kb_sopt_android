@@ -52,10 +52,10 @@ public class LoginActivity extends AppCompatActivity implements Init {
         setContentView(R.layout.activity_login);
         init();
         if (SharedPreference.Companion.getInstance().getPrefStringData("data").isEmpty()) {
-            Log.v("yong login", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 없음 ->login 이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
 
         } else {
-            Log.v("yong main", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 존재 ->main이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
 
             startActivity(new Intent(this, MainActivity.class));
             finish();

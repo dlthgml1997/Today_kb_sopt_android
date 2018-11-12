@@ -17,17 +17,18 @@
         <activity android:name=".view.record.RecordFeelingActivity">
         </activity>
         <activity android:name=".view.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".view.login.WelcomeActivity">
     </activity>
         <activity android:name=".view.login.SignUpActivity">
         </activity>
         <activity android:name=".view.login.FirstSettingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
     </activity>
         <activity android:name=".view.login.UserImageSettingActivity">
         </activity>

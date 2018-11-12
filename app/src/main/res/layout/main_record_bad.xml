@@ -8,25 +8,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="89dp"
         android:lineSpacingExtra="40sp"
-        android:text="오늘은 님!"
-        android:textColor="#000000"
-        android:textSize="40sp" />
-
-    <TextView
-        android:layout_below="@id/main_name_txt"
-        android:id="@+id/main_recommand_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:lineSpacingExtra="40sp"
-        android:text="이거 어때요?"
+        android:text="위로의 멘트"
         android:textColor="#000000"
         android:textSize="40sp" />
 
     <ImageView
-        android:layout_width="347dp"
-        android:layout_height="278dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/main_recommand_txt"
-        android:layout_marginTop="90dp"/>
+        android:layout_below="@id/main_name_txt"
+        android:id="@+id/main_bad_image"
+        android:layout_width="564dp"
+        android:layout_height="564dp"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_bad_recycler_view">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
