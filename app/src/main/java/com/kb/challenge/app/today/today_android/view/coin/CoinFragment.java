@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.coin.CoinDetailData;
 import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse;
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingItem;
@@ -109,6 +111,7 @@ public class CoinFragment extends Fragment {
         TextView coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
         coin_cur_money = (TextView)view.findViewById(R.id.coin_cur_money);
 
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -135,6 +138,14 @@ public class CoinFragment extends Fragment {
 
         getSavingList();
 
+        Button coin_btn_withdrawal = (Button)view.findViewById(R.id.coin_btn_withdrawal);
+        coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteSavingList();
+                getSavingList();
+            }
+        });
 
 
         return view;
@@ -232,6 +243,25 @@ public class CoinFragment extends Fragment {
 
             @Override
             public void onFailure(Call<CoinDetailResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+    public void deleteSavingList() {
+        Log.v("deleteSavingList", "deleteSavingList process!!!");
+        Call<BaseModel> requestDetail = networkService.deleteDeposit(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("deleteSavingList", "deleteSavingList process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
             }
         });

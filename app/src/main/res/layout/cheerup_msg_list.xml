@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cheerup_msg_date"
+        tools:text="2018/11/12"
+        android:layout_marginLeft="7dp"/>
+    <View
+        android:layout_below="@id/cheerup_msg_date"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        android:id="@+id/community_status_mark_view"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:background="@drawable/community_status_mark"
+        android:layout_toRightOf="@id/community_status_txt"/>
+    <TextView
+        android:id="@+id/cheerup_feeling_status_mark_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/community_status_mark_view"
+        android:layout_alignLeft="@id/community_status_mark_view"
+        android:layout_alignRight="@id/community_status_mark_view"
+        android:layout_alignTop="@id/community_status_mark_view"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:text="-3"/>
+
+    <TextView
+        android:id="@+id/cheerup_msg_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="위로의 메시지"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        />
+</RelativeLayout>

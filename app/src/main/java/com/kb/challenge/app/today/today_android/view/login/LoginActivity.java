@@ -53,10 +53,10 @@ public class LoginActivity extends AppCompatActivity implements Init {
         setContentView(R.layout.activity_login);
         init();
         if (SharedPreference.Companion.getInstance().getPrefStringData("data").isEmpty()) {
-            Log.v("yong login", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 없음 ->login 이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
 
         } else {
-            Log.v("yong main", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 존재 ->main이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
 
             startActivity(new Intent(this, MainActivity.class));
             finish();
@@ -90,14 +90,21 @@ public class LoginActivity extends AppCompatActivity implements Init {
                 if (response.isSuccessful()) {
                     Log.v("login process2", "login process2!!!");
                     Log.v("message", response.body().getMessage().toString());
+                    if(response.body().getMessage().equals("wrong password")) {
+                        // 하고싶은 코드
+                    }else if(response.body().getMessage().equals("wrong id")){
 
-                    LoginResponse loginResponse = response.body();
+                    }else{
+                        // 성공적일때
+                        LoginResponse loginResponse = response.body();
 
-                    Log.v("token",loginResponse.getToken());
-                    SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
+                        Log.v("token",loginResponse.getToken());
+                        SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 } else{
 
                     LinearLayout ll_act_login_id_error = (LinearLayout)findViewById(R.id.ll_act_login_id_error);

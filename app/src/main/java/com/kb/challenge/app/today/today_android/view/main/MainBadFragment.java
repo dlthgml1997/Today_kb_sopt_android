@@ -5,12 +5,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
+import com.kb.challenge.app.today.today_android.model.cheerup.CheerupMsgData;
+import com.kb.challenge.app.today.today_android.model.cheerup.CheerupMsgResponse;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+
+import java.util.ArrayList;
+
+import com.bumptech.glide.Glide;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 7..
@@ -30,6 +47,9 @@ public class MainBadFragment extends Fragment {
     private static final String TAG = "MainBadFragment";
 
     private MainBadFragment.OnFragmentInteractionListener mListener;
+    private NetworkService networkService;
+    private RecyclerView mRecyclerView;
+    private ImageView main_bad_image;
 
     public MainBadFragment() {
         // Required empty public constructor
@@ -77,6 +97,15 @@ public class MainBadFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.main_record_bad, container, false);
 
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.main_bad_recycler_view);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        main_bad_image = (ImageView) view.findViewById(R.id.main_bad_image);
+
 
         return view;
 
@@ -118,5 +147,33 @@ public class MainBadFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void getCheerupMsg() {
+        Log.v("getCheerupMsg", "getCheerupMsg process!!!");
+        Call<CheerupMsgResponse> requestDetail = networkService.getCheerupMsg(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CheerupMsgResponse>() {
+            @Override
+            public void onResponse(Call<CheerupMsgResponse> call, Response<CheerupMsgResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getCheerupMsg", "getCheerupMsg process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    ArrayList<CheerupMsgData> cheerupMsgDataList = new ArrayList<>();
+
+                    if (!cheerupMsgDataList.get(0).getComfort_img().isEmpty()) {
+                        Glide.with(getActivity())
+                                .load(cheerupMsgDataList.get(0).getComfort_img())
+                                .into(main_bad_image);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheerupMsgResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
     }
 }
