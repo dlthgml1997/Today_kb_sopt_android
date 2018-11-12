@@ -4,24 +4,61 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
+import com.kb.challenge.app.today.today_android.model.login.LoginData;
+import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.Init;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
 
-public class SignUpActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class SignUpActivity extends AppCompatActivity implements Init {
     private Button signup_button_SignUp;
     private TextView signup_text_go_to_login;
+    private NetworkService networkService;
+    private EditText signup_edit_id;
+    private EditText signup_edit_passwd;
+    private EditText signup_edit_passwd_again;
+    private LoginData signupData;
+
+    @Override
+    public void init() {
+        signup_edit_id = (EditText) findViewById(R.id.signup_edit_id);
+        signup_edit_passwd = (EditText) findViewById(R.id.signup_edit_passwd);
+        signup_edit_passwd_again = (EditText) findViewById(R.id.signup_edit_passwd_again);
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance().load(this);
+    }
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_signup);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
+        init();
         signup_button_SignUp = (Button) findViewById(R.id.signup_button_SignUp);
         signup_button_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
+//                if (!signup_edit_passwd.getText().toString().equals(signup_edit_passwd_again.getText().toString())) {
+//
+//                }
+                Log.v("id & passwd", signup_edit_id.getText().toString() + "&" + signup_edit_passwd.getText().toString());
+                signupData = new LoginData(signup_edit_id.getText().toString(), signup_edit_passwd.getText().toString());
+                signupCheckId();
             }
         });
 
@@ -33,5 +70,54 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-}
+    }
+
+    public void signup() {
+        Log.v("signup process", "signup process!!!");
+
+        Call<BaseModel> requestDetail = networkService.signup(signupData);
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("signup process2", "signup process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    Intent intent = new Intent();
+                    intent.putExtra("id", signup_edit_id.getText().toString());
+                    intent.putExtra("passwd", signup_edit_passwd.getText().toString());
+                    setResult(RESULT_OK, intent);
+                    finish();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+    public void signupCheckId() {
+        Log.v("check process", "check process!!!");
+        Call<BaseModel> requestDetail = networkService.signupCheckId(signupData.getId());
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("check process2", "check process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+                    if (response.body().getMessage().toString().equals("success"))
+                        signup();
+                    else
+                        Toast.makeText(SignUpActivity.this, "이메일 중복!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
 }

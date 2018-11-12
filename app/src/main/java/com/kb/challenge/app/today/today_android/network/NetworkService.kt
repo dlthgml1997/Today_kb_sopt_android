@@ -65,4 +65,14 @@ interface NetworkService {
             @Header("authorization") token : String,
             @Body userSettingData : UserSettingData
     ) :Call<BaseModel>
+
+    @POST("signup")
+    fun signup(
+            @Body loginData : LoginData
+    ) :Call<BaseModel>
+
+    @GET("signup/check")
+    fun signupCheckId(
+            @Query("id") id : String
+    ) :Call<BaseModel>
 }

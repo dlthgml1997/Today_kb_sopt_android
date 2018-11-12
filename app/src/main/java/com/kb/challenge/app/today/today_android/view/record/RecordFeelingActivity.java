@@ -19,6 +19,7 @@ import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 
@@ -89,20 +90,20 @@ public class RecordFeelingActivity extends AppCompatActivity implements MainBadF
                     Log.v("feeling save process", "feeling save process!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    Intent intent = new Intent();
-
+                    Intent intent;
                     Log.v("feeling record", progress_status  + " ");
                     if (progress_status < 3) {
+                        intent = new Intent(RecordFeelingActivity.this, MainActivity.class);
                         intent.putExtra("feeling_record", progress_status);
                         SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - progress_status - 3);
 
                     } else {
+                        intent = new Intent(RecordFeelingActivity.this, MainActivity.class);
                         intent.putExtra("feeling_record", progress_status);
                         SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - 3);
 
                     }
-                    setResult(200);
-                    finish();
+                    startActivity(intent);
 
 
                 }

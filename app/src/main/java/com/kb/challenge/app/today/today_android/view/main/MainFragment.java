@@ -70,22 +70,22 @@ public class MainFragment extends Fragment {
 
         //감정기록이 있을 경우 판별해서 각각의 fragment로 대입하는 코드 삽입
         if(requestCode == 200){
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            int feeling_record = data.getIntExtra("feeling_record",0);
+            if (resultCode == RESULT_OK) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                int feeling_record = data.getIntExtra("feeling_record", 0);
 
-            if (feeling_record < 3) {
-                transaction.replace(R.id.root_frame, new MainBadFragment());
+                if (feeling_record < 3) {
+                    transaction.replace(R.id.root_frame, new MainBadFragment());
 
-            }
-            else {
-                transaction.replace(R.id.root_frame, new MainGoodFragment());
-            }
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.addToBackStack(null);
+                } else {
+                    transaction.replace(R.id.root_frame, new MainGoodFragment());
+                }
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
 //
 ///** * Fragment의 변경사항을 반영시킨다. */
                 transaction.commit();
-
+            }
         }
 
     }

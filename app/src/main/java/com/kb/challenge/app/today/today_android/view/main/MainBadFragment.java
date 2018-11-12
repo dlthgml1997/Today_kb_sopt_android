@@ -159,11 +159,11 @@ public class MainBadFragment extends Fragment {
                     Log.v("getCheerupMsg", "getCheerupMsg process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    ArrayList<CheerupMsgData> cheerupMsgDataList = new ArrayList<>();
+                    ArrayList<CheerupMsgData> cheerupMsgDataList = response.body().getData();
 
-                    if (!cheerupMsgDataList.get(0).getComfort_img().isEmpty()) {
+                    if (!response.body().getComfortImg().isEmpty()) {
                         Glide.with(getActivity())
-                                .load(cheerupMsgDataList.get(0).getComfort_img())
+                                .load(response.body().getComfortImg())
                                 .into(main_bad_image);
                     }
 
