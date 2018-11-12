@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 /**
  * Created by shineeseo on 2018. 11. 6..

@@ -8,14 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
@@ -24,9 +19,7 @@ import java.io.InputStream;
 
 public class FirstSettingActivity extends AppCompatActivity {
     int position = 0;
-
     private ImageView iv_setname_user_image;
-
     Long backKeyPressedTime = 0L;
 
 /*
@@ -51,15 +44,18 @@ public class FirstSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstsetting);
 
-        View header = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
 
+        final View setnameview = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag_container1, new DotFirstFragment());
         fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
         fragmentTransaction.commit();
 
-        iv_setname_user_image= header.findViewById(R.id.iv_setname_user_image);
+
+
+
+        iv_setname_user_image= setnameview.findViewById(R.id.iv_setname_user_image);
         iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v){
@@ -72,7 +68,7 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         });
 
-/*
+/* //이미지 설정하는 액티비티 불러오는 함수
         ImageView iv_setname_user_image = findViewById(R.id.iv_setname_user_image);
         iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +80,8 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         });
 */
-        Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
-        btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
+        final Button btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
+        btn_act_firstsetting_next.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -98,6 +94,7 @@ public class FirstSettingActivity extends AppCompatActivity {
                     fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right);
                     fragmentTransaction.commit();
+
                     position++;
                 } else if (position == 1) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -126,7 +123,7 @@ public class FirstSettingActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
 
 
-                    Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
+                    Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
                     btn_act_first_set_next.setText("완료");
                     position++;
 
@@ -143,7 +140,7 @@ public class FirstSettingActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  //앨범에서 가져온 이미지를 뷰에 표시하는 함수
         // Check which request we're responding to
         if (requestCode == 1) {
             // Make sure the request was successful
@@ -162,17 +159,17 @@ public class FirstSettingActivity extends AppCompatActivity {
             }
         }
     }
+
     //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (position == 0) {
             Intent intent = new Intent(FirstSettingActivity.this, WelcomeActivity.class);
             startActivity(intent);
         } else if (position == 1) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frag_container1, new DotSecondFragment());
+            fragmentTransaction.replace(R.id.frag_container1, new DotFirstFragment());
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
             fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
             fragmentTransaction.commit();
@@ -181,7 +178,7 @@ public class FirstSettingActivity extends AppCompatActivity {
         } else if (position == 2) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frag_container1, new DotThirdFragment());
+            fragmentTransaction.replace(R.id.frag_container1, new DotSecondFragment());
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
             fragmentTransaction.replace(R.id.frag_container2, new PickTimeFragment());
             fragmentTransaction.commit();
@@ -190,7 +187,7 @@ public class FirstSettingActivity extends AppCompatActivity {
         } else if (position == 3) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
+            fragmentTransaction.replace(R.id.frag_container1, new DotThirdFragment());
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
             fragmentTransaction.replace(R.id.frag_container2, new SetTitleFragment());
             fragmentTransaction.commit();
