@@ -76,37 +76,37 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         final ImageView mainIcon = new ImageView(this);
-        mainIcon.setImageResource(R.drawable.a);
+        mainIcon.setImageResource(R.drawable.ic_home_24_px);
         mainIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         final ImageView commuIcon = new ImageView(this);
-        commuIcon.setImageResource(R.drawable.b);
-        commuIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        commuIcon.setImageResource(R.drawable.ic_community_active_24_px);
+        commuIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final ImageView coinIcon = new ImageView(this);
-        coinIcon.setImageResource(R.drawable.c);
-        coinIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        coinIcon.setImageResource(R.drawable.ic_coin_24_px);
+        coinIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final ImageView settingIcon = new ImageView(this);
-        settingIcon.setImageResource(R.drawable.d);
-        settingIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        settingIcon.setImageResource(R.drawable.ic_setting_24_px);
+        settingIcon.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //tablayout icon 선택시
         final ImageView mainIconAct = new ImageView(this);
-        mainIconAct.setImageResource(R.drawable.a);
-        mainIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mainIconAct.setImageResource(R.drawable.ic_home_24_px);
+        mainIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final ImageView commuIconAct = new ImageView(this);
-        commuIconAct.setImageResource(R.drawable.b);
-        commuIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        commuIconAct.setImageResource(R.drawable.ic_community_active_24_px);
+        commuIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final ImageView coinIconAct = new ImageView(this);
-        coinIconAct.setImageResource(R.drawable.c);
-        coinIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        coinIconAct.setImageResource(R.drawable.ic_coin_24_px);
+        coinIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final ImageView settingIconAct = new ImageView(this);
-        settingIconAct.setImageResource(R.drawable.d);
-        settingIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        settingIconAct.setImageResource(R.drawable.ic_setting_24_px);
+        settingIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tabLayout.getTabAt(0).setCustomView(mainIconAct);
         tabLayout.getTabAt(1).setCustomView(commuIconAct);
@@ -120,16 +120,16 @@ public class MainActivity extends AppCompatActivity
                 ImageView iv = (ImageView) tab.getCustomView();
                 switch (tab.getPosition()) {
                     case 0:
-                        iv.setImageResource(R.drawable.a);
+                        iv.setImageResource(R.drawable.ic_home_24_px);
                         break;
                     case 1:
-                        iv.setImageResource(R.drawable.b);
+                        iv.setImageResource(R.drawable.ic_community_active_24_px);
                         break;
                     case 2:
-                        iv.setImageResource(R.drawable.c);
+                        iv.setImageResource(R.drawable.ic_coin_24_px);
                         break;
                     case 3:
-                        iv.setImageResource(R.drawable.d);
+                        iv.setImageResource(R.drawable.ic_setting_24_px);
                         break;
                 }
             }
@@ -139,16 +139,17 @@ public class MainActivity extends AppCompatActivity
                 ImageView iv = (ImageView) tab1.getCustomView();
                 switch (tab1.getPosition()) {
                     case 0:
-                        iv.setImageResource(R.drawable.a);
+                        //iv.setImageResource(R.drawable.ic_home_24_px);
+                        iv.setBackground(getDrawable(R.drawable.ic_home_24_px));
                         break;
                     case 1:
-                        iv.setImageResource(R.drawable.b);
+                        iv.setImageResource(R.drawable.ic_community_active_24_px);
                         break;
                     case 2:
-                        iv.setImageResource(R.drawable.c);
+                        iv.setImageResource(R.drawable.ic_coin_24_px);
                         break;
                     case 3:
-                        iv.setImageResource(R.drawable.d);
+                        iv.setImageResource(R.drawable.ic_setting_24_px);
                         break;
                 }
             }

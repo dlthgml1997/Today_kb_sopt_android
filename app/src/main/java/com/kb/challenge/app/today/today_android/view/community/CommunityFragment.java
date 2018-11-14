@@ -12,17 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.model.community.FriendsInfoItem;
-import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
-import com.kb.challenge.app.today.today_android.view.main.MainFragment;
-import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -88,7 +82,7 @@ public class CommunityFragment extends Fragment {
         });
 
         //팔로워보기
-        TextView community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_txt);
+        TextView community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_btn);
         community_follower_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

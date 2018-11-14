@@ -37,22 +37,15 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/img_emotion_box"
-        android:layout_width="225dp"
-        android:layout_height="190dp"
-        android:layout_below="@+id/record_feeling_hello_txt"
-        android:layout_marginTop="44dp"
-        android:layout_centerHorizontal="true">
 
         <ImageView
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/record_feeling_hello_txt"
             android:id="@+id/img_emotion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/img_emotion_soso_0" />
-    </RelativeLayout>
-
 
 
     <ImageView
@@ -60,7 +53,7 @@
         android:id="@+id/img_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img_emotion_box"
+        android:layout_below="@+id/img_emotion"
         android:layout_centerHorizontal="true"
         android:src="@drawable/img_text_soso_0" />
 
