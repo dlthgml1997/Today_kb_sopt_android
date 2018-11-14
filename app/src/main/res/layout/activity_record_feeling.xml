@@ -167,6 +167,7 @@
     </LinearLayout>
 
     <SeekBar
+        android:splitTrack="false"
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -179,6 +180,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="46dp"
         android:min="0"
+        android:background="@null"
         android:max="6"
         android:progressDrawable="@drawable/custom_seekbar"
         android:thumb="@drawable/button_slider_24_px" />
