@@ -63,7 +63,7 @@ public class SetTitleFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-
+                onEditTitleSetListener.onAmountSet(Integer.parseInt(et_set_title_amount.getText().toString()));
             }
 
             @Override

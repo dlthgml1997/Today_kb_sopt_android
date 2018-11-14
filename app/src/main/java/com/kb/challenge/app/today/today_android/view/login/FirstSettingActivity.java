@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +22,15 @@ import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 
+import java.io.File;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,16 +45,17 @@ public class FirstSettingActivity extends AppCompatActivity implements
     // private  CustomViewPager mPager;
 
     int position = 0;
-    private ImageView iv_setname_user_image;
     Long backKeyPressedTime = 0L;
     int h;
     int m;
     String userName;
     String title;
-    String profile_image;
+    MultipartBody.Part profile_image;
     int amount;
     private NetworkService networkService;
     private UserSettingData userSettingData;
+    private Button btn_act_firstsetting_next_active;
+    private Button btn_act_firstsetting_next;
 
     @Override
     public void init() {
@@ -58,8 +64,9 @@ public class FirstSettingActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onProfileImageSet(String image) {
+    public void onProfileImageSet(MultipartBody.Part image) {
         profile_image = image;
+        Log.v("profile_image_comming!", profile_image + "");
     }
 
     @Override
@@ -75,6 +82,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
     @Override
     public void onNameSet(String name) {
         userName = name;
+        Log.v("userName_comming!", userName + "");
+
     }
 
     @Override
@@ -106,29 +115,15 @@ public class FirstSettingActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_firstsetting);
 
         init();
+        Button btn_act_firstsetting_next_active = (Button)findViewById(R.id.btn_act_firstsetting_next_active);
+        Button btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
 
-        View header = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
-
-        final View setnameview = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag_container1, new DotFirstFragment());
-        fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
+        fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment(), "SetName");
         fragmentTransaction.commit();
 
-/* //이미지 설정하는 액티비티 불러오는 함수
-        ImageView iv_setname_user_image = findViewById(R.id.iv_setname_user_image);
-        iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(FirstSettingActivity.this, UserImageSettingActivity.class);
-                startActivity(intent);
-
-            }
-        });
-*/
-        final Button btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
         btn_act_firstsetting_next.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -142,6 +137,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right);
                     fragmentTransaction.commit();
+
 
                     position++;
                 } else if (position == 1) {
@@ -184,13 +180,6 @@ public class FirstSettingActivity extends AppCompatActivity implements
                         }
                     });
                     position++;
-
-
-                } else {
-
-                    // 이 때 서버로 초기설정 정보를 넘겨준다.
-                    Intent intent = new Intent(FirstSettingActivity.this, MainActivity.class);
-                    startActivity(intent);
                 }
             }
         });
@@ -202,25 +191,34 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
         Time time_data = new Time(h, m, 00);
         Log.v("push time", time_data + " ");
-
-
         userSettingData = new UserSettingData(userName, title, amount, time_data);
         Log.v("usersetting data", userSettingData.toString());
-        Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userSettingData);
+        Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userName, profile_image, title, amount, time_data);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
                 if (response.isSuccessful()) {
                     Log.v("setUserSetting process2", "setUserSetting process2!!!");
                     Log.v("message", response.body().getMessage().toString());
-                    SharedPreference.Companion.getInstance().setPrefData("goal_amount", userSettingData.getGoal_money());
-                    SharedPreference.Companion.getInstance().setPrefData("goal_title", userSettingData.getGoal());
-//                    SharedPreference.Companion.getInstance().setPrefData("push_time", userSettingData.getPush_time());
-                    SharedPreference.Companion.getInstance().setPrefData("user_name", userSettingData.getName());
 
+                    if (response.body().getMessage().toString().equals("update success")) {
+                        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
+                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_amount", userSettingData.getGoal_money());
+                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_title", userSettingData.getGoal());
+//                    SharedPreference.Companion.getInstance().setPrefData("push_time", userSettingData.getPush_time());
+                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name", userSettingData.getName());
+                            Intent intent = new Intent(FirstSettingActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    else if (response.body().getMessage().toString().equals("access denied")){
+                        Intent intent = new Intent(FirstSettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
             }
+
             @Override
             public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
@@ -232,19 +230,19 @@ public class FirstSettingActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {  //앨범에서 가져온 이미지를 뷰에 표시하는 함수
         // Check which request we're responding to
-        if (requestCode == 1) {
-            // Make sure the request was successful
+        if (requestCode == 1111) {
             if (resultCode == RESULT_OK) {
-                try {
-                    // 선택한 이미지에서 비트맵 생성
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-                    // 이미지 표시
-                    iv_setname_user_image.setImageBitmap(img);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentByTag("SetName");
+                if (fragment != null) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+        }
+        if (requestCode == 1112) {
+            if (resultCode == RESULT_OK) {
+                Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentByTag("SetName");
+                if (fragment != null) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
                 }
             }
         }
@@ -254,54 +252,10 @@ public class FirstSettingActivity extends AppCompatActivity implements
     //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        if (position == 0) {
-//            Intent intent = new Intent(FirstSettingActivity.this, WelcomeActivity.class);
-//            startActivity(intent);
-//        } else if (position == 1) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frag_container1, new DotSecondFragment());
-//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-//            fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
-//            fragmentTransaction.commit();
-//
-//            position--;
-//        } else if (position == 2) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frag_container1, new DotThirdFragment());
-//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-//            fragmentTransaction.replace(R.id.frag_container2, new PickTimeFragment());
-//            fragmentTransaction.commit();
-//
-//            position--;
-//        } else if (position == 3) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
-//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-//            fragmentTransaction.replace(R.id.frag_container2, new SetTitleFragment());
-//            fragmentTransaction.commit();
-//
-//            position--;
-//
-//
-//        } else if (position == 4) {
-//
-//
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
-//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-//            fragmentTransaction.replace(R.id.frag_container2, new AccountConnectFragment());
-//            fragmentTransaction.commit();
-//
-//            position--;
-//        } else {
-//            this.finish();
-//        }
-//
+        if(getFragmentManager().getBackStackEntryCount() != 0)
+            getFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
     }
 
 }

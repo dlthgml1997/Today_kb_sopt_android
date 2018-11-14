@@ -49,31 +49,16 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
-        else
+        else {
             super.onBackPressed();
- /*       if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
-            toast.show();
-
-            return;
         }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            this.finish();
 
-        }
-*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //상태바 제거
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //tablayout, viewPager 적용
         adapter = new PagerAdapter(getSupportFragmentManager());

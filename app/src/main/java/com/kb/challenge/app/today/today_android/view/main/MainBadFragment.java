@@ -151,9 +151,9 @@ public class MainBadFragment extends Fragment {
 
                     ArrayList<CheerupMsgData> cheerupMsgDataList = response.body().getData();
 
-                    if (!response.body().getComfortImg().isEmpty()) {
+                    if (!response.body().getComfortImg().get(0).isEmpty()) {
                         Glide.with(getActivity())
-                                .load(response.body().getComfortImg())
+                                .load(response.body().getComfortImg().get(0))
                                 .into(main_bad_image);
                     }
 

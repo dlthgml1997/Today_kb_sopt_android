@@ -5,17 +5,29 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -27,13 +39,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.BuildConfig;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.utils.PermissionUtils;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,19 +57,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 import static android.app.Activity.RESULT_OK;
 
 public class SetNameFragment extends Fragment {
     private ImageView iv_setname_user_image;
     private OnEditNameSetListener onEditNameSetListener;
-    private OnProfileImageSetListener onProfileImageSetListener;
+    private static OnProfileImageSetListener onProfileImageSetListener;
     private EditText et_setname_user_name;
-    private Uri photoUri;
-    private String currentPhotoPath;//실제 사진 파일 경로
-    String mImageCaptureName;//이미지 이름
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private final int CROP_FROM_CAMERA = 1113;
+    public final int CAMERA_CODE = 1111;
+    public final int GALLERY_CODE = 1112;
+    MultipartBody.Part image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,44 +119,17 @@ public class SetNameFragment extends Fragment {
 
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int pos) {
-                        String selectedText = items[pos].toString();
                         switch (pos) {
                             case 0:
-                                //사진촬영 선택
-                                String state = Environment.getExternalStorageState();
-                                if (Environment.MEDIA_MOUNTED.equals(state)) {
-                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-//                                        File photoFile = null;
-//                                        try {
-//                                            photoFile = createImageFile();
-//                                        } catch (IOException ex) {
-//
-//                                        }
-//                                        if (photoFile != null) {
-//                                            photoUri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName(), photoFile);
-//                                            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-//                                            startActivityForResult(intent, CAMERA_CODE);
-//                                        }
-//                                    }
-                                    String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
-
-                                    photoUri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStorageDirectory(), url));
-
-                                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
-                                    // 특정기기에서 사진을 저장못하는 문제가 있어 다음을 주석처리 합니다.
-                                    //intent.putExtra("return-data", true);
-                                    startActivityForResult(intent, CAMERA_CODE);
-
-                                }
+                                //사진촬영하기
+                                sendTakePhotoIntent();
                                 break;
                             case 1:
                                 //갤러리에서 사진 가져오기 선택
                                 Intent intent = new Intent(Intent.ACTION_PICK);
                                 intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                                intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                intent.setType("image/*");
-                                startActivityForResult(intent, GALLERY_CODE);
+                                intent.setType("image/*");
+                                getActivity().startActivityForResult(intent, GALLERY_CODE);
                                 break;
                             case 2:
                                 //기본 이미지 사용 선택
@@ -155,56 +144,111 @@ public class SetNameFragment extends Fragment {
                 builder.show();
             }
         });
-
         return view;
+    }
+
+
+    // 사진촬영 인텐트 실행
+    private void sendTakePhotoIntent() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA);
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            // 권한 없음
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA}, 0);
+            //Toast.makeText(getApplicationContext(),"권한없음",Toast.LENGTH_SHORT).show();
+        } else {
+            //권한 있음
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            getActivity().startActivityForResult(intent, CAMERA_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults[0] == 0) {
+                Toast.makeText(getActivity(), "카메라 권한이 승인됨", Toast.LENGTH_SHORT).show();
+            } else {
+                //권한 거절된 경우
+                Toast.makeText(getActivity(), "카메라 권한이 거절 되었습니다.카메라를 이용하려면 권한을 승낙하여야 합니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         // Check which request we're responding to
-        super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
-            Log.v("request code(get image)", requestCode + "");
             switch (requestCode) {
-                case CROP_FROM_CAMERA:
-                    final Bundle extras = data.getExtras();
-
-                    if (extras != null) {
-                        Bitmap photo = extras.getParcelable("data");
-                        iv_setname_user_image.setImageBitmap(photo);
-                    }
-
-                    // 임시 파일 삭제
-                    File f = new File(photoUri.getPath());
-                    if (f.exists()) {
-                        f.delete();
-                    }
-                    break;
                 case GALLERY_CODE:
-//                    sendPicture(data.getData()); //갤러리에서 가져오기
-                    photoUri = data.getData();
-                    Bundle images = data.getExtras();
+                    try {
+                        // 선택한 이미지에서 비트맵 생성
+                        InputStream in = this.getActivity().getContentResolver().openInputStream(data.getData());
+                        Bitmap img = BitmapFactory.decodeStream(in);
+                        in.close();
+                        Bitmap cropBitmap = cropCircle(img);
+                        // 이미지 표시
+                        iv_setname_user_image.setImageBitmap(cropBitmap);
+                        iv_setname_user_image.setBackground(new ShapeDrawable(new OvalShape()));
+                        if(Build.VERSION.SDK_INT >= 21) {
+                            iv_setname_user_image.setClipToOutline(true);
+                        }
 
-                    if (images != null) {
-                        Bitmap photo = images.getParcelable("data");
-                        iv_setname_user_image.setImageBitmap(photo);
+                        //create a file to write bitmap data
+                        File f = new File(this.getActivity().getCacheDir(), SharedPreference.Companion.getInstance().getPrefStringData("user_id")+"profile");
+                        f.createNewFile();
+
+//Convert bitmap to byte array
+                        Bitmap bitmap =img;
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                        FileOutputStream fos = new FileOutputStream(f);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+
+//                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//                        //비트맵 이미지를 jpeg로 손실 압축
+//                        img.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+                        File photo = new File(data.toString());
+                        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("profile_url", photo.getName(), reqFile);
+
+//                        RequestBody temp = RequestBody.create(MediaType.parse("image/jpeg"), out.toByteArray());
+//
+//
+//                        image = MultipartBody.Part.createFormData("profile_url",photo.getName(),temp);
+                        onProfileImageSetListener.onProfileImageSet(body);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
                 case CAMERA_CODE:
-//                    getPictureForPhoto(); //카메라에서 가져오기
-                    Intent intent = new Intent("com.android.camera.action.CROP");
-                    intent.setDataAndType(photoUri, "image/*");
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-                    intent.putExtra("outputX", 90);
-                    intent.putExtra("outputY", 90);
-                    intent.putExtra("aspectX", 1);
-                    intent.putExtra("aspectY", 1);
-                    intent.putExtra("scale", true);
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(intent, CROP_FROM_CAMERA);
+                    Bitmap cropBitmap = cropCircle(imageBitmap);
+                    iv_setname_user_image.setImageBitmap(cropBitmap);
+                    iv_setname_user_image.setBackground(new ShapeDrawable(new OvalShape()));
+                    if(Build.VERSION.SDK_INT >= 21) {
+                        iv_setname_user_image.setClipToOutline(true);
+                    }
 
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    RequestBody temp = RequestBody.create(MediaType.parse("image/png"), out.toByteArray());
+                    Log.v("profile_img ", imageBitmap.toString());
+
+                    File photo = new File(data.toString());
+                    image = MultipartBody.Part.createFormData("profile_url",photo.getName(),temp);
+                    onProfileImageSetListener.onProfileImageSet(image);
                     break;
 
                 default:
@@ -213,29 +257,40 @@ public class SetNameFragment extends Fragment {
         }
     }
 
-    //    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case CAMERA_PERMISSIONS_REQUEST:
-//                if (PermissionUtils.isPermissionGranted(requestCode, CAMERA_PERMISSIONS_REQUEST, grantResults)) {
-//                    startCamera();
-//                }
-//                break;
-//            case GALLERY_PERMISSIONS_REQUEST:
-//                if (PermissionUtils.isPermissionGranted(requestCode, GALLERY_PERMISSIONS_REQUEST, grantResults)) {
-//                    startGalleryChooser();
-//                }
-//                break;
-//        }
-//    }
+    public Bitmap cropCircle(Bitmap bitmap) {
+
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+
+        canvas.drawARGB(0, 0, 0, 0);
+
+        int size = (bitmap.getWidth() / 4);
+
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
+
+    }
+
     public interface OnProfileImageSetListener {
-        void onProfileImageSet(String image);
+        void onProfileImageSet(MultipartBody.Part image);
     }
 
     public interface OnEditNameSetListener {
         void onNameSet(String name);
+
     }
 
     @Override

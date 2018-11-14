@@ -76,6 +76,13 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreference.Companion.getInstance().removeData("data");
+                SharedPreference.Companion.getInstance().removeData("user_id");
+                SharedPreference.Companion.getInstance().removeData("user_name");
+                SharedPreference.Companion.getInstance().removeData("goal_amount");
+                SharedPreference.Companion.getInstance().removeData("goal_title");
+                SharedPreference.Companion.getInstance().removeData("user_name");
+                SharedPreference.Companion.getInstance().removeData("feeling_score");
+
                 Intent intent = new Intent(getActivity(), FirstActivity.class);
                 startActivity(intent);
 

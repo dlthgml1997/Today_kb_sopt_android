@@ -7,10 +7,14 @@ import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse
 import com.kb.challenge.app.today.today_android.model.login.LoginData
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse
+import com.kb.challenge.app.today.today_android.model.login.SignupData
 import com.kb.challenge.app.today.today_android.model.record.FeelingData
 import com.kb.challenge.app.today.today_android.model.setting.UserSettingData
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.sql.Time
 
 interface NetworkService {
     // 통신에 사용할 함수를 정의
@@ -59,19 +63,24 @@ interface NetworkService {
     ) :Call<CheerupMsgResponse>
 
     //08. 사용자 설정 저장
+    @Multipart
     @PUT("user")
     fun userSetting(
             @Header("authorization") token : String,
-            @Body userSettingData : UserSettingData
-    ) :Call<BaseModel>
+            @Part("name") name :String,
+            @Part profile_url : MultipartBody.Part,
+            @Part("goal") goal:String,
+            @Part("goal_money") goal_money:Int,
+            @Part("push_time") push_time: Time
+            ) :Call<BaseModel>
 
     @POST("signup")
     fun signup(
             @Body loginData : LoginData
     ) :Call<BaseModel>
 
-    @GET("signup/check")
+    @POST("signup/check")
     fun signupCheckId(
-            @Query("id") id : String
+            @Body signupData : SignupData
     ) :Call<BaseModel>
 }

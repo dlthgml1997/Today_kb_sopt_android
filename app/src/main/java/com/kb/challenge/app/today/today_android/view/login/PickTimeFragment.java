@@ -11,6 +11,9 @@ import android.widget.TimePicker;
 
 import com.kb.challenge.app.today.today_android.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PickTimeFragment extends Fragment implements TimePicker.OnTimeChangedListener {
     private OnTimePickerSetListener onTimePickerSetListener;
 
@@ -23,6 +26,14 @@ public class PickTimeFragment extends Fragment implements TimePicker.OnTimeChang
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.fragment_picktime, container, false);
        TimePicker datePicker1 = (TimePicker)view.findViewById(R.id.datePicker1);
+       long now = System.currentTimeMillis();
+       Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+        String getTime = sdf.format(date);
+        String[] split_time = getTime.split(":");
+
+       onTimePickerSetListener.onTimePickerSet(Integer.parseInt(split_time[0]), Integer.parseInt(split_time[1]));
        datePicker1.setOnTimeChangedListener(this);
        return view;
     }

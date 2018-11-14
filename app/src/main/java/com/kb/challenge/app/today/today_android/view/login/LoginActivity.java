@@ -56,6 +56,8 @@ public class LoginActivity extends AppCompatActivity implements Init {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK){
                 //회원가입하고 돌아옴. id, passwd 자동 입력
+                login_edit_id.setText(data.getStringExtra("id"));
+                login_edit_passwd.setText(data.getStringExtra("passwd"));
             }
         }
     }
@@ -67,18 +69,18 @@ public class LoginActivity extends AppCompatActivity implements Init {
         init();
 
         if (SharedPreference.Companion.getInstance().getPrefStringData("data").isEmpty()) {
-            Log.v("토큰 없음 ->login 이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 없음 ->login 이동","토큰 없음" );
 
         } else {
             Log.v("토큰 존재", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("shinee _ user id ", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
 
-            if (SharedPreference.Companion.getInstance().getPrefStringData("user_name").isEmpty() ||SharedPreference.Companion.getInstance().getPrefStringData("push_time").isEmpty()||
-            SharedPreference.Companion.getInstance().getPrefStringData("goal_title").isEmpty()||SharedPreference.Companion.getInstance().getPrefStringData("goal_amount").isEmpty()) {
-                Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
-                startActivity(new Intent(this, FirstSettingActivity.class));
-                finish();
+            if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name").isEmpty()) {
+                Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
+                startActivity(new Intent(this, WelcomeActivity.class));
+
             } else {
-                Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
+                Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name"));
                 startActivity(new Intent(this, MainActivity.class));
             }
 
@@ -137,11 +139,10 @@ public class LoginActivity extends AppCompatActivity implements Init {
                         Log.v("token", loginResponse.getToken());
                         SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
                         SharedPreference.Companion.getInstance().setPrefData("user_id", loginData.getId());
-                        if (SharedPreference.Companion.getInstance().getPrefStringData("user_name").isEmpty() ||SharedPreference.Companion.getInstance().getPrefStringData("push_time").isEmpty()||
-                                SharedPreference.Companion.getInstance().getPrefStringData("goal_title").isEmpty()||SharedPreference.Companion.getInstance().getPrefStringData("goal_amount").isEmpty()) {
-                            Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
-                            startActivity(new Intent(LoginActivity.this, FirstSettingActivity.class));
-                            finish();
+                        if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id")+""+"user_name").isEmpty()) {
+                            Log.v("이름 없음 ->세팅 이동",SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
+                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+
                         } else {
                             Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));

@@ -99,18 +99,20 @@ public class RecordFeelingFragment extends Fragment {
     public void recordFeeling() {
         Log.v("feeling save process", "feeling save process!!!");
         FeelingData feelingData = new FeelingData(0, null, record_feeling_variation_txt.getText().toString());
-        switch (progress_status) {
-            case 0:
-            case 1:
-            case 2:
-                SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - progress_status - 3);
-                new FeelingData(null, seekBar.getMax() - progress_status - 3, record_feeling_variation_txt.getText().toString());
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - 3);
-                new FeelingData(seekBar.getMax() - 3, null, record_feeling_variation_txt.getText().toString());
+        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
+            switch (progress_status) {
+                case 0:
+                case 1:
+                case 2:
+                    SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - progress_status - 3));
+                    new FeelingData(null, seekBar.getMax() - progress_status - 3, record_feeling_variation_txt.getText().toString());
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - 3));
+                    new FeelingData(seekBar.getMax() - 3, null, record_feeling_variation_txt.getText().toString());
+            }
         }
 
         //감정기록하기 (token 값, feelingdata)

@@ -16,6 +16,7 @@ import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.login.LoginData;
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
+import com.kb.challenge.app.today.today_android.model.login.SignupData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
@@ -36,7 +37,8 @@ public class SignUpActivity extends AppCompatActivity implements Init {
     private EditText signup_edit_passwd;
     private EditText signup_edit_passwd_again;
     private LoginData signupData;
-
+    private BaseModel msg;
+    private LinearLayout ll_act_signup_id_error;
     @Override
     public void init() {
         signup_edit_id = (EditText) findViewById(R.id.signup_edit_id);
@@ -50,51 +52,16 @@ public class SignUpActivity extends AppCompatActivity implements Init {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         init();
-/*
-    if(이미존재하는아이디) {
-        LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
-        ll_act_signup_id_error.setVisibility(View.VISIBLE);
 
-        LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
-        ll_act_signup_password_error.setVisibility(View.INVISIBLE);
-    }else if(이미존재하는아이디&&패스워드가 일치하지않을때){
-
-            LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
-            ll_act_signup_id_error.setVisibility(View.VISIBLE);
-
-            LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
-            ll_act_signup_password_error.setVisibility(View.VISIBLE);
-        }else if(패스워드가 일치하지않을 때){
-
-            LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
-            ll_act_signup_id_error.setVisibility(View.INVISIBLE);
-
-            LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
-            ll_act_signup_password_error.setVisibility(View.VISIBLE);
-        }else {
-        //로그인 성공
+        ll_act_signup_id_error = (LinearLayout)findViewById(R.id.ll_act_signup_id_error);
         signup_button_SignUp = (Button) findViewById(R.id.signup_button_SignUp);
         signup_button_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-        }
-*/
-
-        signup_button_SignUp = (Button) findViewById(R.id.signup_button_SignUp);
-        signup_button_SignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if (!signup_edit_passwd.getText().toString().equals(signup_edit_passwd_again.getText().toString())) {
-//
-//                }
                 Log.v("id & passwd", signup_edit_id.getText().toString() + "&" + signup_edit_passwd.getText().toString());
                 signupData = new LoginData(signup_edit_id.getText().toString(), signup_edit_passwd.getText().toString());
-                signupCheckId();
+                signupCheckID();
+//                signup();
             }
         });
 
@@ -118,13 +85,13 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                 if (response.isSuccessful()) {
                     Log.v("signup process2", "signup process2!!!");
                     Log.v("message", response.body().getMessage().toString());
-
-                    Intent intent = new Intent();
-                    intent.putExtra("id", signup_edit_id.getText().toString());
-                    intent.putExtra("passwd", signup_edit_passwd.getText().toString());
-                    setResult(RESULT_OK, intent);
-                    finish();
-
+                    if (response.body().getMessage().toString().equals("success")) {
+                        Intent intent = new Intent();
+                        intent.putExtra("id", signupData.getId());
+                        intent.putExtra("passwd", signupData.getPasswd());
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
             }
 
@@ -135,11 +102,11 @@ public class SignUpActivity extends AppCompatActivity implements Init {
         });
     }
 
-    public void signupCheckId() {
+    public void signupCheckID() {
         Log.v("check process", "check process!!!");
-        Log.v("check process", signupData.getId());
 
-        Call<BaseModel> requestDetail = networkService.signupCheckId(signupData.getId());
+        SignupData data = new SignupData(signupData.getId());
+        Call<BaseModel> requestDetail = networkService.signupCheckId(data);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
@@ -149,8 +116,7 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                     if (response.body().getMessage().toString().equals("success"))
                         signup();
                     else {
-                        Log.v("fail", response.body().getMessage().toString());
-                        Toast.makeText(SignUpActivity.this, response.body().getMessage().toString(), Toast.LENGTH_LONG).show();
+                        ll_act_signup_id_error.setVisibility(View.VISIBLE);
                     }
                 }
             }
