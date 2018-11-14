@@ -23,6 +23,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="제가 "
+                android:textColor="#545454"
+                android:letterSpacing="-0.01"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp" />
 
@@ -32,6 +34,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="어떻게 "
+                android:letterSpacing="-0.01"
+                android:textColor="#545454"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -42,6 +46,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="부를까요?"
+                android:letterSpacing="-0.01"
+                android:textColor="#545454"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp" />
         </LinearLayout>

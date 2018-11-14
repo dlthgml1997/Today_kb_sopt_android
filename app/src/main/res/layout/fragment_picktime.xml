@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="우리 "
-        android:textColor="#000000"
+        android:letterSpacing="-0.01"
+        android:textColor="#545454"
         />
     <TextView
         android:textSize="24sp"
@@ -24,14 +25,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="몇시에 "
-        android:textColor="#000000"
+        android:letterSpacing="-0.01"
+        android:textColor="#545454"
         />
     <TextView
         android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="만날까요?"
-        android:textColor="#000000"
+        android:letterSpacing="-0.01"
+        android:textColor="#545454"
         />
 </LinearLayout>
     <TimePicker

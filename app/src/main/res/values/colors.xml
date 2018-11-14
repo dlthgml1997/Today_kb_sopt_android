@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="very_light_pink">#bdbdbd</color>
     <color name="dandelion">#ffdb08</color>
+    <color name="empty">#c9c9c9</color>
 </resources>

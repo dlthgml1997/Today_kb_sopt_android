@@ -9,23 +9,48 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
+<LinearLayout
+    android:layout_marginVertical="32dp"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:orientation="horizontal"
+    android:id="@+id/ll_set_title_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_set_title_title"
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_set_title_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목표를 "
+        android:textStyle="bold"
+        android:letterSpacing="-0.01"
+        android:textColor="#545454"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="24sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정해주세요"
+        android:letterSpacing="-0.01"
+        android:textColor="#545454"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="24sp" />
+
+</LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_goal_pig"
+            android:layout_below="@+id/ll_set_title_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
-            android:text="티끌모아 태산!"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="24sp" />
+            android:src="@drawable/img_goal_pig"/>
 
         <EditText
             android:id="@+id/et_set_title_hole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_set_title_title"
+            android:layout_below="@+id/img_goal_pig"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="40dp"
             android:hint="목표설정하기"
@@ -36,33 +61,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_set_title_hole"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="40dp">
 
             <EditText
                 android:id="@+id/et_set_title_amount"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:layout_marginTop="16dp"
-                android:hint="목표금액설정하기 (최대30만원)"
+                android:hint="목표금액 (최대 300,000)"
                 android:inputType="number" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="원"
-                android:textSize="24sp"
-                android:layout_gravity="center"
-                android:textColor="#000000"/>
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:id="@+id/ll_settitle_over_amount_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_settitleamount_et"
-            android:orientation="horizontal"
-            android:visibility="invisible">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="14dp"
@@ -71,10 +89,11 @@
                 android:src="@drawable/ic_warning" />
 
             <TextView
+                android:id="@+id/tv_settitle_maximum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="2dp"
-                android:text="목표금액은 최대 30만원 까지 가능합니다."
+                android:text="목표금액은 300.000원 이하로 설정해주세요."
                 android:textColor="#ff6e6e"
                 android:textSize="11sp" />
         </LinearLayout>

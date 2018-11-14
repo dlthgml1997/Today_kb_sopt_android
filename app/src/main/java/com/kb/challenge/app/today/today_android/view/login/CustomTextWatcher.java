@@ -3,20 +3,16 @@ package com.kb.challenge.app.today.today_android.view.login;
 import java.text.DecimalFormat;
 
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class CustomTextWatcher implements TextWatcher {
     @SuppressWarnings("unused")
     private EditText mEditText;
     private LinearLayout ll_settitle_over_amount_error;
     String strAmount = ""; // 임시저장값 (콤마)
-
     public CustomTextWatcher(EditText e, LinearLayout l) {
         mEditText = e;
         ll_settitle_over_amount_error= l;
@@ -37,6 +33,7 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+
       /*  if (!s.toString().equals(strAmount)) { // StackOverflow를 막기위해,
             strAmount = makeStringComma(s.toString().replace(",", ""));
             mEditText.setText(strAmount);

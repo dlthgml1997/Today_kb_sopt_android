@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_above="@+id/btn_act_first_set_next"
+        android:layout_above="@+id/btn_act_firstsetting_next"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,14 +32,14 @@
 </FrameLayout>
     </LinearLayout>
     <Button
-        android:id="@+id/btn_act_first_set_next"
+        android:id="@+id/btn_act_firstsetting_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/custom_button_radius"
-        android:backgroundTint="#ffdb08"
+        android:backgroundTint="#c9c9c9"
         android:text="다음"
         android:textAlignment="center"
         android:textColor="#FFFFFF" />

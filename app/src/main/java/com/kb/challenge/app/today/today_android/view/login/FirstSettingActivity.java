@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.setting.UserSettingData;
@@ -37,13 +36,11 @@ public class FirstSettingActivity extends AppCompatActivity implements
         PickTimeFragment.OnTimePickerSetListener,
         SetNameFragment.OnEditNameSetListener,
         SetTitleFragment.OnEditTitleSetListener, Init,
-        SetNameFragment.OnProfileImageSetListener{
+        SetNameFragment.OnProfileImageSetListener {
     // private  CustomViewPager mPager;
 
     int position = 0;
-
     private ImageView iv_setname_user_image;
-
     Long backKeyPressedTime = 0L;
     int h;
     int m;
@@ -86,23 +83,23 @@ public class FirstSettingActivity extends AppCompatActivity implements
         m = min;
     }
 
-/*
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
-            toast.show();
+    /*
+        @Override
+        public void onBackPressed() {
+            if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
+                backKeyPressedTime = System.currentTimeMillis();
+                Toast toast = Toast.makeText(getApplicationContext(),"\'뒤로 가기\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
+                toast.show();
 
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            this.finish();
+                return;
+            }
+            if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                this.finish();
 
-        }
+            }
 
-    }*/
+        }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,15 +109,14 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
         View header = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
 
+        final View setnameview = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag_container1, new DotFirstFragment());
         fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
         fragmentTransaction.commit();
 
-
-
-/*
+/* //이미지 설정하는 액티비티 불러오는 함수
         ImageView iv_setname_user_image = findViewById(R.id.iv_setname_user_image);
         iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +128,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
             }
         });
 */
-        Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
-        btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
+        final Button btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
+        btn_act_firstsetting_next.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -146,6 +142,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right);
                     fragmentTransaction.commit();
+
                     position++;
                 } else if (position == 1) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -174,7 +171,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     fragmentTransaction.commit();
 
 
-                    Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
+                    Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
                     btn_act_first_set_next.setText("완료");
                     btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -207,7 +204,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
         Log.v("push time", time_data + " ");
 
 
-        userSettingData = new UserSettingData(userName, title, amount,time_data);
+        userSettingData = new UserSettingData(userName, title, amount, time_data);
         Log.v("usersetting data", userSettingData.toString());
         Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userSettingData);
         requestDetail.enqueue(new Callback<BaseModel>() {
@@ -222,13 +219,35 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     SharedPreference.Companion.getInstance().setPrefData("user_name", userSettingData.getName());
 
                 }
-            }
 
+            }
             @Override
             public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {  //앨범에서 가져온 이미지를 뷰에 표시하는 함수
+        // Check which request we're responding to
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                try {
+                    // 선택한 이미지에서 비트맵 생성
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    // 이미지 표시
+                    iv_setname_user_image.setImageBitmap(img);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
@@ -283,7 +302,6 @@ public class FirstSettingActivity extends AppCompatActivity implements
 //            this.finish();
 //        }
 //
-
     }
 
 }
