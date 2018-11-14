@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,41 @@ public class SignUpActivity extends AppCompatActivity implements Init {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         init();
+/*
+    if(이미존재하는아이디) {
+        LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
+        ll_act_signup_id_error.setVisibility(View.VISIBLE);
+
+        LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
+        ll_act_signup_password_error.setVisibility(View.INVISIBLE);
+    }else if(이미존재하는아이디&&패스워드가 일치하지않을때){
+
+            LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
+            ll_act_signup_id_error.setVisibility(View.VISIBLE);
+
+            LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
+            ll_act_signup_password_error.setVisibility(View.VISIBLE);
+        }else if(패스워드가 일치하지않을 때){
+
+            LinearLayout ll_act_signup_id_error = (LinearLayout) findViewById(R.id.ll_act_signup_id_error);
+            ll_act_signup_id_error.setVisibility(View.INVISIBLE);
+
+            LinearLayout ll_act_signup_password_error = (LinearLayout) findViewById(R.id.ll_act_signup_password_error);
+            ll_act_signup_password_error.setVisibility(View.VISIBLE);
+        }else {
+        //로그인 성공
+        signup_button_SignUp = (Button) findViewById(R.id.signup_button_SignUp);
+        signup_button_SignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        }
+*/
+
         signup_button_SignUp = (Button) findViewById(R.id.signup_button_SignUp);
         signup_button_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +134,11 @@ public class SignUpActivity extends AppCompatActivity implements Init {
             }
         });
     }
+
     public void signupCheckId() {
         Log.v("check process", "check process!!!");
+        Log.v("check process", signupData.getId());
+
         Call<BaseModel> requestDetail = networkService.signupCheckId(signupData.getId());
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
@@ -109,8 +148,10 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                     Log.v("message", response.body().getMessage().toString());
                     if (response.body().getMessage().toString().equals("success"))
                         signup();
-                    else
-                        Toast.makeText(SignUpActivity.this, "이메일 중복!", Toast.LENGTH_LONG).show();
+                    else {
+                        Log.v("fail", response.body().getMessage().toString());
+                        Toast.makeText(SignUpActivity.this, response.body().getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 

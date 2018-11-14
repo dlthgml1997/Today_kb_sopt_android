@@ -46,26 +46,19 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         final int pos = i;
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
-        viewHolder.community_btn_check_following.setOnClickListener(new View.OnClickListener() {
+        viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewHolder.community_btn_check_following.setVisibility(View.GONE);
-                viewHolder.community_following_txt.setVisibility(View.GONE);
-                viewHolder.community_following_check.setVisibility(View.GONE);
-                viewHolder.community_btn_check_follower.setVisibility(View.VISIBLE);
-                viewHolder.community_follower_txt.setVisibility(View.VISIBLE);
+                viewHolder.community_btn_follow.setVisibility(View.GONE);
+                viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
 
             }
         });
-        viewHolder.community_btn_check_follower.setOnClickListener(new View.OnClickListener() {
+        viewHolder.community_btn_follower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewHolder.community_btn_check_following.setVisibility(View.VISIBLE);
-                viewHolder.community_following_txt.setVisibility(View.VISIBLE);
-                viewHolder.community_following_check.setVisibility(View.VISIBLE);
-                viewHolder.community_btn_check_follower.setVisibility(View.GONE);
-                viewHolder.community_follower_txt.setVisibility(View.GONE);
-
+                viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
+                viewHolder.community_btn_follower.setVisibility(View.GONE);
             }
         });
 
@@ -78,21 +71,17 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView community_following_id;
-        public View community_btn_check_following;
-        public View community_btn_check_follower;
-        public TextView community_follower_txt;
-        public TextView community_following_txt;
-        public ImageView community_following_check;
-
+        public ImageView community_following_img;
+        public ImageView community_btn_follower;
+        public ImageView community_btn_follow;
 
         public ViewHolder(View itemView) {
             super(itemView);
             community_following_id = (TextView) itemView.findViewById(R.id.community_following_id);
-            community_btn_check_following = (View)itemView.findViewById(R.id.community_btn_check_following);
-            community_btn_check_follower = (View)itemView.findViewById(R.id.community_btn_check_follower);
-            community_follower_txt = (TextView) itemView.findViewById(R.id.community_follower_txt);
-            community_following_txt = (TextView) itemView.findViewById(R.id.community_following_txt);
-            community_following_check = (ImageView) itemView.findViewById(R.id.community_following_check);
+            community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
+            community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
+            community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
+
         }
 
 

@@ -9,22 +9,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.kb.challenge.app.today.today_android.R;
 
 public class SetTitleFragment extends Fragment {
+
     private EditText et_set_title_hole;
     private EditText et_set_title_amount;
     private OnEditTitleSetListener onEditTitleSetListener;
+    private LinearLayout ll_settitle_over_amount_error;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settitle, container, false);
         et_set_title_hole = (EditText)view.findViewById(R.id.et_set_title_hole);
+
+        ll_settitle_over_amount_error = view.findViewById(R.id.ll_settitle_over_amount_error);
+
+        et_set_title_amount = (EditText)view.findViewById(R.id.et_set_title_amount);
+        et_set_title_amount.addTextChangedListener(new CustomTextWatcher(et_set_title_amount,ll_settitle_over_amount_error));
+
         et_set_title_hole.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -43,7 +53,7 @@ public class SetTitleFragment extends Fragment {
             }
         });
 
-        et_set_title_amount = (EditText)view.findViewById(R.id.et_set_title_amount);
+
         et_set_title_amount.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -53,7 +63,7 @@ public class SetTitleFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                onEditTitleSetListener.onAmountSet(Integer.parseInt(et_set_title_amount.getText().toString()));
+
             }
 
             @Override
@@ -84,5 +94,6 @@ public class SetTitleFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         onEditTitleSetListener = null;
+
     }
 }

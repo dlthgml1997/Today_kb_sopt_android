@@ -1,15 +1,17 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
+
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
@@ -20,32 +22,47 @@ import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FirstSettingActivity extends AppCompatActivity implements PickTimeFragment.OnTimePickerSetListener,
+import java.io.InputStream;
+
+public class FirstSettingActivity extends AppCompatActivity implements
+        PickTimeFragment.OnTimePickerSetListener,
         SetNameFragment.OnEditNameSetListener,
-        SetTitleFragment.OnEditTitleSetListener, Init{
+        SetTitleFragment.OnEditTitleSetListener, Init,
+        SetNameFragment.OnProfileImageSetListener{
     // private  CustomViewPager mPager;
+
     int position = 0;
+
+    private ImageView iv_setname_user_image;
+
     Long backKeyPressedTime = 0L;
     int h;
     int m;
     String userName;
     String title;
+    String profile_image;
     int amount;
     private NetworkService networkService;
+    private UserSettingData userSettingData;
 
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(this);
+    }
+
+    @Override
+    public void onProfileImageSet(String image) {
+        profile_image = image;
     }
 
     @Override
@@ -69,6 +86,7 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
         m = min;
     }
 
+/*
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() > (backKeyPressedTime + 2000)) {
@@ -84,12 +102,15 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
 
         }
 
-    }
+    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstsetting);
+
         init();
+
+        View header = getLayoutInflater().inflate(R.layout.fragment_setname, null, false);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -97,6 +118,20 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
         fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
         fragmentTransaction.commit();
 
+
+
+/*
+        ImageView iv_setname_user_image = findViewById(R.id.iv_setname_user_image);
+        iv_setname_user_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FirstSettingActivity.this, UserImageSettingActivity.class);
+                startActivity(intent);
+
+            }
+        });
+*/
         Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_first_set_next);
         btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
 
@@ -121,7 +156,7 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
                     fragmentTransaction.commit();
 
                     position++;
-                } else if(position == 2){
+                } else if (position == 2) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
@@ -130,7 +165,7 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
                     fragmentTransaction.commit();
 
                     position++;
-                } else if(position == 3){
+                } else if (position == 3) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container1, new DotFifthFragment());
@@ -152,7 +187,11 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
                         }
                     });
                     position++;
-                } else{
+
+
+                } else {
+
+                    // 이 때 서버로 초기설정 정보를 넘겨준다.
                     Intent intent = new Intent(FirstSettingActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -163,17 +202,13 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
 
     public void setUserSetting() throws ParseException {
         Log.v("setUserSetting process", "setUserSetting process!!!");
-        String minutes = String.valueOf(m);
-        String hours = String.valueOf(h);
-        if (m < 10)
-            minutes = "0" + m;
-        if (h < 10)
-            hours = "0" + h;
-        String time = hours + ":" + minutes  + ":00";
-        Date date = new SimpleDateFormat("HH:mm:ss").parse(time);
 
-        Log.v("push time", date + " ");
-        final UserSettingData userSettingData = new UserSettingData(userName,null, title, amount,date);
+        Time time_data = new Time(h, m, 00);
+        Log.v("push time", time_data + " ");
+
+
+        userSettingData = new UserSettingData(userName, title, amount,time_data);
+        Log.v("usersetting data", userSettingData.toString());
         Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userSettingData);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
@@ -194,6 +229,61 @@ public class FirstSettingActivity extends AppCompatActivity implements PickTimeF
                 Log.i("err", t.getMessage());
             }
         });
+    }
+
+
+    //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        if (position == 0) {
+//            Intent intent = new Intent(FirstSettingActivity.this, WelcomeActivity.class);
+//            startActivity(intent);
+//        } else if (position == 1) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frag_container1, new DotSecondFragment());
+//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//            fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment());
+//            fragmentTransaction.commit();
+//
+//            position--;
+//        } else if (position == 2) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frag_container1, new DotThirdFragment());
+//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//            fragmentTransaction.replace(R.id.frag_container2, new PickTimeFragment());
+//            fragmentTransaction.commit();
+//
+//            position--;
+//        } else if (position == 3) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
+//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//            fragmentTransaction.replace(R.id.frag_container2, new SetTitleFragment());
+//            fragmentTransaction.commit();
+//
+//            position--;
+//
+//
+//        } else if (position == 4) {
+//
+//
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frag_container1, new DotForthFragment());
+//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//            fragmentTransaction.replace(R.id.frag_container2, new AccountConnectFragment());
+//            fragmentTransaction.commit();
+//
+//            position--;
+//        } else {
+//            this.finish();
+//        }
+//
+
     }
 
 }

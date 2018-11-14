@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import android.util.Log;
@@ -17,9 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.model.ActivityResultEvent;
-import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
-import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
+import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -114,7 +110,7 @@ public class MainFragment extends Fragment {
                 //fragment 교체
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                transaction.replace(R.id.root_frame, new MainGoodFragment());
+                transaction.replace(R.id.root_frame, new RecordFeelingFragment());
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
 

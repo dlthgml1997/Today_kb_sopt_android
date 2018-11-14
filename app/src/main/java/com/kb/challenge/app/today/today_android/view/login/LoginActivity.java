@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.login.LoginData;
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
         login_edit_id = (EditText)findViewById(R.id.login_edit_id);
         login_edit_passwd = (EditText)findViewById(R.id.login_edit_passwd);
         login_text_go_to_signup =(TextView) findViewById(R.id.login_text_go_to_signup);
+
         login_button_SignIn = (Button) findViewById(R.id.login_button_SignIn);
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(this);
@@ -77,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
                 finish();
             } else {
                 Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
-                startActivity(new Intent(this, RecordFeelingActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
             }
 
             finish();
@@ -88,7 +90,16 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
             @Override
             public void onClick(View view) {
-               signIn();
+                signIn();
+            }
+        });
+
+        login_text_go_to_signup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
         login_text_go_to_signup.setOnClickListener(new View.OnClickListener() {
@@ -99,9 +110,10 @@ public class LoginActivity extends AppCompatActivity implements Init {
         });
 
     }
+
     public void signIn() {
         Log.v("login process", "login process!!!");
-        LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
+        final LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
         Call<LoginResponse> requestDetail = networkService.login(loginData);
         requestDetail.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -110,20 +122,40 @@ public class LoginActivity extends AppCompatActivity implements Init {
                     Log.v("login process2", "login process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    LoginResponse loginResponse = response.body();
-
-                    Log.v("token",loginResponse.getToken());
-                    SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
-
-                    if (SharedPreference.Companion.getInstance().getPrefStringData("user_name").isEmpty() ||SharedPreference.Companion.getInstance().getPrefStringData("push_time").isEmpty()||
-                            SharedPreference.Companion.getInstance().getPrefStringData("goal_title").isEmpty()||SharedPreference.Companion.getInstance().getPrefStringData("goal_amount").isEmpty()) {
-                        Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
-                        startActivity(new Intent(LoginActivity.this, FirstSettingActivity.class));
-                        finish();
+                    if (response.body().getMessage().equals("wrong password")) { //패스워드 에러
+                        LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                        ll_act_login_password_error.setVisibility(View.VISIBLE);
+                    } else if (response.body().getMessage().equals("wrong id")) { //아이디 에러
+                        LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
+                        ll_act_login_id_error.setVisibility(View.VISIBLE);
+                        LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                        ll_act_login_password_error.setVisibility(View.VISIBLE);
                     } else {
-                        Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
-                        startActivity(new Intent(LoginActivity.this, RecordFeelingActivity.class));
+                        // 로그인 성공
+                        LoginResponse loginResponse = response.body();
+
+                        Log.v("token", loginResponse.getToken());
+                        SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
+                        SharedPreference.Companion.getInstance().setPrefData("user_id", loginData.getId());
+                        if (SharedPreference.Companion.getInstance().getPrefStringData("user_name").isEmpty() ||SharedPreference.Companion.getInstance().getPrefStringData("push_time").isEmpty()||
+                                SharedPreference.Companion.getInstance().getPrefStringData("goal_title").isEmpty()||SharedPreference.Companion.getInstance().getPrefStringData("goal_amount").isEmpty()) {
+                            Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
+                            startActivity(new Intent(LoginActivity.this, FirstSettingActivity.class));
+                            finish();
+                        } else {
+                            Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_name"));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
                     }
+
+                } else {
+
+                    LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
+                    ll_act_login_id_error.setVisibility(View.VISIBLE);
+
+                    LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                    ll_act_login_password_error.setVisibility(View.VISIBLE);
+
                 }
             }
 

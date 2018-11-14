@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class CommunityFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private static final String TAG_COMM = "CommunityFragment";
     private CommunityFragment.OnFragmentInteractionListener mListener;
 
     public CommunityFragment() {
@@ -103,6 +105,14 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+        ImageView community_btn_search_id = (ImageView)view.findViewById(R.id.community_btn_search_id);
+
+        community_btn_search_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

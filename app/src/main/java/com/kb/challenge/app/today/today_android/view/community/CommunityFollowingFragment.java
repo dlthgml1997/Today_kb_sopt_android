@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -82,12 +83,19 @@ public class CommunityFollowingFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_community_following, container, false);
-        TextView community_toolbar_title = (TextView)view.findViewById(R.id.community_toolbar_title);
 
-        community_toolbar_title.setText("팔로잉");
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_following_recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        ImageView community_back_btn = (ImageView)view.findViewById(R.id.community_back_btn);
+
+        community_back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
 
         ArrayList<FollowingItem> followingList = new ArrayList<>();
 

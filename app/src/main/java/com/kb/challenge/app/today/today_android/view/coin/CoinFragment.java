@@ -105,7 +105,7 @@ public class CoinFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_coin, container, false);
 
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
-        SharedPreference.Companion.getInstance();
+        SharedPreference.Companion.getInstance().load(getActivity());
 
         TextView coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
         TextView coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);

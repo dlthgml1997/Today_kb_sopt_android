@@ -1,6 +1,5 @@
 package com.kb.challenge.app.today.today_android.network
 
-import android.util.JsonToken
 import com.kb.challenge.app.today.today_android.base.BaseModel
 import com.kb.challenge.app.today.today_android.model.cheerup.CheerupMsgResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse
