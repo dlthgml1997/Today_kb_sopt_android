@@ -26,6 +26,7 @@
                 android:resource="@xml/file_path" />
         </provider>
         <activity android:name=".view.main.MainActivity">
+
         </activity>
         <activity android:name=".view.login.FirstActivity"></activity>
         <activity android:name=".view.login.LoginActivity"></activity>

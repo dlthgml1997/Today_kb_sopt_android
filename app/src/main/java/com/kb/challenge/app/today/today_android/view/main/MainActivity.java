@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     Long backKeyPressedTime = 0L;
     private PagerAdapter adapter;
     private CustomViewPager viewPager;
-
+    private TabLayout tabLayout;
 
     @Override
     public void onBackPressed() {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setPagingEnabled(false);
         viewPager.setAdapter(adapter);
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
         final ImageView mainIcon = new ImageView(this);
@@ -152,6 +153,14 @@ public class MainActivity extends AppCompatActivity
                 Log.d("reselected tap", String.valueOf(tab2.getPosition()));
             }
         });
+
+    }
+    public void inVisibleTabLayout() {
+        ((ViewGroup) tabLayout).setVisibility(View.GONE);
+
+    }
+    public void visibleTabLayout() {
+        ((ViewGroup) tabLayout).setVisibility(View.VISIBLE);
 
     }
 

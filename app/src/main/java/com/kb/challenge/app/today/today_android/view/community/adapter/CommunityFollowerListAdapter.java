@@ -9,15 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
-import com.kb.challenge.app.today.today_android.model.community.FollowingData;
-import com.kb.challenge.app.today.today_android.model.community.FollowingItem;
+import com.kb.challenge.app.today.today_android.model.community.FollowerData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
@@ -34,9 +31,9 @@ import retrofit2.Response;
  * Created by shineeseo on 2018. 11. 9..
  */
 
-public class CommunityFollowingListAdapter extends RecyclerView.Adapter<CommunityFollowingListAdapter.ViewHolder>  implements Init {
+public class CommunityFollowerListAdapter extends RecyclerView.Adapter<CommunityFollowerListAdapter.ViewHolder>  implements Init {
     Context context;
-    ArrayList<FollowingData> communityFollowingList;
+    ArrayList<FollowerData> communityFollowingList;
     private NetworkService networkService;
     private String follow_id;
     private BaseModel msg;
@@ -47,23 +44,23 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         SharedPreference.Companion.getInstance().load(context);
     }
 
-    public CommunityFollowingListAdapter(Context context, ArrayList<FollowingData> communityFollowingList) {
+    public CommunityFollowerListAdapter(Context context, ArrayList<FollowerData> communityFollowingList) {
         super();
         this.context = context;
         this.communityFollowingList = communityFollowingList;
     }
 
     @Override
-    public CommunityFollowingListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public CommunityFollowerListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.community_following_list, viewGroup, false);
         init();
-        CommunityFollowingListAdapter.ViewHolder viewHolder = new CommunityFollowingListAdapter.ViewHolder(v);
+        CommunityFollowerListAdapter.ViewHolder viewHolder = new CommunityFollowerListAdapter.ViewHolder(v);
         return viewHolder;
     }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final CommunityFollowingListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final CommunityFollowerListAdapter.ViewHolder viewHolder, int i) {
         final int pos = i;
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());

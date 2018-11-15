@@ -2,7 +2,13 @@ package com.kb.challenge.app.today.today_android.view.community;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,22 +22,37 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
+import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
+import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse;
 import com.kb.challenge.app.today.today_android.model.community.FriendsInfoItem;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.Init;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
  */
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends Fragment implements Init {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,7 +64,19 @@ public class CommunityFragment extends Fragment {
 
     private static final String TAG_COMM = "CommunityFragment";
     private CommunityFragment.OnFragmentInteractionListener mListener;
+    private NetworkService networkService;
+    private TextView community_follower_num_txt;
+    private TextView community_following_num_txt;
+    private ImageView community_my_profil_img;
+    private TextView community_user_name;
+    private TextView community_id;
+    private ImageView community_btn_emotion_box;
 
+    @Override
+    public void init() {
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+    }
     public CommunityFragment() {
     }
 
@@ -71,10 +104,30 @@ public class CommunityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_community, container, false);
+        init();
+        //나의 프로필
+        community_my_profil_img = (ImageView)view.findViewById(R.id.community_my_profil_img);
 
+        //이미지 크롭
+        community_my_profil_img.setBackground(new ShapeDrawable(new OvalShape()));
+        if(Build.VERSION.SDK_INT >= 21) {
+            community_my_profil_img.setClipToOutline(true);
+        }
         //팔로잉 보기
-        TextView community_following_num_txt = (TextView)view.findViewById(R.id.community_following_num_txt);
+        community_following_num_txt = (TextView)view.findViewById(R.id.community_following_num_txt);
+        //팔로워보기
+        community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_txt);
 
+        //프로필 유저 이름
+        community_user_name = (TextView)view.findViewById(R.id.community_user_name);
+
+        //프로필 id
+        community_id = (TextView)view.findViewById(R.id.community_id);
+
+        //프로필 정보 가져오는 통신 메소드 호출
+        getProfileData();
+
+        //팔로우 보기 -> 프래그먼트 전환
         community_following_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,8 +142,7 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        //팔로워보기
-        TextView community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_txt);
+        //팔로워 보기 -> 프래그먼트 전환
         community_follower_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,4 +223,45 @@ public class CommunityFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public void getProfileData() {
+        Log.v("getProfileData process", "getProfileData process!!!");
+        Call<CommuProfileResponse> requestDetail = networkService.getUserProfile(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CommuProfileResponse>() {
+            @Override
+            public void onResponse(Call<CommuProfileResponse> call, Response<CommuProfileResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getProfileData", "getProfileData process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    if(response.body().getMessage().toString().equals("success")) {
+                        ArrayList<CommuProfileData> commuProfileDataList = response.body().getData();
+                        Glide.with(getActivity())
+                                .load(commuProfileDataList.get(0).getProfile_url())
+                                .into(community_my_profil_img);
+
+                        community_my_profil_img.setBackground(new ShapeDrawable(new OvalShape()));
+                        if(Build.VERSION.SDK_INT >= 21) {
+                            community_my_profil_img.setClipToOutline(true);
+                        }
+                        community_id.setText(commuProfileDataList.get(0).getId());
+
+                        community_user_name.setText(commuProfileDataList.get(0).getName());
+
+                        community_follower_num_txt.setText(commuProfileDataList.get(0).getCountFollower());
+
+                        community_following_num_txt.setText(commuProfileDataList.get(0).getCountFollowing());
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommuProfileResponse> call, Throwable t) {
+                Log.v("profile err", "profile err");
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
 }

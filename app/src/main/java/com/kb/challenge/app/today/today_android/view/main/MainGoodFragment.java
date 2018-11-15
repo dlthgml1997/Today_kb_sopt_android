@@ -23,6 +23,7 @@ import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,8 +73,8 @@ public class MainGoodFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
+        if (resultCode == 200) {
+            Log.v("yong", data.getStringExtra("result"));
         }
 
     }
@@ -100,7 +101,7 @@ public class MainGoodFragment extends Fragment {
         deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
         //스피너 어댑터 설정
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),R.array.deposit,android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.deposit, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deposit_spinner.setAdapter(adapter);
 
@@ -131,6 +132,7 @@ public class MainGoodFragment extends Fragment {
         return view;
 
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -169,6 +171,7 @@ public class MainGoodFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     public void savingMoney() {
         Log.v("saving process", "saving process!!!");
         CoinSavingData coinSavingData = new CoinSavingData(Integer.parseInt(deposit_spinner.getSelectedItem().toString()), "오늘도 화이팅!");
@@ -180,14 +183,22 @@ public class MainGoodFragment extends Fragment {
                     Log.v("saving process2", "saving process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    if (response.body().getMessage().toString().equals("success")) {
+
+
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                    transaction.replace(R.id.root_frame, new MainDepositFragment());
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    transaction.addToBackStack(null);
+                        transaction.replace(R.id.root_frame, new MainDepositFragment());
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.addToBackStack(null);
 
 /** * Fragment의 변경사항을 반영시킨다. */
-                    transaction.commit();
+                        transaction.commit();
+                    }
+                    else if (response.body().getMessage().toString().equals("access denied")){
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
 

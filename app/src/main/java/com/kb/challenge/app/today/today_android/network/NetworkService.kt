@@ -5,6 +5,9 @@ import com.kb.challenge.app.today.today_android.model.cheerup.CheerupMsgResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse
+import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse
+import com.kb.challenge.app.today.today_android.model.community.FollowListResponse
+import com.kb.challenge.app.today.today_android.model.community.FollowingListResponse
 import com.kb.challenge.app.today.today_android.model.login.LoginData
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse
 import com.kb.challenge.app.today.today_android.model.login.SignupData
@@ -74,13 +77,37 @@ interface NetworkService {
             @Part("push_time") push_time: Time
             ) :Call<BaseModel>
 
+    //09.회원가입
     @POST("signup")
     fun signup(
             @Body loginData : LoginData
     ) :Call<BaseModel>
 
+    //10.아이디 중복체크
     @POST("signup/check")
     fun signupCheckId(
             @Body signupData : SignupData
     ) :Call<BaseModel>
+
+    @POST("follow/{id}")
+    fun followUser(
+            @Header("authorization") token : String,
+            @Path("id") id : String
+    ) :Call<BaseModel>
+
+    @GET("follower")
+    fun getFollowerList(
+            @Header("authorization") token : String
+    ) :Call<FollowListResponse>
+
+    @GET("following")
+    fun getFollowingList(
+            @Header("authorization") token : String
+    ) :Call<FollowingListResponse>
+
+    @GET("user")
+    fun getUserProfile(
+            @Header("authorization") token : String
+    ):Call<CommuProfileResponse>
+
 }

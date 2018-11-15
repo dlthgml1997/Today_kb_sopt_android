@@ -15,10 +15,11 @@
     <ImageView
         android:layout_below="@id/main_name_txt"
         android:id="@+id/main_bad_image"
-        android:layout_width="564dp"
-        android:layout_height="564dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         />
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/main_bad_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_bad_recycler_view">

@@ -118,20 +118,7 @@ public class CoinFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        if (SharedPreference.Companion.getInstance().getPrefIntegerData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "totalMoney")< 0) {
-            Log.v("total empty", "total empty");
-
-        }
-
-        if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_title").isEmpty() || SharedPreference.Companion.getInstance().getPrefIntegerData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_amount")<0) {
-            Log.v("goal empty", "goal empty");
-            getSavingDetail();
-        }
-        else {
-            coin_name_txt.setText(SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal"));
-            coin_target_money_txt.setText(String.valueOf(SharedPreference.Companion.getInstance().getPrefIntegerData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goalMoney")));
-        }
-
+        getSavingDetail();
 
         getSavingList();
 
@@ -207,7 +194,6 @@ public class CoinFragment extends Fragment {
 
                         mRecyclerView.setAdapter(coinSavingListAdapter);
                     }
-
 
 
                 }
