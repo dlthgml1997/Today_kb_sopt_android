@@ -46,7 +46,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         final int pos = i;
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
-        viewHolder.community_btn_check_following.setOnClickListener(new View.OnClickListener() {
+        viewHolder.community_btn_check_follower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewHolder.community_btn_check_following.setVisibility(View.GONE);

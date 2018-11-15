@@ -5,17 +5,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.model.community.FollowingItem;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowingListAdapter;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 
 import org.w3c.dom.Text;
 
@@ -59,15 +63,6 @@ public class CommunityFollowerFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
-        }
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,9 +79,22 @@ public class CommunityFollowerFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_community_following, container, false);
-        TextView community_toolbar_title = (TextView)view.findViewById(R.id.community_toolbar_title);
 
-        community_toolbar_title.setText("팔로워");
+        TextView community_following_txt = (TextView)view.findViewById(R.id.community_following_txt);
+
+        community_following_txt.setText("팔로워");
+        TextView community_following_list_txt = (TextView)view.findViewById(R.id.community_following_list_txt);
+
+        community_following_list_txt.setText("팔로워 리스트");
+
+        ImageView community_back_btn = (ImageView)view.findViewById(R.id.community_back_btn);
+
+        community_back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_following_recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -118,6 +126,7 @@ public class CommunityFollowerFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override

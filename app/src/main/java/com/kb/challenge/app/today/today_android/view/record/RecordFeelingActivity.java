@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,9 @@ import retrofit2.Response;
  * Created by shineeseo on 2018. 11. 11..
  */
 
-public class RecordFeelingActivity extends AppCompatActivity implements MainBadFragment.OnFragmentInteractionListener, MainGoodFragment.OnFragmentInteractionListener {
+public class RecordFeelingActivity extends AppCompatActivity implements
+        MainBadFragment.OnFragmentInteractionListener,
+        MainGoodFragment.OnFragmentInteractionListener {
     String[] feelingMsg = {"건드리면 물어요", "날 내버려둬요", "그저 그래요", "별 생각 없어요", "기분이 좋아요!", "기분이 좋아요!", "오늘 기분 최고!"};
     int[] emotionImg = {R.drawable.img_emotion_bad_3,R.drawable.img_emotion_bad_2,R.drawable.img_emotion_bad_1,R.drawable.img_emotion_soso_0,R.drawable.img_emotion_good_1,R.drawable.img_emotion_good_2,R.drawable.img_emotion_good_3};
     int[] emotionTextImg = {R.drawable.img_text_bad_3,R.drawable.img_text_bad_2,R.drawable.img_text_bad_1,R.drawable.img_text_soso_0,R.drawable.img_text_good_1,R.drawable.img_text_good_2,R.drawable.img_text_good_3};
@@ -36,7 +39,7 @@ public class RecordFeelingActivity extends AppCompatActivity implements MainBadF
     private ImageView img_text;
     private SeekBar seekBar;
     private Button record_save_btn;
-    private static int progress_status = 0;
+    private static int progress_status = 3;
     private NetworkService networkService;
     private ImageView hint_bad_3,hint_bad_2,hint_bad_1,hint_soso_1,hint_good_1,hint_good_2,hint_good_3;
     //    private final static String TOKEN_DATA = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE1NDE4NjcxMjEsImV4cCI6MTU0NDQ1OTEyMX0.irjngtenOTszNG3qiJ1XoQB8gRo0RRSA3jPUMbUvqSw";
@@ -45,7 +48,7 @@ public class RecordFeelingActivity extends AppCompatActivity implements MainBadF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_feeling);
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
-        SharedPreference.Companion.getInstance();
+        SharedPreference.Companion.getInstance().load(this);
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         record_save_btn = (Button) findViewById(R.id.record_save_btn);
@@ -162,18 +165,20 @@ public class RecordFeelingActivity extends AppCompatActivity implements MainBadF
 
     public void recordFeeling() {
         Log.v("feeling save process", "feeling save process!!!");
-
         FeelingData feelingData = new FeelingData(0, null, feelingMsg[3]);
         switch (progress_status) {
             case 0:
             case 1:
             case 2:
                 new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
+                SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - progress_status - 3);
             case 3:
             case 4:
             case 5:
             case 6:
                 new FeelingData(seekBar.getMax() - 3, null, feelingMsg[4]);
+                SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - 3);
+
         }
         //감정기록하기 (token 값, feelingdata)
         Call<BaseModel> requestDetail = networkService.recordFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), feelingData);
@@ -184,22 +189,27 @@ public class RecordFeelingActivity extends AppCompatActivity implements MainBadF
                     Log.v("feeling save process", "feeling save process!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    Intent intent = new Intent();
-
                     Log.v("feeling record", progress_status  + " ");
                     if (progress_status < 3) {
-                        intent.putExtra("feeling_record", progress_status);
-                        SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - progress_status - 3);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                        transaction.add(R.id.root_frame, new MainBadFragment());
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.addToBackStack(null);
+
+/** * Fragment의 변경사항을 반영시킨다. */
+                        transaction.commit();
 
                     } else {
-                        intent.putExtra("feeling_record", progress_status);
-                        SharedPreference.Companion.getInstance().setPrefData("feeling_score", seekBar.getMax() - 3);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                        transaction.add(R.id.root_frame, new MainGoodFragment());
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.addToBackStack(null);
 
+/** * Fragment의 변경사항을 반영시킨다. */
+                        transaction.commit();
                     }
-                    setResult(200);
-                    finish();
-
-
                 }
             }
 

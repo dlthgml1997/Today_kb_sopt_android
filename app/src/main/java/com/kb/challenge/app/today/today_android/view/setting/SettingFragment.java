@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.login.FirstActivity;
+
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -52,16 +55,6 @@ public class SettingFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == 200) {
-            Log.v("yong", data.getStringExtra("result"));
-        }
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -75,13 +68,24 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mainsetting, container, false);
-
+        SharedPreference.Companion.getInstance().load(getActivity());
 
         tv_main_setting_logout = view.findViewById(R.id.tv_main_setting_logout);
         tv_main_setting_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                SharedPreference.Companion.getInstance().removeData("data");
+                SharedPreference.Companion.getInstance().removeData("user_id");
+                SharedPreference.Companion.getInstance().removeData("user_name");
+                SharedPreference.Companion.getInstance().removeData("goal_amount");
+                SharedPreference.Companion.getInstance().removeData("goal_title");
+                SharedPreference.Companion.getInstance().removeData("user_name");
+                SharedPreference.Companion.getInstance().removeData("feeling_score");
+
+                Intent intent = new Intent(getActivity(), FirstActivity.class);
+                startActivity(intent);
+
             }
         });
 
