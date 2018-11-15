@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
                         Log.v("token", loginResponse.getToken());
                         SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
-                        SharedPreference.Companion.getInstance().setPrefData("user_id", loginData.getId());
+                        SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("data")+ ""+"user_id", loginData.getId());
                         if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id")+""+"user_name").isEmpty()) {
                             Log.v("이름 없음 ->세팅 이동",SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));

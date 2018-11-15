@@ -18,7 +18,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-
         btn_act_welcome_next = (ImageView) findViewById(R.id.btn_act_welcome_next);
         btn_act_welcome_next.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -142,7 +142,8 @@
             android:letterSpacing="-0.01"
             android:text="감정박스"
             android:textColor="#aeaeae"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:id="@+id/textView" />
 
 
 
@@ -167,14 +168,13 @@
             android:gravity="center"
             android:text="-3"
             android:textColor="#ffffff" />
+
         <View
             android:id="@+id/community_status_msg_view"
             android:layout_width="215dp"
             android:layout_height="32dp"
-            android:layout_below="@id/community_follower_hello_txt"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginTop="21dp"
-            android:layout_toRightOf="@id/community_status_mark_view"
+            android:layout_alignEnd="@+id/textView"
+            android:layout_alignTop="@+id/community_status_mark_view"
             android:background="@drawable/custom_button_radius"
             android:backgroundTint="#f5f5f5" />
 

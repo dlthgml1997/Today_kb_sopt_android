@@ -202,7 +202,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     Log.v("message", response.body().getMessage().toString());
 
                     if (response.body().getMessage().toString().equals("update success")) {
-                        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
+                        if (!SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("data")+""+"user_id").isEmpty()) {
+                            Log.v("id not empty", "id not empty");
                             SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_amount", userSettingData.getGoal_money());
                             SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_title", userSettingData.getGoal());
 //                    SharedPreference.Companion.getInstance().setPrefData("push_time", userSettingData.getPush_time());
