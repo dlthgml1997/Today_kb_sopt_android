@@ -22,7 +22,6 @@ import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
-import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

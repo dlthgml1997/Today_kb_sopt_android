@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -43,11 +44,15 @@ public class RecordFeelingFragment extends Fragment {
     private RecordFeelingFragment.OnFragmentInteractionListener mListener;
 
     String[] feelingMsg = {"건드리면 물어요", "날 내버려둬요", "그저 그래요", "별 생각 없어요", "기분이 좋아요!", "기분이 좋아요!", "오늘 기분 최고!"};
-    private TextView record_feeling_variation_txt;
+    int[] emotionImg = {R.drawable.img_emotion_bad_3,R.drawable.img_emotion_bad_2,R.drawable.img_emotion_bad_1,R.drawable.img_emotion_soso_0,R.drawable.img_emotion_good_1,R.drawable.img_emotion_good_2,R.drawable.img_emotion_good_3};
+    int[] emotionTextImg = {R.drawable.img_text_bad_3,R.drawable.img_text_bad_2,R.drawable.img_text_bad_1,R.drawable.img_text_soso_0,R.drawable.img_text_good_1,R.drawable.img_text_good_2,R.drawable.img_text_good_3};
+    private ImageView img_emotion;
+    private ImageView img_text;
     private SeekBar seekBar;
     private Button record_save_btn;
     private static int progress_status = 3;
     private NetworkService networkService;
+    private ImageView hint_bad_3,hint_bad_2,hint_bad_1,hint_soso_1,hint_good_1,hint_good_2,hint_good_3;
 
     public RecordFeelingFragment() {
     }
@@ -80,10 +85,18 @@ public class RecordFeelingFragment extends Fragment {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(getActivity());
 
-        seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        seekBar = (SeekBar)view.findViewById(R.id.seekBar);
         record_save_btn = (Button) view.findViewById(R.id.record_save_btn);
-        record_feeling_variation_txt = (TextView) view.findViewById(R.id.record_feeling_variation_txt);
-
+        img_emotion = (ImageView)view. findViewById(R.id.img_emotion);
+        img_text= (ImageView) view.findViewById(R.id.img_text);
+        //힌트 바꾸기위해 힌트아이디 찾음
+        hint_bad_3=(ImageView) view.findViewById(R.id.hint_bad_3);
+        hint_bad_2=(ImageView) view.findViewById(R.id.hint_bad_2);
+        hint_bad_1=(ImageView) view.findViewById(R.id.hint_bad_1);
+        hint_soso_1=(ImageView) view.findViewById(R.id.hint_soso_1);
+        hint_good_1=(ImageView) view.findViewById(R.id.hint_good_1);
+        hint_good_2=(ImageView) view.findViewById(R.id.hint_good_2);
+        hint_good_3=(ImageView) view.findViewById(R.id.hint_good_3);
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         record_save_btn.setOnClickListener(new View.OnClickListener() {
@@ -96,22 +109,111 @@ public class RecordFeelingFragment extends Fragment {
         return view;
     }
 
+    public void setEmotionImage(int progress_status){
+        switch (progress_status) {
+            case 0:
+                img_emotion.setImageResource(emotionImg[0]);
+                img_text.setImageResource(emotionTextImg[0]);
+
+                hint_bad_3.setVisibility(View.VISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                img_emotion.setImageResource(emotionImg[1]);
+                img_text.setImageResource(emotionTextImg[1]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.VISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                img_emotion.setImageResource(emotionImg[2]);
+                img_text.setImageResource(emotionTextImg[2]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.VISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                img_emotion.setImageResource(emotionImg[3]);
+                img_text.setImageResource(emotionTextImg[3]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.VISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                img_emotion.setImageResource(emotionImg[4]);
+                img_text.setImageResource(emotionTextImg[4]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.VISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 5:
+                img_emotion.setImageResource(emotionImg[5]);
+                img_text.setImageResource(emotionTextImg[5]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.VISIBLE);
+                hint_good_3.setVisibility(View.INVISIBLE);
+                break;
+            case 6:
+                img_emotion.setImageResource(emotionImg[6]);
+                img_text.setImageResource(emotionTextImg[6]);
+
+                hint_bad_3.setVisibility(View.INVISIBLE);
+                hint_bad_2.setVisibility(View.INVISIBLE);
+                hint_bad_1.setVisibility(View.INVISIBLE);
+                hint_soso_1.setVisibility(View.INVISIBLE);
+                hint_good_1.setVisibility(View.INVISIBLE);
+                hint_good_2.setVisibility(View.INVISIBLE);
+                hint_good_3.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
     public void recordFeeling() {
         Log.v("feeling save process", "feeling save process!!!");
-        FeelingData feelingData = new FeelingData(0, null, record_feeling_variation_txt.getText().toString());
+        FeelingData feelingData = new FeelingData(0, null, feelingMsg[0]);
         if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
             switch (progress_status) {
                 case 0:
                 case 1:
                 case 2:
                     SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - progress_status - 3));
-                    new FeelingData(null, seekBar.getMax() - progress_status - 3, record_feeling_variation_txt.getText().toString());
+                    new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
                 case 3:
                 case 4:
                 case 5:
                 case 6:
                     SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - 3));
-                    new FeelingData(seekBar.getMax() - 3, null, record_feeling_variation_txt.getText().toString());
+                    new FeelingData(seekBar.getMax() - 3, null, feelingMsg[0]);
             }
         }
 
@@ -163,8 +265,8 @@ public class RecordFeelingFragment extends Fragment {
 
             if (seekBar.getId() == R.id.seekBar) {
                 progress_status = progress;
-                record_feeling_variation_txt.setText(feelingMsg[progress]);
-            }
+
+                setEmotionImage(progress);            }
 
         }
 

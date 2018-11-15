@@ -49,6 +49,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 viewHolder.community_btn_follow.setVisibility(View.GONE);
                 viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
 
@@ -71,9 +72,10 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView community_following_id;
-        public ImageView community_following_img;
-        public ImageView community_btn_follower;
         public ImageView community_btn_follow;
+        public ImageView community_btn_follower;
+        public ImageView community_following_img;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -81,7 +83,6 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
             community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
             community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
             community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
-
         }
 
 

@@ -25,10 +25,10 @@ public class CommunityRootFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();
-  /*
-   * When this container fragment is created, we fill it with our first
-   * "real" fragment
-   */
+        /*
+         * When this container fragment is created, we fill it with our first
+         * "real" fragment
+         */
         transaction.replace(R.id.root_frame2, CommunityFragment.newInstance());
 
         transaction.commit();

@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="목표금액 (최대 300,000)"
+                android:hint="목표금액 (최대 300,000원)"
                 android:inputType="number" />
 
         </LinearLayout>

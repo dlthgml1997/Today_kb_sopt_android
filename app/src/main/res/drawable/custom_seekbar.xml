@@ -6,22 +6,18 @@
     <item>
         <shape android:shape="rectangle" >
             <corners android:radius="10dp"/>
-
             <gradient
-                android:angle="270"
-                android:endColor="#acacac"
-                android:startColor="#acacac" />
+                android:endColor="#e0e0e0"
+                android:startColor="#e0e0e0" />
         </shape>
     </item>
     <item>
         <clip>
-            <shape android:shape="rectangle" >
+            <shape android:shape="rectangle"  >
                 <corners android:radius="10dp" />
-
                 <gradient
-                    android:angle="270"
-                    android:endColor="#f5ec07"
-                    android:startColor="#f5ec07" />
+                    android:endColor="#ffdb08"
+                    android:startColor="#ffdb08" />
             </shape>
         </clip>
     </item>

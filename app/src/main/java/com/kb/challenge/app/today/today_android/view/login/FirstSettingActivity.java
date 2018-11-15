@@ -219,6 +219,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
             }
 
+
             @Override
             public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
