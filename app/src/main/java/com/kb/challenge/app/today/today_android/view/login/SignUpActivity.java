@@ -89,6 +89,10 @@ public class SignUpActivity extends AppCompatActivity implements Init {
 //                        intent.putExtra("passwd", signupData.getPasswd());
 //                        setResult(RESULT_OK, intent);
 //                        finish();
+                        Intent intent = new Intent(SignUpActivity.this, FirstSettingActivity.class);
+                        intent.putExtra("id", signupData.getId());
+                        intent.putExtra("passwd", signupData.getPasswd());
+                        startActivity(intent);
 
                     }
                 }

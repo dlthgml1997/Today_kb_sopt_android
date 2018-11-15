@@ -3,12 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/dandelion">
+
+    <ImageView
+        android:layout_width="89dp"
+        android:layout_height="98dp"
+        android:src="@drawable/logo_splash"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"/>
 
     <TextView
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SPLASH SCREEN"/>
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:letterSpacing="-0.01"
+        android:text="티끌모으는 습관"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:layout_marginTop="314dp"/>
 
 </RelativeLayout>

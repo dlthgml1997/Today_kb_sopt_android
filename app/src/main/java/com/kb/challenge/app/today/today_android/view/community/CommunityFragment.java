@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -167,6 +168,10 @@ public class CommunityFragment extends Fragment implements Init {
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         ArrayList<FriendsInfoItem> friendsList = new ArrayList<>();
 

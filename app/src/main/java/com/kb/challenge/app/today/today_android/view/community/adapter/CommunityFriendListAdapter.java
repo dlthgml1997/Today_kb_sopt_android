@@ -2,6 +2,7 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.media.Image;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,7 +49,6 @@ public class CommunityFriendListAdapter extends RecyclerView.Adapter<CommunityFr
         viewHolder.community_user_img.setBackgroundResource(communityFriendsList.get(i).getProfile_img());
         viewHolder.community_user_id_txt.setText(communityFriendsList.get(i).getUser_id());
         viewHolder.community_status_txt.setText(communityFriendsList.get(i).getStatus_msg());
-        viewHolder.community_friends_status_mark_txt.setText(String.valueOf(communityFriendsList.get(i).getStatus_num()));
 
     }
 
@@ -61,16 +61,16 @@ public class CommunityFriendListAdapter extends RecyclerView.Adapter<CommunityFr
         public ImageView community_user_img;
         public TextView community_user_id_txt;
         public TextView community_status_txt;
-        public TextView community_friends_status_mark_txt;
+        public ImageView community_profile_btn_msg;
+        public ImageView community_emotion_mark;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            community_emotion_mark = (ImageView)itemView.findViewById(R.id.community_emotion_mark);
             community_user_img = (ImageView)itemView.findViewById(R.id.community_user_img);
             community_user_id_txt = (TextView) itemView.findViewById(R.id.community_user_id_txt);
             community_status_txt = (TextView) itemView.findViewById(R.id.community_status_txt);
-            community_friends_status_mark_txt = (TextView) itemView.findViewById(R.id.community_friends_status_mark_txt);
+            community_profile_btn_msg = (ImageView) itemView.findViewById(R.id.community_profile_btn_msg);
         }
-
-
     }
 }
