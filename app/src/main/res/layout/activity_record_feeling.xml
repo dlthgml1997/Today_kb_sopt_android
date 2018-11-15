@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/record_save_btn"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="56dp">
 
         <LinearLayout
             android:id="@+id/ll_emotion_hint"
