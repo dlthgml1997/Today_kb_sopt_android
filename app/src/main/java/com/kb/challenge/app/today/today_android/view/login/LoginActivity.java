@@ -74,14 +74,15 @@ public class LoginActivity extends AppCompatActivity implements Init {
             Log.v("토큰 존재", SharedPreference.Companion.getInstance().getPrefStringData("data"));
             Log.v("shinee _ user id ", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
 
-            if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name").isEmpty()) {
-                Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
-                startActivity(new Intent(this, WelcomeActivity.class));
-
-            } else {
-                Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name"));
-                startActivity(new Intent(this, MainActivity.class));
-            }
+//            if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name").isEmpty()) {
+//                Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
+//                startActivity(new Intent(this, WelcomeActivity.class));
+//
+//            } else {
+//                Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name"));
+//                startActivity(new Intent(this, MainActivity.class));
+//            }
+            startActivity(new Intent(this, MainActivity.class));
 
             finish();
 

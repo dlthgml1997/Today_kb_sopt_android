@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.FollowerData;
@@ -65,6 +66,9 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
         follow_id = viewHolder.community_following_id.getText().toString();
+        Glide.with(context)
+                .load(communityFollowingList.get(i).getProfile_img())
+                .into(viewHolder.community_following_img);
 
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override

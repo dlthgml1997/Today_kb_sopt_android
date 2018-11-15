@@ -12,6 +12,10 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:textViewStyle">@style/NotoSansTextViewStyle</item>
     </style>
+    <style name="Splash" parent="AppTheme">
+        <item name="android:statusBarColor">@color/dandelion</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="NotoSansTextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/notosans</item>
