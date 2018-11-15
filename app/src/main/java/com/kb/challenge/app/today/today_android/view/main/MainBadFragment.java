@@ -23,6 +23,7 @@ import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import java.util.ArrayList;
 
 import com.bumptech.glide.Glide;
+import com.kb.challenge.app.today.today_android.view.main.adapter.CheerupMsgListAdapter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,7 +96,7 @@ public class MainBadFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         main_bad_image = (ImageView) view.findViewById(R.id.main_bad_image);
-
+        getCheerupMsg();
 
         return view;
 
@@ -150,14 +151,17 @@ public class MainBadFragment extends Fragment {
                     Log.v("message", response.body().getMessage().toString());
 
                     ArrayList<CheerupMsgData> cheerupMsgDataList = response.body().getData();
-
-                    if (!response.body().getComfortImg().get(0).isEmpty()) {
+                    Log.v("cheerupmes",cheerupMsgDataList.size() + "");
+                    CheerupMsgListAdapter cheerupMsgListAdapter = new CheerupMsgListAdapter(getActivity(),cheerupMsgDataList);
+                    mRecyclerView.setAdapter(cheerupMsgListAdapter);
+                    if (!response.body().getComfortImg().get(0).getComfort_img().isEmpty()) {
                         Glide.with(getActivity())
-                                .load(response.body().getComfortImg().get(0))
+                                .load(response.body().getComfortImg().get(0).getComfort_img())
                                 .into(main_bad_image);
                     }
 
                 }
+
             }
 
             @Override

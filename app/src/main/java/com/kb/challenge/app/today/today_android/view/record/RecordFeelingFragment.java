@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.record;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,8 @@ import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.R;
@@ -81,7 +84,7 @@ public class RecordFeelingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_record_feeling, container, false);
-
+        ((MainActivity)getActivity()).inVisibleTabLayout();
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(getActivity());
 
@@ -219,34 +222,39 @@ public class RecordFeelingFragment extends Fragment {
         }
 
         //감정기록하기 (token 값, feelingdata)
-        Call<BaseModel> requestDetail = networkService.recordFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), feelingData);
+        final Call<BaseModel> requestDetail = networkService.recordFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), feelingData);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
                 if (response.isSuccessful()) {
                     Log.v("feeling save process", "feeling save process!!!");
                     Log.v("message", response.body().getMessage().toString());
-
-                    Log.v("feeling record", progress_status  + " ");
-                    if (progress_status < 3) {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    if (response.body().getMessage().toString().equals("success")) {
+                        Log.v("feeling record", progress_status + " ");
+                        if (progress_status < 3) {
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                        transaction.replace(R.id.root_frame, new MainBadFragment());
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.addToBackStack(null);
-
+                            transaction.replace(R.id.root_frame, new MainBadFragment());
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            transaction.addToBackStack(null);
+                            ((MainActivity) getActivity()).visibleTabLayout();
 /** * Fragment의 변경사항을 반영시킨다. */
-                        transaction.commit();
+                            transaction.commit();
 
-                    } else {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        } else {
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                        transaction.replace(R.id.root_frame, new MainGoodFragment());
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.addToBackStack(null);
-
+                            transaction.replace(R.id.root_frame, new MainGoodFragment());
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            transaction.addToBackStack(null);
 /** * Fragment의 변경사항을 반영시킨다. */
-                        transaction.commit();
+                            ((MainActivity) getActivity()).visibleTabLayout();
+                            transaction.commit();
+                        }
+                    }
+                    else if (response.body().getMessage().toString().equals("access denied")){
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
                     }
                 }
             }

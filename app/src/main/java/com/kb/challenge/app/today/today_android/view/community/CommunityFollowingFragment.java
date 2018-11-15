@@ -15,16 +15,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.community.FollowListResponse;
+import com.kb.challenge.app.today.today_android.model.community.FollowerData;
+import com.kb.challenge.app.today.today_android.model.community.FollowingData;
 import com.kb.challenge.app.today.today_android.model.community.FollowingItem;
+import com.kb.challenge.app.today.today_android.model.community.FollowingListResponse;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.Init;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowerListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowingListAdapter;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 9..
  */
 
-public class CommunityFollowingFragment extends Fragment {
+public class CommunityFollowingFragment extends Fragment implements Init {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,6 +51,16 @@ public class CommunityFollowingFragment extends Fragment {
     private static final String TAG = "CommunityFollowingFragment";
 
     private CommunityFollowingFragment.OnFragmentInteractionListener mListener;
+
+    private NetworkService networkService;
+
+    private RecyclerView mRecyclerView;
+
+    @Override
+    public void init() {
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+    }
 
     public CommunityFollowingFragment() {
         // Required empty public constructor
@@ -84,7 +108,9 @@ public class CommunityFollowingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_community_following, container, false);
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_following_recycler_view);
+        init();
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.community_following_recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -97,14 +123,7 @@ public class CommunityFollowingFragment extends Fragment {
             }
         });
 
-        ArrayList<FollowingItem> followingList = new ArrayList<>();
-
-        followingList.add(new FollowingItem("오늘은"));
-        followingList.add(new FollowingItem("오늘은"));
-
-        CommunityFollowingListAdapter communityFollowingListAdapter = new CommunityFollowingListAdapter(getActivity(),followingList);
-        mRecyclerView.setAdapter(communityFollowingListAdapter);
-
+        getFollowerList();
         return view;
 
     }
@@ -145,5 +164,37 @@ public class CommunityFollowingFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void getFollowerList() {
+        Log.v("getFollowerList process", "getFollowerList process!!!");
+        Call<FollowingListResponse> requestDetail = networkService.getFollowingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<FollowingListResponse>() {
+            @Override
+            public void onResponse(Call<FollowingListResponse> call, Response<FollowingListResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getFollowerList", "getFollowerList process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    if (response.body().getMessage().toString().equals("success")) {
+                        ArrayList<FollowingData> followingList = response.body().getData();
+                        Log.v("followerDataList", followingList.toString());
+
+                        CommunityFollowingListAdapter communityFollowingListAdapter = new CommunityFollowingListAdapter(getActivity(),followingList);
+                        mRecyclerView.setAdapter(communityFollowingListAdapter);
+
+                    }
+                    else if (response.body().getMessage().toString().equals("access denied")) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FollowingListResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
     }
 }

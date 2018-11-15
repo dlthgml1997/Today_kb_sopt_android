@@ -56,7 +56,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
     private UserSettingData userSettingData;
     private Button btn_act_firstsetting_next_active;
     private Button btn_act_firstsetting_next;
-
+    private char trim_string = '\"';
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -76,7 +76,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
     @Override
     public void onTitleSet(String title) {
-        this.title = title;
+        this.title = title.replaceAll("\"", "");
     }
 
     @Override

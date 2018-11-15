@@ -84,11 +84,12 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                     Log.v("signup process2", "signup process2!!!");
                     Log.v("message", response.body().getMessage().toString());
                     if (response.body().getMessage().toString().equals("success")) {
-                        Intent intent = new Intent();
-                        intent.putExtra("id", signupData.getId());
-                        intent.putExtra("passwd", signupData.getPasswd());
-                        setResult(RESULT_OK, intent);
-                        finish();
+//                        Intent intent = new Intent();
+//                        intent.putExtra("id", signupData.getId());
+//                        intent.putExtra("passwd", signupData.getPasswd());
+//                        setResult(RESULT_OK, intent);
+//                        finish();
+
                     }
                 }
             }
