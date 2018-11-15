@@ -34,6 +34,7 @@ public class AccountCreateFragment extends Fragment {
                 account_create_view.setImageResource(0);
 
                 pig.bringToFront();
+                ((FirstSettingActivity)getActivity()).changeBtnAct();
             }
         });
         return v;
