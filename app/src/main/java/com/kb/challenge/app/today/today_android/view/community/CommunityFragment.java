@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,17 +27,12 @@ import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse;
 import com.kb.challenge.app.today.today_android.model.community.FriendsInfoItem;
+
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
-import com.kb.challenge.app.today.today_android.view.main.MainFragment;
-import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
-
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -162,7 +156,12 @@ public class CommunityFragment extends Fragment implements Init {
         community_btn_search_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.root_frame2, new CommunitySearchListFragment());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
 
+                transaction.commit();
             }
         });
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
@@ -247,9 +246,9 @@ public class CommunityFragment extends Fragment implements Init {
 
                         community_user_name.setText(commuProfileDataList.get(0).getName());
 
-                        community_follower_num_txt.setText(commuProfileDataList.get(0).getCountFollower());
+                        community_follower_num_txt.setText(String.valueOf(commuProfileDataList.get(0).getCountFollower()));
 
-                        community_following_num_txt.setText(commuProfileDataList.get(0).getCountFollowing());
+                        community_following_num_txt.setText(String.valueOf(commuProfileDataList.get(0).getCountFollowing()));
 
                     }
 
