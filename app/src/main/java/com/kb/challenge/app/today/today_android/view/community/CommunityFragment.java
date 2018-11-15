@@ -27,21 +27,33 @@ import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse;
-import com.kb.challenge.app.today.today_android.model.community.FriendsInfoItem;
 
+import com.kb.challenge.app.today.today_android.model.community.FriendsProfileData;
+import com.kb.challenge.app.today.today_android.model.community.FriendsProfileResponse;
+import com.kb.challenge.app.today.today_android.model.record.FeelingData;
+import com.kb.challenge.app.today.today_android.model.record.FeelingDataResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
+import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
+import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
+
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter.emotion_mark_resource;
+import static com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment.feelingMsg;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -66,6 +78,10 @@ public class CommunityFragment extends Fragment implements Init {
     private TextView community_user_name;
     private TextView community_id;
     private ImageView community_btn_emotion_box;
+    private RecyclerView mRecyclerView;
+    private ImageView community_my_profile_emotion_mark;
+    private String getTime;
+    private TextView community_my_profil_status_txt;
 
     @Override
     public void init() {
@@ -100,8 +116,19 @@ public class CommunityFragment extends Fragment implements Init {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_community, container, false);
         init();
+
+        //통신할 때 보낼 오늘의 날짜
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        getTime = sdf.format(date);
+
+
         //나의 프로필
         community_my_profil_img = (ImageView)view.findViewById(R.id.community_my_profil_img);
+
+        //나의 상태 메시지
+        community_my_profil_status_txt = (TextView)view.findViewById(R.id.community_my_profil_status_txt);
 
         //이미지 크롭
         community_my_profil_img.setBackground(new ShapeDrawable(new OvalShape()));
@@ -119,6 +146,10 @@ public class CommunityFragment extends Fragment implements Init {
         //프로필 id
         community_id = (TextView)view.findViewById(R.id.community_id);
 
+        //사용자의 감정 이미지 아이콘
+        community_my_profile_emotion_mark = (ImageView)view.findViewById(R.id.community_my_profile_emotion_mark);
+
+        getTodayFeelingData();
         //프로필 정보 가져오는 통신 메소드 호출
         getProfileData();
 
@@ -165,25 +196,15 @@ public class CommunityFragment extends Fragment implements Init {
                 transaction.commit();
             }
         });
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        ArrayList<FriendsInfoItem> friendsList = new ArrayList<>();
-
-        friendsList.add (new FriendsInfoItem(R.drawable.person, "오늘은", "기분최고!!", 3));
-        friendsList.add (new FriendsInfoItem(R.drawable.person, "오늘은", "기분최고!!", 3));
-        friendsList.add (new FriendsInfoItem(R.drawable.person, "오늘은", "기분최고!!", 3));
-        friendsList.add (new FriendsInfoItem(R.drawable.person, "오늘은", "기분최고!!", 3));
-        friendsList.add (new FriendsInfoItem(R.drawable.person, "오늘은", "기분최고!!", 3));
-
-        CommunityFriendListAdapter communityFriendListAdapter = new CommunityFriendListAdapter(getActivity(),friendsList);
-        Log.v("friendListSIze", friendsList.size() + " ");
-        mRecyclerView.setAdapter(communityFriendListAdapter);
+        getFriendsList();
 
         return view;
 
@@ -267,5 +288,88 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
     }
+    public void getTodayFeelingData() {
+        Log.v("getTodayFeelingData", "getTodayFeelingData process!!!");
+        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), "2018-11-15");
+        requestDetail.enqueue(new Callback<FeelingDataResponse>() {
+            @Override
+            public void onResponse(Call<FeelingDataResponse> call, Response<FeelingDataResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getTodayFeelingData", "getProfileData process2!!!");
+                    Log.v("feeling message", response.body().getMessage().toString());
 
+                    if(response.body().getMessage().toString().equals("success")) {
+                        ArrayList<FeelingData> feelingDataList = response.body().getData();
+                        Log.v("feeling data", feelingDataList.toString());
+                        if (feelingDataList.get(0).getBad()!= null) {
+                            Log.v("feeling data bad",emotion_mark_resource.length-feelingDataList.get(0).getBad()-3 +"");
+                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[emotion_mark_resource.length-feelingDataList.get(0).getBad()-3]);
+                            community_my_profil_status_txt.setText(feelingMsg[feelingMsg.length-feelingDataList.get(0).getBad()-3]);
+                        }
+                        else if (feelingDataList.get(0).getGood()!= null) {
+                            Log.v("feeling data good",feelingDataList.get(0).getGood()+ 3 +"");
+                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[feelingDataList.get(0).getGood()+ 3]);
+                            community_my_profil_status_txt.setText(feelingMsg[feelingDataList.get(0).getGood()+ 3]);
+                        }
+
+                    }
+                    else if (response.body().getMessage().toString().equals("get today's feeling fail")) {
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.root_frame2, new RecordFeelingFragment());
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.addToBackStack(null);
+
+                        transaction.commit();
+                    }
+
+                    else if (response.body().getMessage().toString().equals("access denied")) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FeelingDataResponse> call, Throwable t) {
+                Log.v("profile err", "profile err");
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+    public void getFriendsList() {
+        Log.v("getFriendsList process", "getFriendsList process!!!");
+        Log.v("getdate", getTime);
+        Call<FriendsProfileResponse> requestDetail = networkService.getFollowingsFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
+        requestDetail.enqueue(new Callback<FriendsProfileResponse>() {
+            @Override
+            public void onResponse(Call<FriendsProfileResponse> call, Response<FriendsProfileResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getFriendsList", "getFriendsList process2!!!");
+                    Log.v("friends list message", response.body().getMessage().toString());
+
+                    if (response.body().getMessage().toString().equals("success")) {
+                        ArrayList<FriendsProfileData> friendsProfileDataList = response.body().getData();
+                        Log.v("friendsProfileDataList", friendsProfileDataList.toString());
+
+                        CommunityFriendListAdapter communityFriendListAdapter = new CommunityFriendListAdapter(getActivity(),friendsProfileDataList);
+
+                        mRecyclerView.setAdapter(communityFriendListAdapter);
+
+
+                    }
+                    else if (response.body().getMessage().toString().equals("access denied")) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FriendsProfileResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
 }

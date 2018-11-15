@@ -5,18 +5,18 @@ import com.kb.challenge.app.today.today_android.model.cheerup.CheerupMsgResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse
-import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse
-import com.kb.challenge.app.today.today_android.model.community.FollowListResponse
-import com.kb.challenge.app.today.today_android.model.community.FollowingListResponse
+import com.kb.challenge.app.today.today_android.model.community.*
 import com.kb.challenge.app.today.today_android.model.login.LoginData
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse
 import com.kb.challenge.app.today.today_android.model.login.SignupData
 import com.kb.challenge.app.today.today_android.model.record.FeelingData
+import com.kb.challenge.app.today.today_android.model.record.FeelingDataResponse
 import com.kb.challenge.app.today.today_android.model.setting.UserSettingData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.sql.Date
 import java.sql.Time
 
 interface NetworkService {
@@ -110,4 +110,26 @@ interface NetworkService {
             @Header("authorization") token : String
     ):Call<CommuProfileResponse>
 
+    @DELETE("follow/{id}")
+    fun cancelFollow(
+            @Header("authorization") token : String,
+            @Path("id") id : String
+    ) :Call<BaseModel>
+
+    @GET("follow/{date}")
+    fun getFollowingsFeeling(
+            @Header("authorization") token : String,
+            @Path("date") today : String
+    ) :Call<FriendsProfileResponse>
+
+    @GET("today/{date}")
+    fun getTodayFeeling(
+            @Header("authorization") token : String,
+            @Path("date") today : String
+    ):Call<FeelingDataResponse>
+
+    @GET("search")
+    fun searchUser(
+            @Query("id") id : String
+    ) :Call<SearchUserResponse>
 }
