@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kb.challenge.app.today.today_android">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".network.ApplicationController"
         android:allowBackup="true"
@@ -10,29 +15,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.kb.challenge.app.today.today_android"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
         <activity android:name=".view.main.MainActivity">
         </activity>
-        <activity android:name=".view.login.FirstActivity">
+        <activity android:name=".view.login.FirstActivity"></activity>
+        <activity android:name=".view.login.LoginActivity"></activity>
+        <activity android:name=".view.login.WelcomeActivity"></activity>
+        <activity android:name=".view.login.SignUpActivity">
+
         </activity>
-        <activity android:name=".view.record.RecordFeelingActivity">
-        </activity>
-        <activity android:name=".view.login.LoginActivity">
+        <activity android:name=".view.login.FirstSettingActivity"></activity>
+        <activity
+            android:name=".view.login.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.login.WelcomeActivity">
-    </activity>
-        <activity android:name=".view.login.SignUpActivity">
-        </activity>
-        <activity android:name=".view.login.FirstSettingActivity">
-    </activity>
-        <activity android:name=".view.login.SplashActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            />
     </application>
+
 
 </manifest>

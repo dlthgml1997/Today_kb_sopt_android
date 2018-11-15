@@ -1,7 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,15 +70,6 @@ public class MainBadFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
-        }
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,11 +149,11 @@ public class MainBadFragment extends Fragment {
                     Log.v("getCheerupMsg", "getCheerupMsg process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    ArrayList<CheerupMsgData> cheerupMsgDataList = new ArrayList<>();
+                    ArrayList<CheerupMsgData> cheerupMsgDataList = response.body().getData();
 
-                    if (!cheerupMsgDataList.get(0).getComfort_img().isEmpty()) {
+                    if (!response.body().getComfortImg().get(0).isEmpty()) {
                         Glide.with(getActivity())
-                                .load(cheerupMsgDataList.get(0).getComfort_img())
+                                .load(response.body().getComfortImg().get(0))
                                 .into(main_bad_image);
                     }
 

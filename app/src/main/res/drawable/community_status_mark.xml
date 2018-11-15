@@ -2,11 +2,11 @@
     <item>
         <shape android:shape="oval">
             <solid
-                android:color="#0006a8"/>
+                android:color="@color/dandelion"/>
 
             <size
-                android:width="21dp"
-                android:height="21dp"/>
+                android:width="32dp"
+                android:height="32dp"/>
                 />
         </shape>
     </item>

@@ -28,6 +28,7 @@ public class AccountConnectFragment extends Fragment {
                 public void onClick(View v) {
                     rl_account_connect.setBackgroundResource(R.drawable.img_linkaccount_active);
                     account_connect_view.setImageResource(0);
+                    ((FirstSettingActivity)getActivity()).changeBtnAct();
                 }
             });
             return v;

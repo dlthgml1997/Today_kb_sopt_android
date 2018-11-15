@@ -22,6 +22,7 @@ import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,12 +41,25 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
     @Override
     public void init() {
-        login_edit_id = (EditText) findViewById(R.id.login_edit_id);
-        login_edit_passwd = (EditText) findViewById(R.id.login_edit_passwd);
-        login_text_go_to_signup = (TextView) findViewById(R.id.login_text_go_to_signup);
+        login_edit_id = (EditText)findViewById(R.id.login_edit_id);
+        login_edit_passwd = (EditText)findViewById(R.id.login_edit_passwd);
+        login_text_go_to_signup =(TextView) findViewById(R.id.login_text_go_to_signup);
+
         login_button_SignIn = (Button) findViewById(R.id.login_button_SignIn);
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK){
+                //회원가입하고 돌아옴. id, passwd 자동 입력
+                login_edit_id.setText(data.getStringExtra("id"));
+                login_edit_passwd.setText(data.getStringExtra("passwd"));
+            }
+        }
     }
 
     @Override
@@ -53,16 +67,27 @@ public class LoginActivity extends AppCompatActivity implements Init {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+
         if (SharedPreference.Companion.getInstance().getPrefStringData("data").isEmpty()) {
-            Log.v("토큰 없음 ->login 이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 없음 ->login 이동","토큰 없음" );
 
         } else {
-            Log.v("토큰 존재 ->main이동", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("토큰 존재", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+            Log.v("shinee _ user id ", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
 
-            startActivity(new Intent(this, MainActivity.class));
+            if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name").isEmpty()) {
+                Log.v("이름 없음 ->세팅 이동", SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
+                startActivity(new Intent(this, WelcomeActivity.class));
+
+            } else {
+                Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name"));
+                startActivity(new Intent(this, MainActivity.class));
+            }
+
             finish();
 
         }
+
         login_button_SignIn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -79,12 +104,18 @@ public class LoginActivity extends AppCompatActivity implements Init {
                 startActivity(intent);
             }
         });
+        login_text_go_to_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(LoginActivity.this, SignUpActivity.class), 1);
+            }
+        });
 
     }
 
     public void signIn() {
         Log.v("login process", "login process!!!");
-        LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
+        final LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
         Call<LoginResponse> requestDetail = networkService.login(loginData);
         requestDetail.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -92,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
                 if (response.isSuccessful()) {
                     Log.v("login process2", "login process2!!!");
                     Log.v("message", response.body().getMessage().toString());
+
                     if (response.body().getMessage().equals("wrong password")) { //패스워드 에러
                         LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
                         ll_act_login_password_error.setVisibility(View.VISIBLE);
@@ -106,9 +138,15 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
                         Log.v("token", loginResponse.getToken());
                         SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
+                        SharedPreference.Companion.getInstance().setPrefData("user_id", loginData.getId());
+                        if (SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id")+""+"user_name").isEmpty()) {
+                            Log.v("이름 없음 ->세팅 이동",SharedPreference.Companion.getInstance().getPrefStringData("user_id"));
+                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        } else {
+                            Log.v("이름 존재 ->감정기록 이동", SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("user_id")+""+"user_name"));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
                     }
 
                 } else {
@@ -118,6 +156,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
                     LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
                     ll_act_login_password_error.setVisibility(View.VISIBLE);
+
                 }
             }
 

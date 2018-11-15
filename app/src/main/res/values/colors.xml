@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="very_light_pink">#bdbdbd</color>
+    <color name="colorBackground">#FFFFFF</color>
     <color name="dandelion">#ffdb08</color>
     <color name="empty">#c9c9c9</color>
 </resources>

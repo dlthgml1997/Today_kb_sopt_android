@@ -39,7 +39,6 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        startActivity(new Intent(this, SplashActivity.class));
         btn_login = (Button) findViewById(R.id.btn_login);
 
         btn_login.setOnClickListener(new View.OnClickListener() {

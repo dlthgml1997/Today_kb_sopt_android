@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.MainActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".view.main.MainActivity">
 
-       <com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+    <com.kb.challenge.app.today.today_android.view.main.CustomViewPager
         android:id="@+id/view_pager"
-        android:layout_above="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabLayout" />
 
     <android.support.design.widget.TabLayout
-        android:background="#FFFFFF"
-        android:layout_alignParentBottom="true"
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:backgroundTint="#ffde5f"
-        app:tabIndicatorColor="@android:color/transparent" >
-    </android.support.design.widget.TabLayout>
-
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:backgroundTint="#ffdb08"
+        app:tabIndicatorColor="@android:color/transparent"></android.support.design.widget.TabLayout>
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/fragment_tab"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+    </FrameLayout>
 </RelativeLayout>
