@@ -46,16 +46,16 @@ public class RecordFeelingFragment extends Fragment {
 
     private RecordFeelingFragment.OnFragmentInteractionListener mListener;
 
-    String[] feelingMsg = {"건드리면 물어요", "날 내버려둬요", "그저 그래요", "별 생각 없어요", "기분이 좋아요!", "기분이 좋아요!", "오늘 기분 최고!"};
-    int[] emotionImg = {R.drawable.img_emotion_bad_3,R.drawable.img_emotion_bad_2,R.drawable.img_emotion_bad_1,R.drawable.img_emotion_soso_0,R.drawable.img_emotion_good_1,R.drawable.img_emotion_good_2,R.drawable.img_emotion_good_3};
-    int[] emotionTextImg = {R.drawable.img_text_bad_3,R.drawable.img_text_bad_2,R.drawable.img_text_bad_1,R.drawable.img_text_soso_0,R.drawable.img_text_good_1,R.drawable.img_text_good_2,R.drawable.img_text_good_3};
+    public final static String[] feelingMsg = {"건드리면 물어요", "날 내버려둬요", "그저 그래요", "별 생각 없어요", "나쁘지 않아요", "기분이 좋아요", "오늘 기분 최고!"};
+    int[] emotionImg = {R.drawable.img_emotion_bad_3, R.drawable.img_emotion_bad_2, R.drawable.img_emotion_bad_1, R.drawable.img_emotion_soso_0, R.drawable.img_emotion_good_1, R.drawable.img_emotion_good_2, R.drawable.img_emotion_good_3};
+    int[] emotionTextImg = {R.drawable.img_text_bad_3, R.drawable.img_text_bad_2, R.drawable.img_text_bad_1, R.drawable.img_text_soso_0, R.drawable.img_text_good_1, R.drawable.img_text_good_2, R.drawable.img_text_good_3};
     private ImageView img_emotion;
     private ImageView img_text;
     private SeekBar seekBar;
     private Button record_save_btn;
     private static int progress_status = 3;
     private NetworkService networkService;
-    private ImageView hint_bad_3,hint_bad_2,hint_bad_1,hint_soso_1,hint_good_1,hint_good_2,hint_good_3;
+    private ImageView hint_bad_3, hint_bad_2, hint_bad_1, hint_soso_1, hint_good_1, hint_good_2, hint_good_3;
 
     public RecordFeelingFragment() {
     }
@@ -84,22 +84,22 @@ public class RecordFeelingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_record_feeling, container, false);
-        ((MainActivity)getActivity()).inVisibleTabLayout();
+        ((MainActivity) getActivity()).inVisibleTabLayout();
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(getActivity());
 
-        seekBar = (SeekBar)view.findViewById(R.id.seekBar);
+        seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         record_save_btn = (Button) view.findViewById(R.id.record_save_btn);
-        img_emotion = (ImageView)view. findViewById(R.id.img_emotion);
-        img_text= (ImageView) view.findViewById(R.id.img_text);
+        img_emotion = (ImageView) view.findViewById(R.id.img_emotion);
+        img_text = (ImageView) view.findViewById(R.id.img_text);
         //힌트 바꾸기위해 힌트아이디 찾음
-        hint_bad_3=(ImageView) view.findViewById(R.id.hint_bad_3);
-        hint_bad_2=(ImageView) view.findViewById(R.id.hint_bad_2);
-        hint_bad_1=(ImageView) view.findViewById(R.id.hint_bad_1);
-        hint_soso_1=(ImageView) view.findViewById(R.id.hint_soso_1);
-        hint_good_1=(ImageView) view.findViewById(R.id.hint_good_1);
-        hint_good_2=(ImageView) view.findViewById(R.id.hint_good_2);
-        hint_good_3=(ImageView) view.findViewById(R.id.hint_good_3);
+        hint_bad_3 = (ImageView) view.findViewById(R.id.hint_bad_3);
+        hint_bad_2 = (ImageView) view.findViewById(R.id.hint_bad_2);
+        hint_bad_1 = (ImageView) view.findViewById(R.id.hint_bad_1);
+        hint_soso_1 = (ImageView) view.findViewById(R.id.hint_soso_1);
+        hint_good_1 = (ImageView) view.findViewById(R.id.hint_good_1);
+        hint_good_2 = (ImageView) view.findViewById(R.id.hint_good_2);
+        hint_good_3 = (ImageView) view.findViewById(R.id.hint_good_3);
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         record_save_btn.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +113,7 @@ public class RecordFeelingFragment extends Fragment {
         return view;
     }
 
-    public void setEmotionImage(int progress_status){
+    public void setEmotionImage(int progress_status) {
         switch (progress_status) {
             case 0:
                 img_emotion.setImageResource(emotionImg[0]);
@@ -251,8 +251,7 @@ public class RecordFeelingFragment extends Fragment {
                             ((MainActivity) getActivity()).visibleTabLayout();
                             transaction.commit();
                         }
-                    }
-                    else if (response.body().getMessage().toString().equals("access denied")){
+                    } else if (response.body().getMessage().toString().equals("access denied")) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }
@@ -275,7 +274,8 @@ public class RecordFeelingFragment extends Fragment {
             if (seekBar.getId() == R.id.seekBar) {
                 progress_status = progress;
 
-                setEmotionImage(progress);            }
+                setEmotionImage(progress);
+            }
 
         }
 

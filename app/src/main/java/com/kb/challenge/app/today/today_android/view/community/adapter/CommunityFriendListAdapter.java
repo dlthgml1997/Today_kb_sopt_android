@@ -2,7 +2,6 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.media.Image;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.model.coin.CoinSavingItem;
-import com.kb.challenge.app.today.today_android.model.community.FriendsInfoItem;
-import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
+import com.kb.challenge.app.today.today_android.model.community.FriendsProfileData;
 
 import java.util.ArrayList;
 
@@ -26,12 +24,12 @@ import java.util.ArrayList;
 public class CommunityFriendListAdapter extends RecyclerView.Adapter<CommunityFriendListAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<FriendsInfoItem> communityFriendsList;
-
-    public CommunityFriendListAdapter(Context context, ArrayList<FriendsInfoItem> communityFriendsList) {
+    ArrayList<FriendsProfileData> friendsProfileDataList;
+    public final static int[] emotion_mark_resource = {R.drawable.img_sns_emotion_bad_3_20_px,R.drawable.img_sns_emotion_bad_2_20_px,R.drawable.img_sns_emotion_bad_1_20_px,R.drawable.img_sns_emotion_soso_0_20_px,R.drawable.img_sns_emotion_good_1_20_px,R.drawable.img_sns_emotion_good_2_20_px,R.drawable.img_sns_emotion_good_3_20_px };
+    public CommunityFriendListAdapter(Context context, ArrayList<FriendsProfileData> friendsProfileDataList) {
         super();
         this.context = context;
-        this.communityFriendsList = communityFriendsList;
+        this.friendsProfileDataList = friendsProfileDataList;
     }
 
     @Override
@@ -45,16 +43,22 @@ public class CommunityFriendListAdapter extends RecyclerView.Adapter<CommunityFr
     @Override
     public void onBindViewHolder(CommunityFriendListAdapter.ViewHolder viewHolder, int i) {
         final int pos = i;
-        Log.v("communityFriendsList", communityFriendsList.size() + " ");
-        viewHolder.community_user_img.setBackgroundResource(communityFriendsList.get(i).getProfile_img());
-        viewHolder.community_user_id_txt.setText(communityFriendsList.get(i).getUser_id());
-        viewHolder.community_status_txt.setText(communityFriendsList.get(i).getStatus_msg());
+        Log.v("communityFriendsList", friendsProfileDataList.size() + " ");
+        Glide.with(context)
+                .load(friendsProfileDataList.get(i).getProfile_img())
+                .into(viewHolder.community_user_img);
+        viewHolder.community_user_id_txt.setText(friendsProfileDataList.get(i).getName());
+        viewHolder.community_status_txt.setText(friendsProfileDataList.get(i).getComment());
+        if (friendsProfileDataList.get(i).getBad()!= null)
+            viewHolder.community_emotion_mark.setBackgroundResource(emotion_mark_resource[emotion_mark_resource.length-friendsProfileDataList.get(i).getBad()-3]);
+        else if (friendsProfileDataList.get(i).getGood()!= null)
+            viewHolder.community_emotion_mark.setBackgroundResource(emotion_mark_resource[friendsProfileDataList.get(i).getGood()+3]);
 
     }
 
     @Override
     public int getItemCount() {
-        return communityFriendsList.size();
+        return friendsProfileDataList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

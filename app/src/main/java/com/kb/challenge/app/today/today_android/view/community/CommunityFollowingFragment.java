@@ -87,7 +87,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == 200){
-            Log.v("yong",data.getStringExtra("result"));
+
         }
 
     }
@@ -123,7 +123,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
             }
         });
 
-        getFollowerList();
+        getFollowingList();
         return view;
 
     }
@@ -165,7 +165,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    public void getFollowerList() {
+    public void getFollowingList() {
         Log.v("getFollowerList process", "getFollowerList process!!!");
         Call<FollowingListResponse> requestDetail = networkService.getFollowingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
         requestDetail.enqueue(new Callback<FollowingListResponse>() {

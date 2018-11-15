@@ -3,6 +3,8 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,10 +71,16 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
         follow_id = viewHolder.community_following_id.getText().toString();
+        Log.i("id2323", follow_id);
+
         Glide.with(context)
                 .load(communityFollowingList.get(i).getProfile_img())
                 .into(viewHolder.community_following_img);
 
+        viewHolder.community_following_img.setBackground(new ShapeDrawable(new OvalShape()));
+        if(Build.VERSION.SDK_INT >= 21) {
+            viewHolder.community_following_img.setClipToOutline(true);
+        }
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,8 +95,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
             public void onClick(View view) {
                 viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
                 viewHolder.community_btn_follower.setVisibility(View.GONE);
-                //팔로우하기
-                follow();
+                cancelFollow();
             }
         });
 
@@ -114,9 +121,10 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
             community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
         }
     }
-    public void follow() {
-        Log.v("follow process", "follow process!!!");
-        Call<BaseModel> requestDetail = networkService.followUser(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
+    public void cancelFollow() {
+        Log.v("cancelFollow process", "cancelFollow process!!!");
+        Log.v("follow id", follow_id);
+        Call<BaseModel> requestDetail = networkService.cancelFollow(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {

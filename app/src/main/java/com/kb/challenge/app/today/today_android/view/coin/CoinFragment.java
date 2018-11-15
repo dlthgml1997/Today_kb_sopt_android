@@ -174,6 +174,7 @@ public class CoinFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+
         }
     }
 

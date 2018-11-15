@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
@@ -63,18 +64,36 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
     @Override
     public void onBindViewHolder(final CommunityFollowerListAdapter.ViewHolder viewHolder, int i) {
         final int pos = i;
-        Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
-        follow_id = viewHolder.community_following_id.getText().toString();
+
+        follow_id = communityFollowingList.get(i).getId();
+        Log.i("id2323", follow_id);
+
         Glide.with(context)
                 .load(communityFollowingList.get(i).getProfile_img())
                 .into(viewHolder.community_following_img);
 
+        //맞팔일 경우!
+        if (communityFollowingList.get(i).getFollowing()) {
+            //팔로우 버튼 비활성화
+            viewHolder.community_btn_follow.setVisibility(View.GONE);
+            //팔로잉 버튼 활성화
+            viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
+            viewHolder.community_btn_follower.setVisibility(View.GONE);
+        }
+
+        //팔로우 버튼 클릭 -> follow 호출
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewHolder.community_btn_follow.setVisibility(View.GONE);
                 viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
+                //팔로우하기
+                follow();
 
             }
         });
@@ -83,8 +102,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
             public void onClick(View view) {
                 viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
                 viewHolder.community_btn_follower.setVisibility(View.GONE);
-                //팔로우하기
-                follow();
+                cancelFollow();
             }
         });
 
@@ -112,13 +130,14 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
     }
     public void follow() {
         Log.v("follow process", "follow process!!!");
+        Log.i("맞팔할 id", follow_id);
         Call<BaseModel> requestDetail = networkService.followUser(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
                 if (response.isSuccessful()) {
                     Log.v("follow", "follow process2!!!");
-                    Log.v("message", response.body().getMessage().toString());
+                    Log.i("follow message", response.body().getMessage().toString());
 
                     if (response.body().getMessage().toString().equals("access denied")){
                         Intent intent = new Intent(context, LoginActivity.class);
@@ -133,5 +152,32 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
             }
         });
     }
+
+    public void cancelFollow() {
+        Log.v("cancelFollow process", "cancelFollow process!!!");
+        Log.v("follow id", follow_id);
+        Call<BaseModel> requestDetail = networkService.cancelFollow(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("follow", "follow process2!!!");
+                    Log.v("cancel message", response.body().getMessage().toString());
+
+                    if (response.body().getMessage().toString().equals("access denied")){
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
+
 
 }
