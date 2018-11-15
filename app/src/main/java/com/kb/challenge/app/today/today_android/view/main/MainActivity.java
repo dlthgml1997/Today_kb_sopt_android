@@ -23,7 +23,6 @@ import com.kb.challenge.app.today.today_android.view.community.CommunityFollowin
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
 import com.kb.challenge.app.today.today_android.view.login.SplashActivity;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
-import com.kb.challenge.app.today.today_android.view.record.RecordFeelingActivity;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
 

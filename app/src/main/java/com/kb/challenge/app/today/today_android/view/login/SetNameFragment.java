@@ -93,6 +93,8 @@ public class SetNameFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable arg0) {
                 onEditNameSetListener.onNameSet(et_setname_user_name.getText().toString());
+                ((FirstSettingActivity)getActivity()).changeBtnAct();
+
             }
 
             @Override

@@ -116,11 +116,6 @@ public class MainFragment extends Fragment {
 
 /** * Fragment의 변경사항을 반영시킨다. */
                 transaction.commit();
-//                Intent intent = new Intent(getActivity(), RecordFeelingActivity.class);
-//                //감정을 기록하는 액티비티로 연결
-////                startActivity(intent);
-//                getActivity().startActivityForResult(intent, 200);
-
             }
         });
         return view;

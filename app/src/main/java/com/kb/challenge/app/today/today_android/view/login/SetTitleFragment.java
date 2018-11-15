@@ -45,6 +45,7 @@ public class SetTitleFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable arg0) {
                 onEditTitleSetListener.onTitleSet(et_set_title_hole.getText().toString());
+
             }
 
             @Override
@@ -64,6 +65,7 @@ public class SetTitleFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable arg0) {
                 onEditTitleSetListener.onAmountSet(Integer.parseInt(et_set_title_amount.getText().toString()));
+                ((FirstSettingActivity)getActivity()).changeBtnAct();
             }
 
             @Override

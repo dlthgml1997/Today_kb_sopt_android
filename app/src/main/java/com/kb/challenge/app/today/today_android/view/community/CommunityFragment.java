@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -85,7 +84,7 @@ public class CommunityFragment extends Fragment {
         });
 
         //팔로워보기
-        TextView community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_btn);
+        TextView community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_txt);
         community_follower_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +104,12 @@ public class CommunityFragment extends Fragment {
         community_btn_search_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.root_frame2, new CommunitySearchListFragment());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
 
+                transaction.commit();
             }
         });
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);

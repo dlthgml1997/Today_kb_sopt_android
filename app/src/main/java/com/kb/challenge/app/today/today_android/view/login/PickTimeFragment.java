@@ -35,6 +35,7 @@ public class PickTimeFragment extends Fragment implements TimePicker.OnTimeChang
 
        onTimePickerSetListener.onTimePickerSet(Integer.parseInt(split_time[0]), Integer.parseInt(split_time[1]));
        datePicker1.setOnTimeChangedListener(this);
+       ((FirstSettingActivity)getActivity()).changeBtnAct();
        return view;
     }
     public interface OnTimePickerSetListener {
@@ -45,6 +46,7 @@ public class PickTimeFragment extends Fragment implements TimePicker.OnTimeChang
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
         onTimePickerSetListener.onTimePickerSet(hourOfDay, minute);
         Log.v("timepicker", hourOfDay + " ");
+
     }
 
     @Override

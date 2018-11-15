@@ -115,8 +115,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_firstsetting);
 
         init();
-        Button btn_act_firstsetting_next_active = (Button)findViewById(R.id.btn_act_firstsetting_next_active);
-        Button btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
+        btn_act_firstsetting_next_active = (Button)findViewById(R.id.btn_act_firstsetting_next_active);
+        btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -124,10 +124,11 @@ public class FirstSettingActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.frag_container2, new SetNameFragment(), "SetName");
         fragmentTransaction.commit();
 
-        btn_act_firstsetting_next.setOnClickListener(new View.OnClickListener() {
+        btn_act_firstsetting_next_active.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                changeBtn();
                 if (position == 0) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -166,10 +167,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     fragmentTransaction.replace(R.id.frag_container2, new AccountCreateFragment());
                     fragmentTransaction.commit();
 
-
-                    Button btn_act_first_set_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
-                    btn_act_first_set_next.setText("완료");
-                    btn_act_first_set_next.setOnClickListener(new View.OnClickListener() {
+                    btn_act_firstsetting_next_active.setText("완료");
+                    btn_act_firstsetting_next_active.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
@@ -202,7 +201,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     Log.v("message", response.body().getMessage().toString());
 
                     if (response.body().getMessage().toString().equals("update success")) {
-                        if (!SharedPreference.Companion.getInstance().getPrefStringData(SharedPreference.Companion.getInstance().getPrefStringData("data")+""+"user_id").isEmpty()) {
+                        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
                             Log.v("id not empty", "id not empty");
                             SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_amount", userSettingData.getGoal_money());
                             SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_title", userSettingData.getGoal());
@@ -220,6 +219,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
             }
 
+
             @Override
             public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
@@ -228,6 +228,16 @@ public class FirstSettingActivity extends AppCompatActivity implements
     }
 
 
+    public void changeBtnAct(){
+
+        btn_act_firstsetting_next_active.setVisibility(View.VISIBLE);
+        btn_act_firstsetting_next.setVisibility(View.GONE);
+    }
+    public void changeBtn(){
+
+        btn_act_firstsetting_next_active.setVisibility(View.GONE);
+        btn_act_firstsetting_next.setVisibility(View.VISIBLE);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {  //앨범에서 가져온 이미지를 뷰에 표시하는 함수
         // Check which request we're responding to

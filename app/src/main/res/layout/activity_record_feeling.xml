@@ -264,8 +264,6 @@
 </LinearLayout>
     <Button
         android:id="@+id/record_save_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="24dp"
@@ -275,5 +273,6 @@
         android:text="기록하기"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </RelativeLayout>
