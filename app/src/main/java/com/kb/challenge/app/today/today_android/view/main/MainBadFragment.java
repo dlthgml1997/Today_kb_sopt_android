@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
@@ -50,6 +53,8 @@ public class MainBadFragment extends Fragment {
     private NetworkService networkService;
     private RecyclerView mRecyclerView;
     private ImageView main_bad_image;
+    private TextView txt_main_bad_user_name; //유저네임 님 힘네세요
+    private TextView txt_main_bad_user_name2; //유저네임 님이 행복했던 3일
 
     public MainBadFragment() {
         // Required empty public constructor
@@ -74,18 +79,20 @@ public class MainBadFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        View view1 = getActivity().getWindow().getDecorView();
+        view1.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(Color.parseColor("#f2f2f2"));
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.main_record_bad, container, false);
 
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -95,6 +102,8 @@ public class MainBadFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        txt_main_bad_user_name = (TextView)view.findViewById(R.id.txt_main_bad_user_name);
+        txt_main_bad_user_name2 = (TextView)view.findViewById(R.id.txt_main_bad_user_name2);
         main_bad_image = (ImageView) view.findViewById(R.id.main_bad_image);
         getCheerupMsg();
 
