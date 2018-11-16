@@ -15,12 +15,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.Init;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by shineeseo on 2018. 11. 7..
  */
 
-public class MainDepositFragment extends Fragment {
+public class MainDepositFragment extends Fragment implements Init {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +42,16 @@ public class MainDepositFragment extends Fragment {
     private static final String TAG = "MainDepositFragment";
 
     private MainDepositFragment.OnFragmentInteractionListener mListener;
+
+    private NetworkService networkService;
+
+    private int total_money;
+    @Override
+    public void init() {
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+        getSavingList();
+    }
 
     public MainDepositFragment() {
         // Required empty public constructor
@@ -70,6 +89,12 @@ public class MainDepositFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.main_record_good_deposit, container, false);
 
+        init();
+
+        Bundle bundle = getArguments();
+        String user_name = bundle.getString("user_name");
+
+        Log.v("user_name, total", user_name + " " + total_money);
 
         return view;
 
@@ -111,5 +136,28 @@ public class MainDepositFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void getSavingList() {
+        Log.v("savingList process", "savingList process!!!");
+        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
+            @Override
+            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("savingList process2", "savingList process2!!!");
+                    Log.v("saving list get message", response.body().getMessage().toString());
+                    Log.v("coin saving list res", response.body().toString());
+
+                    total_money = response.body().getTotalMoney();
+                    Log.v("total toatl", total_money + "");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
+                Log.i("err saving", t.getMessage());
+            }
+        });
     }
 }

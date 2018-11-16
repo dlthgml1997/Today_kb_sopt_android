@@ -30,6 +30,17 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_qna_coin_16_px"/>
         <TextView
+            android:id="@+id/coin_target_money_hello_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#757575"
+            android:letterSpacing="-0.01"
+            android:fontFamily="@font/notosanskr_light_hestia"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:text="목표금액"/>
+        <TextView
             android:id="@+id/coin_target_money_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +50,7 @@
             android:fontFamily="@font/notosanskr_light_hestia"
             android:gravity="center_horizontal"
             android:layout_marginLeft="8dp"
-            android:text="목표금액 300,000원"/>
+            android:text="300,000원"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/img_goal_pig"

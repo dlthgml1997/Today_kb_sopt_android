@@ -157,4 +157,10 @@ interface NetworkService {
             @Header("authorization") token : String,
             @Query("today") today : String
     ) :Call<EmotionBoxResponse>
+
+    @POST("box")
+    fun sendEmotionBox(
+            @Header("authorization") token : String,
+            @Body emotionData : SendEmotionData
+    ):Call<BaseModel>
 }

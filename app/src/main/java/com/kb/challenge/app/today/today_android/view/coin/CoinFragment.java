@@ -131,6 +131,8 @@ public class CoinFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
+                intent.putExtra("goal",coin_name_txt.getText().toString() );
+                intent.putExtra("goal_money",coin_target_money_txt.getText().toString() );
                 startActivity(intent);
 
                 Log.v("눌림","눌림");
@@ -254,23 +256,5 @@ public class CoinFragment extends Fragment {
         });
     }
 
-    public void deleteSavingList() {
-        Log.v("deleteSavingList", "deleteSavingList process!!!");
-        Call<BaseModel> requestDetail = networkService.deleteDeposit(SharedPreference.Companion.getInstance().getPrefStringData("data"));
-        requestDetail.enqueue(new Callback<BaseModel>() {
-            @Override
-            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
-                if (response.isSuccessful()) {
-                    Log.v("deleteSavingList", "deleteSavingList process2!!!");
-                    Log.v("message", response.body().getMessage().toString());
 
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseModel> call, Throwable t) {
-                Log.i("err", t.getMessage());
-            }
-        });
-    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,15 @@ public class ConfilmFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_confirm, container, false);
         TextView txt_confirm_withdraw = (TextView)view.findViewById(R.id.txt_confirm_withdraw);
 
+        Bundle bundle = getArguments();
+
+        TextView coin_name_txt = (TextView)view.findViewById(R.id.coin_name_txt);
+        TextView coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
+
+        Log.v("goal&goal_money", bundle.getString("goal") + " " + bundle.getString("goal_money"));
+
+        coin_name_txt.setText(bundle.getString("goal"));
+        coin_target_money_txt.setText(bundle.getString("goal_money"));
        // Bundle bundle = getArguments();
 
       //  txt_confirm_withdraw.setText(bundle.getString("changeText"));

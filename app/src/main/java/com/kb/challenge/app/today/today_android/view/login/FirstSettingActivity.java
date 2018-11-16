@@ -199,7 +199,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
         String userName_trim = userName.replaceAll("\"", "");
         String title_trim = title.replaceAll("\"", "");
         Log.v("user trim & title trim", userName_trim + "&" + title_trim);
-        
+
         userSettingData = new UserSettingData(userName_trim, title_trim, amount, time_data);
 
         Log.v("usersetting data", userSettingData.toString());
