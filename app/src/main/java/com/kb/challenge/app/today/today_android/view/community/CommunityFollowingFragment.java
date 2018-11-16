@@ -86,7 +86,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 200){
+        if (resultCode == 200) {
 
         }
 
@@ -114,7 +114,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ImageView community_back_btn = (ImageView)view.findViewById(R.id.community_back_btn);
+        ImageView community_back_btn = (ImageView) view.findViewById(R.id.community_back_btn);
 
         community_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +127,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         return view;
 
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -165,6 +166,7 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     public void getFollowingList() {
         Log.v("getFollowerList process", "getFollowerList process!!!");
         Call<FollowingListResponse> requestDetail = networkService.getFollowingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
@@ -179,13 +181,9 @@ public class CommunityFollowingFragment extends Fragment implements Init {
                         ArrayList<FollowingData> followingList = response.body().getData();
                         Log.v("followerDataList", followingList.toString());
 
-                        CommunityFollowingListAdapter communityFollowingListAdapter = new CommunityFollowingListAdapter(getActivity(),followingList);
+                        CommunityFollowingListAdapter communityFollowingListAdapter = new CommunityFollowingListAdapter(getActivity(), followingList);
                         mRecyclerView.setAdapter(communityFollowingListAdapter);
 
-                    }
-                    else if (response.body().getMessage().toString().equals("access denied")) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
                     }
 
                 }

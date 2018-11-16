@@ -131,10 +131,6 @@ public class CommunityUserFragment extends Fragment implements Init {
                     Log.v("follow", "follow process2!!!");
                     Log.i("follow message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
                 }
             }
 
@@ -155,10 +151,7 @@ public class CommunityUserFragment extends Fragment implements Init {
                     Log.v("follow", "follow process2!!!");
                     Log.v("cancel message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
+
                 }
             }
 

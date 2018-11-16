@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
+import com.kb.challenge.app.today.today_android.model.setting.SignupAndSettingData;
 import com.kb.challenge.app.today.today_android.model.setting.UserSettingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
@@ -56,7 +57,8 @@ public class FirstSettingActivity extends AppCompatActivity implements
     private UserSettingData userSettingData;
     private Button btn_act_firstsetting_next_active;
     private Button btn_act_firstsetting_next;
-    private char trim_string = '\"';
+
+
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -76,7 +78,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
     @Override
     public void onTitleSet(String title) {
-        this.title = title.replaceAll("\"", "");
+        this.title = title;
     }
 
     @Override
@@ -115,7 +117,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_firstsetting);
 
         init();
-        btn_act_firstsetting_next_active = (Button)findViewById(R.id.btn_act_firstsetting_next_active);
+        btn_act_firstsetting_next_active = (Button) findViewById(R.id.btn_act_firstsetting_next_active);
         btn_act_firstsetting_next = (Button) findViewById(R.id.btn_act_firstsetting_next);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -171,11 +173,13 @@ public class FirstSettingActivity extends AppCompatActivity implements
                     btn_act_firstsetting_next_active.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
                             try {
                                 setUserSetting();
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     });
                     position++;
@@ -185,13 +189,21 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
     }
 
+
     public void setUserSetting() throws ParseException {
         Log.v("setUserSetting process", "setUserSetting process!!!");
 
         Time time_data = new Time(h, m, 00);
         Log.v("push time", time_data + " ");
-        userSettingData = new UserSettingData(userName, title, amount, time_data);
+
+        String userName_trim = userName.replaceAll("\"", "");
+        String title_trim = title.replaceAll("\"", "");
+        Log.v("user trim & title trim", userName_trim + "&" + title_trim);
+        
+        userSettingData = new UserSettingData(userName_trim, title_trim, amount, time_data);
+
         Log.v("usersetting data", userSettingData.toString());
+
         Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userName, profile_image, title, amount, time_data);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
@@ -199,24 +211,10 @@ public class FirstSettingActivity extends AppCompatActivity implements
                 if (response.isSuccessful()) {
                     Log.v("setUserSetting process2", "setUserSetting process2!!!");
                     Log.v("message", response.body().getMessage().toString());
+                    Intent intent = new Intent(FirstSettingActivity.this, MainActivity.class);
+                    startActivity(intent);
 
-                    if (response.body().getMessage().toString().equals("update success")) {
-                        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
-                            Log.v("id not empty", "id not empty");
-                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_amount", userSettingData.getGoal_money());
-                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "goal_title", userSettingData.getGoal());
-//                    SharedPreference.Companion.getInstance().setPrefData("push_time", userSettingData.getPush_time());
-                            SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "user_name", userSettingData.getName());
-                            Intent intent = new Intent(FirstSettingActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                    else if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(FirstSettingActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
                 }
-
             }
 
 
@@ -228,16 +226,18 @@ public class FirstSettingActivity extends AppCompatActivity implements
     }
 
 
-    public void changeBtnAct(){
+    public void changeBtnAct() {
 
         btn_act_firstsetting_next_active.setVisibility(View.VISIBLE);
         btn_act_firstsetting_next.setVisibility(View.GONE);
     }
-    public void changeBtn(){
+
+    public void changeBtn() {
 
         btn_act_firstsetting_next_active.setVisibility(View.GONE);
         btn_act_firstsetting_next.setVisibility(View.VISIBLE);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {  //앨범에서 가져온 이미지를 뷰에 표시하는 함수
         // Check which request we're responding to
@@ -263,7 +263,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
     //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() != 0)
+        if (getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
         else
             super.onBackPressed();

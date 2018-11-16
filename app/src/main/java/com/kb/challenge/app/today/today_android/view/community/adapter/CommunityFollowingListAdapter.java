@@ -132,10 +132,6 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
                     Log.v("follow", "follow process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(context, LoginActivity.class);
-                        context.startActivity(intent);
-                    }
                 }
             }
 

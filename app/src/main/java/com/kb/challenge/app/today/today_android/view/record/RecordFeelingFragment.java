@@ -22,6 +22,8 @@ import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.dialog.RecordCommentDialog;
+import com.kb.challenge.app.today.today_android.view.dialog.RecordFeelingEmotion;
 import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
@@ -58,6 +60,8 @@ public class RecordFeelingFragment extends Fragment {
     private ImageView hint_bad_3, hint_bad_2, hint_bad_1, hint_soso_1, hint_good_1, hint_good_2, hint_good_3;
     private FeelingData feelingData;
 
+    private String user_name;
+
     public RecordFeelingFragment() {
     }
 
@@ -85,7 +89,14 @@ public class RecordFeelingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_record_feeling, container, false);
+
+        //탭 레이아웃 안 보이게.
         ((MainActivity) getActivity()).inVisibleTabLayout();
+
+        Bundle bundle = getArguments();
+
+        user_name = bundle.getString("user_name");
+
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance().load(getActivity());
 
@@ -106,6 +117,8 @@ public class RecordFeelingFragment extends Fragment {
         record_save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                RecordCommentDialog dialog = new RecordCommentDialog();
+//                dialog.show(getActivity().getFragmentManager(), "example");
                 recordFeeling();
 
             }
@@ -205,7 +218,7 @@ public class RecordFeelingFragment extends Fragment {
 
     public void recordFeeling() {
         Log.v("feeling save process", "feeling save process!!!");
-        feelingData = new FeelingData(0, null, feelingMsg[0]);
+        feelingData = new FeelingData(0, null, feelingMsg[3]);
         if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
             switch (progress_status) {
                 case 0:
@@ -218,7 +231,7 @@ public class RecordFeelingFragment extends Fragment {
                 case 5:
                 case 6:
                     SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - 3));
-                    new FeelingData(seekBar.getMax() - 3, null, feelingMsg[0]);
+                    new FeelingData(seekBar.getMax() - 3, null, feelingMsg[3]);
             }
         }
 
@@ -233,9 +246,13 @@ public class RecordFeelingFragment extends Fragment {
                     if (response.body().getMessage().toString().equals("success")) {
                         Log.v("feeling record", progress_status + " ");
                         if (progress_status < 3) {
+                            Fragment fragment = new MainBadFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_name", user_name);
+                            fragment.setArguments(bundle);
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                            transaction.replace(R.id.root_frame, new MainBadFragment());
+                            transaction.replace(R.id.root_frame, fragment);
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.addToBackStack(null);
                             ((MainActivity) getActivity()).visibleTabLayout();
@@ -245,8 +262,9 @@ public class RecordFeelingFragment extends Fragment {
                         } else {
                             Fragment fragment = new MainGoodFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            Bundle bundle = new Bundle(); // 파라미터는 전달할 데이터 개수
+                            Bundle bundle = new Bundle(2); // 파라미터는 전달할 데이터 개수
                             bundle.putInt("feeling_data", seekBar.getMax() - 3); // key , value
+                            bundle.putString("user_name", user_name);
                             fragment.setArguments(bundle);
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
                             transaction.replace(R.id.root_frame, fragment);
@@ -256,11 +274,9 @@ public class RecordFeelingFragment extends Fragment {
                             ((MainActivity) getActivity()).visibleTabLayout();
                             transaction.commit();
                         }
-                    } else if (response.body().getMessage().toString().equals("access denied")) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
                     }
                 }
+
             }
 
             @Override
@@ -312,6 +328,7 @@ public class RecordFeelingFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        ((MainActivity) getActivity()).visibleTabLayout();
         mListener = null;
     }
 

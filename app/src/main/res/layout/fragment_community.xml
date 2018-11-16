@@ -152,14 +152,15 @@
 
         <RelativeLayout
             android:layout_marginTop="21dp"
-            android:layout_width="215dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/follower_hello_txt"
             android:layout_toRightOf="@+id/community_user_name"
             android:layout_marginLeft="26dp"
             >
 
             <RelativeLayout
+                android:layout_centerVertical="true"
                 android:layout_width="215dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"

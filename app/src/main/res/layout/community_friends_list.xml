@@ -55,4 +55,14 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"/>
 
+    <ImageView
+        android:id="@+id/community_profile_btn_good"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_message_done_32_px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

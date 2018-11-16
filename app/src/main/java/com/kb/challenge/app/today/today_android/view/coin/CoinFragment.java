@@ -86,7 +86,7 @@ public class CoinFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 200){
+        if (resultCode == 200) {
 
         }
 
@@ -112,23 +112,21 @@ public class CoinFragment extends Fragment {
         SharedPreference.Companion.getInstance();
 
         coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
-        coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
-        coin_cur_money = (TextView)view.findViewById(R.id.coin_cur_money);
-        rl_coin_goal_box=(RelativeLayout) view.findViewById(R.id.rl_coin_goal_box);
-        img_coin_pig=(ImageView) view.findViewById(R.id.img_coin_pig);
-        coin_btn_withdrawal=(Button) view.findViewById(R.id.coin_btn_withdrawal);
-        ic_qna_coin=(ImageView) view.findViewById(R.id.ic_qna_coin);
+        coin_target_money_txt = (TextView) view.findViewById(R.id.coin_target_money_txt);
+        coin_cur_money = (TextView) view.findViewById(R.id.coin_cur_money);
+        rl_coin_goal_box = (RelativeLayout) view.findViewById(R.id.rl_coin_goal_box);
+        img_coin_pig = (ImageView) view.findViewById(R.id.img_coin_pig);
+        coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
+        ic_qna_coin = (ImageView) view.findViewById(R.id.ic_qna_coin);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
-
-
-
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         getSavingDetail();
 
         getSavingList();
 
-        Button coin_btn_withdrawal = (Button)view.findViewById(R.id.coin_btn_withdrawal);
+        Button coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,21 +140,20 @@ public class CoinFragment extends Fragment {
         });
 
 
-
-
         return view;
 
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-}
+    }
 
 
-    public void changeGoalBackground(){ //목표금액이랑 지금 금액 같아지면 배경변경
-        if(coin_cur_money==coin_target_money_txt) {
+    public void changeGoalBackground() { //목표금액이랑 지금 금액 같아지면 배경변경
+        if (coin_cur_money == coin_target_money_txt) {
             rl_coin_goal_box.setBackgroundResource(R.drawable.img_coin_pig_success);
             img_coin_pig.setVisibility(View.INVISIBLE);
             coin_btn_withdrawal.setText("목표달성! 인출하기");
@@ -166,6 +163,7 @@ public class CoinFragment extends Fragment {
         }
 
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -198,6 +196,7 @@ public class CoinFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     public void getSavingList() {
         Log.v("savingList process", "savingList process!!!");
         Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
@@ -206,26 +205,24 @@ public class CoinFragment extends Fragment {
             public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
                 if (response.isSuccessful()) {
                     Log.v("savingList process2", "savingList process2!!!");
-                    Log.v("message", response.body().getMessage().toString());
-                    if (response.body().getMessage().toString().equals("success")){
-                        int totalMoney = response.body().getTotalMoney();
-                        coinSavingItems = response.body().getData();
-                        Log.v("coin saving list", coinSavingItems.toString());
-                        Log.v("totalMoney", totalMoney + " ");
-                        coin_cur_money.setText(String.valueOf(totalMoney));
+                    Log.v("saving list get message", response.body().getMessage().toString());
+                    Log.v("coin saving list res", response.body().toString());
 
-                        CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(),coinSavingItems);
+                    int totalMoney = response.body().getTotalMoney();
+                    coinSavingItems = response.body().getData();
+                    Log.v("coin saving list", coinSavingItems.toString());
+                    Log.v("totalMoney", totalMoney + " ");
+                    coin_cur_money.setText(String.valueOf(totalMoney));
 
-                        mRecyclerView.setAdapter(coinSavingListAdapter);
-                    }
+                    CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(), coinSavingItems);
 
-
+                    mRecyclerView.setAdapter(coinSavingListAdapter);
                 }
             }
 
             @Override
             public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
-                Log.i("err", t.getMessage());
+                Log.i("err saving", t.getMessage());
             }
         });
     }
@@ -240,13 +237,10 @@ public class CoinFragment extends Fragment {
                     Log.v("getSavingDetail", "getSavingDetail process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("success")) {
-                        ArrayList<CoinDetailData> coinDetailData = response.body().getData();
-                        Log.v("coin detail", coinDetailData.toString());
-                        coin_name_txt.setText(coinDetailData.get(0).getGoal());
-                        coin_target_money_txt.setText(String.valueOf(coinDetailData.get(0).getGoal_money()));
-                        //coin_cur_money
-                    }
+                    ArrayList<CoinDetailData> coinDetailData = response.body().getData();
+                    Log.v("coin detail", coinDetailData.toString());
+                    coin_name_txt.setText(coinDetailData.get(0).getGoal());
+                    coin_target_money_txt.setText(String.valueOf(coinDetailData.get(0).getGoal_money()));
 
                 }
             }
@@ -257,6 +251,7 @@ public class CoinFragment extends Fragment {
             }
         });
     }
+
     public void deleteSavingList() {
         Log.v("deleteSavingList", "deleteSavingList process!!!");
         Call<BaseModel> requestDetail = networkService.deleteDeposit(SharedPreference.Companion.getInstance().getPrefStringData("data"));
