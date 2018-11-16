@@ -20,7 +20,7 @@
         android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textColor="#545454"
         android:letterSpacing="-0.01"
         android:text="목표에 달성한 것을 축하드려요"/>
@@ -30,7 +30,7 @@
         android:id="@+id/txt_cong_2"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/notosanskr_medium_hestia"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="#545454"
         android:letterSpacing="-0.01"
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         android:id="@+id/txt_cong_3"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/notosanskr_medium_hestia"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="#545454"
         android:letterSpacing="-0.01"
         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         android:textColor="#bdbdbd"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btn_withdraw_dialog"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:layout_marginBottom="32dp"
         android:letterSpacing="-0.01"
         />
@@ -72,7 +72,7 @@
     android:layout_marginBottom="32dp"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
-    android:textSize="14dp"
+    android:textSize="14sp"
     android:letterSpacing="-0.01"
     />
 </RelativeLayout>

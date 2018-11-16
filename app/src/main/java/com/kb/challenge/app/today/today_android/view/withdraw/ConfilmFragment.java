@@ -21,10 +21,10 @@ public class ConfilmFragment extends Fragment{
 
     public static ConfilmFragment newInstance(/*String param1, String param2*/) {
         ConfilmFragment fragment = new ConfilmFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+////        args.putString(ARG_PARAM1, param1);
+////        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
         return fragment;
     }
     @Override
@@ -37,9 +37,9 @@ public class ConfilmFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_confirm, container, false);
         TextView txt_confirm_withdraw = (TextView)view.findViewById(R.id.txt_confirm_withdraw);
 
-        Bundle bundle = getArguments();
+       // Bundle bundle = getArguments();
 
-        txt_confirm_withdraw.setText(bundle.getString("changeText"));
+      //  txt_confirm_withdraw.setText(bundle.getString("changeText"));
 
 
         return view;
@@ -47,12 +47,12 @@ public class ConfilmFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ConfilmFragment.OnFragmentInteractionListener) {
-            mListener = (ConfilmFragment.OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof ConfilmFragment.OnFragmentInteractionListener) {
+//            mListener = (ConfilmFragment.OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
