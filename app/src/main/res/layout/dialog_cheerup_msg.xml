@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="328dp"
+        android:layout_width="360dp"
         android:layout_height="410dp">
 
         <RelativeLayout
-            android:layout_width="280dp"
+            android:layout_width="320dp"
             android:layout_height="186dp"
             android:layout_below="@+id/txt_dialog_cheerup"
             android:layout_centerHorizontal="true"
