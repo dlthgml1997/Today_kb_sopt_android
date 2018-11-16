@@ -41,20 +41,20 @@
             />
 
         <TextView
-            android:id="@+id/btn_cancel_dialog"
+            android:id="@+id/btn_cancel_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
             android:layout_marginRight="32dp"
             android:textColor="#bdbdbd"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/btn_withdraw_dialog"
+            android:layout_toLeftOf="@+id/btn_withdraw_confirm"
             android:textSize="14sp"
             android:layout_marginBottom="28dp"
             android:letterSpacing="-0.01"
             />
         <TextView
-            android:id="@+id/btn_withdraw_dialog"
+            android:id="@+id/btn_withdraw_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인출"

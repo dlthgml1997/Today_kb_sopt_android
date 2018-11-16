@@ -7,5 +7,5 @@ import java.util.*
  * Created by shineeseo on 2018. 11. 16..
  */
 data class EmotionBoxResponse (
-        var result : ArrayList<EmotionBoxData>
+        var data : ArrayList<EmotionBoxData>
 ):BaseModel()

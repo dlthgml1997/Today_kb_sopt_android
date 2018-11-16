@@ -21,9 +21,11 @@ import android.widget.Toast;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
 import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import org.w3c.dom.Text;
@@ -51,6 +53,8 @@ public class MainGoodFragment extends Fragment {
     private Spinner deposit_spinner;
     private NetworkService networkService;
     private MainGoodFragment.OnFragmentInteractionListener mListener;
+    private int totalMoney;
+    private String user_name;
 
     public MainGoodFragment() {
         // Required empty public constructor
@@ -73,7 +77,6 @@ public class MainGoodFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +96,7 @@ public class MainGoodFragment extends Fragment {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
 
-        TextView main_name_txt = (TextView)view.findViewById(R.id.main_name_txt);
+        TextView main_name_txt = (TextView) view.findViewById(R.id.main_name_txt);
 
         deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
         //스피너 어댑터 설정
@@ -103,7 +106,7 @@ public class MainGoodFragment extends Fragment {
         deposit_spinner.setAdapter(adapter);
 
         int good = getArguments().getInt("feeling_data");
-        String user_name = getArguments().getString("user_name");
+        user_name = getArguments().getString("user_name");
         main_name_txt.setText(user_name + "님!");
 
         Log.v("good", good + "");
@@ -187,9 +190,13 @@ public class MainGoodFragment extends Fragment {
                     Log.v("saving process2", "saving process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
+                    Fragment fragment = new MainDepositFragment();
+                    Bundle bundle = new Bundle(1);
+                    bundle.putString("user_name", user_name);
+                    fragment.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                    transaction.replace(R.id.root_frame, new MainDepositFragment());
+                    transaction.replace(R.id.root_frame, fragment);
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     transaction.addToBackStack(null);
 
