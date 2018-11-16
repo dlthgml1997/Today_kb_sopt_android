@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
@@ -50,6 +51,8 @@ public class MainBadFragment extends Fragment {
     private NetworkService networkService;
     private RecyclerView mRecyclerView;
     private ImageView main_bad_image;
+    private TextView txt_main_bad_user_name; //유저네임 님 힘네세요
+    private TextView txt_main_bad_user_name2; //유저네임 님이 행복했던 3일
 
     public MainBadFragment() {
         // Required empty public constructor
@@ -95,6 +98,8 @@ public class MainBadFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        txt_main_bad_user_name = (TextView)view.findViewById(R.id.txt_main_bad_user_name);
+        txt_main_bad_user_name2 = (TextView)view.findViewById(R.id.txt_main_bad_user_name2);
         main_bad_image = (ImageView) view.findViewById(R.id.main_bad_image);
         getCheerupMsg();
 
