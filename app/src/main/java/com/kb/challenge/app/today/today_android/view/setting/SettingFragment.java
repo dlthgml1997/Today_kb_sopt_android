@@ -23,6 +23,8 @@ import com.kb.challenge.app.today.today_android.view.login.FirstActivity;
 
 public class SettingFragment extends Fragment {
     private TextView tv_main_setting_logout;
+    private TextView tv_main_setting_push;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,9 +88,18 @@ public class SettingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FirstActivity.class);
                 startActivity(intent);
 
+
+
             }
         });
+        //푸시시간 설정하는 곳
+        tv_main_setting_push = view.findViewById(R.id.tv_main_setting_push);
+        tv_main_setting_push.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
         return view;
     }
 
