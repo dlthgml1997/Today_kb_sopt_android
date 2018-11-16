@@ -50,7 +50,6 @@ public class RecordFeelingEmotion extends DialogFragment {
         btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getActivity().recordFeeling();
 
             }
         });

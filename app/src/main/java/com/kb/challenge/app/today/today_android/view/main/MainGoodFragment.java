@@ -1,5 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +57,7 @@ public class MainGoodFragment extends Fragment {
     private MainGoodFragment.OnFragmentInteractionListener mListener;
     private int totalMoney;
     private String user_name;
+    private String comment;
 
     public MainGoodFragment() {
         // Required empty public constructor
@@ -131,11 +134,62 @@ public class MainGoodFragment extends Fragment {
         btn_main_deposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savingMoney();
+                final Dialog send_deposit_comment_dialog = new Dialog(getActivity());
+                send_deposit_comment_dialog.setContentView(R.layout.dialog_record_comment);
+                send_deposit_comment_dialog.setTitle("comment Dialog");
+
+                TextView deposit_dialog_name = (TextView)send_deposit_comment_dialog.findViewById(R.id.deposit_dialog_name);
+
+                deposit_dialog_name.setText(user_name + "님,");
+
+                final EditText deposit_edit_comment = (EditText)send_deposit_comment_dialog.findViewById(R.id.deposit_edit_comment);
+
+
+                TextView btn_cancel_dialog = (TextView)send_deposit_comment_dialog.findViewById(R.id.btn_cancel_dialog);
+
+                TextView btn_ok_dialog = (TextView)send_deposit_comment_dialog.findViewById(R.id.btn_ok_dialog);
+
+                btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        send_deposit_comment_dialog.dismiss();
+                    }
+                });
+
+                btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        comment = deposit_edit_comment.getText().toString();
+                        Log.v("deposit comment", comment);
+
+                        savingMoney();
+                        send_deposit_comment_dialog.dismiss();
+                    }
+                });
+                send_deposit_comment_dialog.show();
 
             }
         });
 
+        TextView btn_do_not_deposit = (TextView)view.findViewById(R.id.btn_do_not_deposit);
+        btn_do_not_deposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new MainDepositFragment();
+                Bundle bundle = new Bundle(1);
+                bundle.putString("user_name", user_name);
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                transaction.replace(R.id.root_frame, fragment);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+
+/** * Fragment의 변경사항을 반영시킨다. */
+                transaction.commit();
+
+            }
+        });
         return view;
 
     }
@@ -181,7 +235,7 @@ public class MainGoodFragment extends Fragment {
 
     public void savingMoney() {
         Log.v("saving process", "saving process!!!");
-        CoinSavingData coinSavingData = new CoinSavingData(Integer.parseInt(deposit_spinner.getSelectedItem().toString()), "오늘도 화이팅!");
+        CoinSavingData coinSavingData = new CoinSavingData(Integer.parseInt(deposit_spinner.getSelectedItem().toString()), comment);
         Call<BaseModel> requestDetail = networkService.savingMoney(SharedPreference.Companion.getInstance().getPrefStringData("data"), coinSavingData);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override

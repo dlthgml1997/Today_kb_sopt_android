@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
@@ -90,6 +91,7 @@ public class CommunityFragment extends Fragment implements Init {
     private ArrayList<FriendsProfileData> friendsProfileDataList;
     private ArrayList<FollowingData> followingList;
     private ArrayList<FriendsProfileData> friendsList = new ArrayList<>();
+    private String user_name;
 
     @Override
     public void init() {
@@ -306,6 +308,8 @@ public class CommunityFragment extends Fragment implements Init {
 
                         community_user_name.setText(commuProfileDataList.get(0).getName());
 
+                        user_name = commuProfileDataList.get(0).getName();
+
                         community_follower_num_txt.setText(String.valueOf(commuProfileDataList.get(0).getCountFollower()));
 
                         community_following_num_txt.setText(String.valueOf(commuProfileDataList.get(0).getCountFollowing()));
@@ -333,12 +337,35 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("getTodayFeelingData", "getProfileData process2!!!");
                     Log.v("feeling message", response.body().getMessage().toString());
 
-                        ArrayList<FeelingData> feelingDataList = response.body().getData();
+                        final ArrayList<FeelingData> feelingDataList = response.body().getData();
 
                         if (feelingDataList.isEmpty()) {
                             Log.v("감정기록 다이얼로그 뜨기", "감정기록 다이얼로그 뜨기");
-                            RecordFeelingDialog dialog = new RecordFeelingDialog();
-                            dialog.show(getActivity().getFragmentManager(), "example");
+//                            RecordFeelingDialog dialog = new RecordFeelingDialog();
+//                            dialog.show(getActivity().getFragmentManager(), "example");
+                            final Dialog go_to_record_feeling_dialog = new Dialog(getActivity());
+                            go_to_record_feeling_dialog.setContentView(R.layout.dialog_record_feeling_main);
+
+                            TextView btn_ok_dialog = (TextView)go_to_record_feeling_dialog.findViewById(R.id.btn_ok_dialog);
+
+                            btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    go_to_record_feeling_dialog.dismiss();
+                                    Fragment fragment = new RecordFeelingFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("user_name", user_name);
+                                    fragment.setArguments(bundle);
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.root_frame2, fragment, "feeling_record");
+                                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                    transaction.addToBackStack(null);
+
+                                    transaction.commit();
+
+                                }
+                            });
+                            go_to_record_feeling_dialog.show();
                         }
                         else if (feelingDataList.get(0).getBad() != null) {
                             Log.v("feeling data bad", emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3 + "");

@@ -1,5 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.record;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -117,10 +118,34 @@ public class RecordFeelingFragment extends Fragment {
         record_save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                RecordCommentDialog dialog = new RecordCommentDialog();
-//                dialog.show(getActivity().getFragmentManager(), "example");
-                recordFeeling();
+                final Dialog save_feeling_record_dialog = new Dialog(getActivity());
+                save_feeling_record_dialog.setContentView(R.layout.dialog_record_emotion);
 
+                TextView txt_name = (TextView)save_feeling_record_dialog.findViewById(R.id.txt_name);
+
+                txt_name.setText(user_name + "님,");
+
+                TextView btn_save_dialog = (TextView)save_feeling_record_dialog.findViewById(R.id.btn_save_dialog);
+
+                btn_save_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        save_feeling_record_dialog.dismiss();
+                        recordFeeling();
+
+                    }
+                });
+
+                TextView btn_cancel_dialog = (TextView)save_feeling_record_dialog.findViewById(R.id.btn_cancel_dialog);
+
+                btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        save_feeling_record_dialog.dismiss();
+                    }
+                });
+
+                save_feeling_record_dialog.show();
             }
         });
 

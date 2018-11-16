@@ -4,13 +4,14 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="328dp"
-        android:layout_height="410dp">
+        android:layout_width="360dp"
+        android:layout_height="410dp"
+        android:background="@drawable/button_border">
 
         <RelativeLayout
-            android:layout_width="280dp"
+            android:layout_width="320dp"
             android:layout_height="186dp"
-            android:layout_below="@+id/txt_dialog_cheerup"
+            android:layout_below="@+id/txt_dialog_cheerup_hello"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
             android:background="@drawable/button_border"
@@ -55,7 +56,7 @@
         <RelativeLayout
             android:layout_width="240dp"
             android:layout_height="103dp"
-            android:layout_below="@+id/txt_dialog_cheerup"
+            android:layout_below="@+id/txt_dialog_cheerup_hello"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="38dp"
             android:layout_marginTop="116dp">
@@ -92,14 +93,37 @@
             android:src="@drawable/mail_1" />
 
         <TextView
-            android:id="@+id/txt_dialog_cheerup"
+            android:id="@+id/txt_dialog_cheerup_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="56dp"
             android:fontFamily="@font/notosanskr_medium_hestia"
-            android:letterSpacing="-0.01"
-            android:text="승언님은 오늘 기분이 안좋아요"
+            android:letterSpacing="-0.025"
+            android:text="승언"
+            android:textColor="#424242"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_toRightOf="@id/txt_dialog_cheerup_name"
+            android:id="@+id/txt_dialog_cheerup_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.025"
+            android:text="님은 오늘 "
+            android:textColor="#424242"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_toRightOf="@id/txt_dialog_cheerup_hello"
+            android:id="@+id/txt_dialog_cheerup_feeling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            android:letterSpacing="-0.025"
+            android:text="기분이 안좋아요"
             android:textColor="#424242"
             android:textSize="20sp" />
 

@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.coin;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -130,16 +131,34 @@ public class CoinFragment extends Fragment {
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
-                intent.putExtra("goal",coin_name_txt.getText().toString() );
-                intent.putExtra("goal_money",coin_target_money_txt.getText().toString() );
-                startActivity(intent);
+                final Dialog with_draw_confirm_dialog = new Dialog(getActivity());
+                with_draw_confirm_dialog.setContentView(R.layout.dialog_withdraw);
 
-                Log.v("눌림","눌림");
-//                deleteSavingList();
-//                getSavingList();
-//
-//                changeGoalBackground();
+                with_draw_confirm_dialog.setTitle("withdraw Dialog");
+
+                TextView btn_cancel_dialog = (TextView)with_draw_confirm_dialog.findViewById(R.id.btn_cancel_dialog);
+
+                btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        with_draw_confirm_dialog.dismiss();
+                    }
+                });
+
+                TextView btn_withdraw_dialog = (TextView)with_draw_confirm_dialog.findViewById(R.id.btn_withdraw_dialog);
+
+                btn_withdraw_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        with_draw_confirm_dialog.dismiss();
+                        Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
+                        intent.putExtra("goal",coin_name_txt.getText().toString() );
+                        intent.putExtra("goal_money",coin_target_money_txt.getText().toString() );
+                        startActivity(intent);
+                    }
+                });
+                with_draw_confirm_dialog.show();
+
             }
         });
 

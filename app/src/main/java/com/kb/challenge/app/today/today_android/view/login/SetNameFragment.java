@@ -113,6 +113,7 @@ public class SetNameFragment extends Fragment {
                 View v = inflater.inflate(R.layout.select_image_dialog_layout, null);
                 builder.setView(v);
 
+                builder.setTitle("프로필");
                 final ArrayList<String> dialog_items = new ArrayList<>();
                 dialog_items.add("사진촬영");
                 dialog_items.add("앨범에서 사진 선택");
@@ -199,7 +200,7 @@ public class SetNameFragment extends Fragment {
                         }
 
                         //create a file to write bitmap data
-                        File f = new File(this.getActivity().getCacheDir(), SharedPreference.Companion.getInstance().getPrefStringData("user_id")+"profile");
+                        File f = new File(this.getActivity().getCacheDir(), "profile");
                         f.createNewFile();
 
 //Convert bitmap to byte array
