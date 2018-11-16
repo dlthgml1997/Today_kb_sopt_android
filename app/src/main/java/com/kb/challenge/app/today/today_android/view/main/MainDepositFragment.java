@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -30,6 +31,10 @@ import retrofit2.Response;
  */
 
 public class MainDepositFragment extends Fragment implements Init {
+    private TextView txt_good_deposit_total_money;
+    private TextView txt_good_deposit_user_name;
+    private TextView txt_average_coin_mini;
+    private TextView txt_average_coin;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,12 +95,15 @@ public class MainDepositFragment extends Fragment implements Init {
         View view = inflater.inflate(R.layout.main_record_good_deposit, container, false);
 
         init();
+        txt_good_deposit_user_name= (TextView)view.findViewById(R.id.txt_good_deposit_user_name );
 
+        txt_good_deposit_total_money= (TextView)view.findViewById(R.id.txt_good_deposit_total_money );
         Bundle bundle = getArguments();
         String user_name = bundle.getString("user_name");
 
         Log.v("user_name, total", user_name + " " + total_money);
 
+        txt_good_deposit_user_name.setText(user_name);
         return view;
 
     }
