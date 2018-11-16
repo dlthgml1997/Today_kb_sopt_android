@@ -86,7 +86,7 @@ interface NetworkService {
     //10.아이디 중복체크
     @POST("signup/check")
     fun signupCheckId(
-            @Body signupData : SignupData
+            @Body id : String
     ) :Call<BaseModel>
 
     @POST("follow/{id}")

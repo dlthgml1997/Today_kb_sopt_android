@@ -105,7 +105,7 @@ public class CoinFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_coin, container, false);
 
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
-        SharedPreference.Companion.getInstance().load(getActivity());
+        SharedPreference.Companion.getInstance();
 
         coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
         coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
@@ -182,9 +182,8 @@ public class CoinFragment extends Fragment {
                     if (response.body().getMessage().toString().equals("success")){
                         int totalMoney = response.body().getTotalMoney();
                         coinSavingItems = response.body().getData();
-
+                        Log.v("coin saving list", coinSavingItems.toString());
                         Log.v("totalMoney", totalMoney + " ");
-                        SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "totalMoney", totalMoney);
                         coin_cur_money.setText(String.valueOf(totalMoney));
 
                         CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(),coinSavingItems);

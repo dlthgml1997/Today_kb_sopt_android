@@ -109,13 +109,13 @@ public class SignUpActivity extends AppCompatActivity implements Init {
         Log.v("check process", "check process!!!");
 
         SignupData data = new SignupData(signupData.getId());
-        Call<BaseModel> requestDetail = networkService.signupCheckId(data);
+        Call<BaseModel> requestDetail = networkService.signupCheckId(signupData.getId());
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
                 if (response.isSuccessful()) {
                     Log.v("check process2", "check process2!!!");
-                    Log.v("message", response.body().getMessage().toString());
+                    Log.v("check message", response.body().getMessage().toString());
                     if (response.body().getMessage().toString().equals("success"))
                         signup();
                     else {

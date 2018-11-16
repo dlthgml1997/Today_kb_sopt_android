@@ -98,6 +98,8 @@ public class MainGoodFragment extends Fragment {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
 
+
+
         deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
         //스피너 어댑터 설정
 
@@ -105,12 +107,17 @@ public class MainGoodFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deposit_spinner.setAdapter(adapter);
 
+        int good = getArguments().getInt("feeling_data");
+
+            Log.v("good", good+ "");
+            deposit_spinner.setSelection(good);
+
         //스피너 이벤트 발생
         deposit_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //각 항목 클릭시 포지션값을 토스트에 띄운다.
-                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
