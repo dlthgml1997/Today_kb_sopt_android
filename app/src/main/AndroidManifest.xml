@@ -27,12 +27,12 @@
         </provider>
         <activity android:name=".view.main.MainActivity">
         </activity>
+
+        <activity android:name=".view.withdraw.ConfirmWithdrawActivity"></activity>
         <activity android:name=".view.login.FirstActivity"></activity>
         <activity android:name=".view.login.LoginActivity"></activity>
         <activity android:name=".view.login.WelcomeActivity"></activity>
-        <activity android:name=".view.login.SignUpActivity">
-
-        </activity>
+        <activity android:name=".view.login.SignUpActivity"></activity>
         <activity android:name=".view.login.FirstSettingActivity"></activity>
         <activity
             android:name=".view.login.SplashActivity"

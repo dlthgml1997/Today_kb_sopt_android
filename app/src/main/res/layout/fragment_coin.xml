@@ -1,113 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:id="@+id/rl_coin_goal_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<TextView
+    android:id="@+id/coin_name_txt"
+    android:layout_marginTop="24dp"
+    android:layout_marginLeft="16dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:text="롱패딩 장만"
+    android:textSize="32dp"
+    android:textColor="#424242"
+    android:letterSpacing="-0.01"
+    android:fontFamily="@font/notosanskr_bold_hestia"
+    />
 
     <LinearLayout
+        android:id="@+id/ll_coin_title_setting"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/coin_name_txt"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/coin_cur_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="38dp"
-        android:orientation="horizontal">
+        android:text="15,000 원"
+        android:textSize="32dp"
+        android:textColor="#424242"
+        android:letterSpacing="-0.01"
+        android:fontFamily="@font/notosanskr_bold_hestia"
+        />
+    <ImageView
+        android:layout_marginTop="4dp"
+        android:id="@+id/img_coin_setting_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_coin_setting_24_px"
+        android:layout_marginLeft="8dp"
+        android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/coin_name_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="저금통 이름"
-            android:textColor="#000000"
-            android:textSize="25sp" />
-
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_txt_coin_goal"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_coin_title_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp">
         <ImageView
-            android:id="@+id/coin_name_edit_img"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/edit" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal">
-
-        <TextView
+            android:id="@+id/ic_qna_coin"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목표액 : "
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
+            android:src="@drawable/ic_qna_coin_16_px"/>
         <TextView
             android:id="@+id/coin_target_money_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:text="00000원 " />
-
-        <ImageView
-            android:id="@+id/coin_target_edit_img"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/edit" />
+            android:textSize="15dp"
+            android:textColor="#757575"
+            android:letterSpacing="-0.01"
+            android:fontFamily="@font/notosanskr_light_hestia"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:text="목표금액 300,000원"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/coin_img"
-        android:layout_width="299dp"
-        android:layout_height="201dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="17dp" />
-
     <LinearLayout
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/ll_btn_coin_withdraw"
+        android:layout_below="@+id/ll_txt_coin_goal"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/coin_cur_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15.5dp"
-            android:text="0원"
-            android:textColor="#000000"
-            android:textSize="34sp" />
-
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/coin_btn_withdrawal"
             android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="인출"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/button_border2"/>
+        <ImageView
+            android:id="@+id/img_coin_pig"
+            android:layout_gravity="end"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15.5dp"
-            android:background="@drawable/community_button_radius"
-            android:backgroundTint="#ffde5f"
-            android:text="인출하기"
-            android:textColor="#707070"
-            android:textSize="10sp" />
-
+            android:src="@drawable/img_coin_pig"/>
     </LinearLayout>
-
-    <View
-        android:layout_width="310dp"
-        android:layout_height="3dp"
-        android:layout_marginLeft="32.5dp"
-        android:layout_marginTop="11dp"
-        android:background="#707070" />
+    </RelativeLayout>
+<TextView
+    android:layout_below="@+id/rl_coin_goal_box"
+    android:id="@+id/txt_coin_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eeeeee"
+    android:text="감정기록 저금 내역"
+    android:paddingVertical="5dp"
+android:textColor="#757575"
+    android:paddingLeft="11dp"
+    android:fontFamily="@font/notosanskr_light_hestia"/>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/txt_coin_list"
         android:id="@+id/coin_recycler_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="23.5dp">
+        android:layout_gravity="center">
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>

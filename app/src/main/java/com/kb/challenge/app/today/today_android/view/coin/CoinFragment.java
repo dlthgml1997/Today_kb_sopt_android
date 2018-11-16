@@ -13,7 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -26,8 +27,7 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.coin.adapter.CoinSavingListAdapter;
-
-import org.w3c.dom.Text;
+import com.kb.challenge.app.today.today_android.view.withdraw.ConfirmWithdrawActivity;
 
 import java.util.ArrayList;
 
@@ -55,6 +55,10 @@ public class CoinFragment extends Fragment {
     private TextView coin_cur_money;
     private TextView coin_name_txt;
     private TextView coin_target_money_txt;
+    private RelativeLayout rl_coin_goal_box;
+    private ImageView img_coin_pig;
+    private Button coin_btn_withdrawal;
+    private ImageView ic_qna_coin;
 
     private CoinFragment.OnFragmentInteractionListener mListener;
 
@@ -110,11 +114,16 @@ public class CoinFragment extends Fragment {
         coin_name_txt = (TextView) view.findViewById(R.id.coin_name_txt);
         coin_target_money_txt = (TextView)view.findViewById(R.id.coin_target_money_txt);
         coin_cur_money = (TextView)view.findViewById(R.id.coin_cur_money);
-
+        rl_coin_goal_box=(RelativeLayout) view.findViewById(R.id.rl_coin_goal_box);
+        img_coin_pig=(ImageView) view.findViewById(R.id.img_coin_pig);
+        coin_btn_withdrawal=(Button) view.findViewById(R.id.coin_btn_withdrawal);
+        ic_qna_coin=(ImageView) view.findViewById(R.id.ic_qna_coin);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.coin_recycler_view);
+
+
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         getSavingDetail();
 
         getSavingList();
@@ -123,10 +132,16 @@ public class CoinFragment extends Fragment {
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteSavingList();
-                getSavingList();
+                Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
+                startActivity(intent);
+//                deleteSavingList();
+//                getSavingList();
+//
+//                changeGoalBackground();
             }
         });
+
+
 
 
         return view;
@@ -137,8 +152,20 @@ public class CoinFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
+}
 
+
+    public void changeGoalBackground(){ //목표금액이랑 지금 금액 같아지면 배경변경
+        if(coin_cur_money==coin_target_money_txt) {
+            rl_coin_goal_box.setBackgroundResource(R.drawable.img_coin_pig_success);
+            img_coin_pig.setVisibility(View.INVISIBLE);
+            coin_btn_withdrawal.setText("목표달성! 인출하기");
+            ic_qna_coin.setImageResource(R.drawable.ic_coin_coin_white_16_px);
+
+
+        }
+
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -147,6 +174,7 @@ public class CoinFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+
         }
     }
 
@@ -217,6 +245,7 @@ public class CoinFragment extends Fragment {
                         Log.v("coin detail", coinDetailData.toString());
                         coin_name_txt.setText(coinDetailData.get(0).getGoal());
                         coin_target_money_txt.setText(String.valueOf(coinDetailData.get(0).getGoal_money()));
+                        //coin_cur_money
                     }
 
                 }

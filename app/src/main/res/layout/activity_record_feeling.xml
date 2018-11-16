@@ -38,232 +38,268 @@
     </LinearLayout>
 
 
-        <ImageView
-            android:layout_marginTop="44dp"
-            android:layout_below="@+id/record_feeling_hello_txt"
-            android:id="@+id/img_emotion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/img_emotion_soso_0" />
+    <ImageView
+        android:id="@+id/img_emotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/record_feeling_hello_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/img_emotion_soso_0" />
 
 
     <ImageView
-        android:layout_marginTop="20dp"
         android:id="@+id/img_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_emotion"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:src="@drawable/img_text_soso_0" />
 
-    <LinearLayout
-        android:id="@+id/ll_emotion_hint"
-        android:layout_below="@id/img_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="46dp"
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:visibility="invisible"
-                android:id="@+id/hint_bad_3"
-                android:background="@drawable/hint_bad_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/hint_bad_2"
-                android:visibility="invisible"
-                android:background="@drawable/hint_bad_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/hint_bad_1"
-                android:visibility="invisible"
-                android:background="@drawable/hint_bad_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:visibility="visible"
-                android:id="@+id/hint_soso_1"
-                android:background="@drawable/hint_soso_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/hint_good_1"
-                android:visibility="invisible"
-                android:background="@drawable/hint_good_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/hint_good_2"
-                android:visibility="invisible"
-                android:background="@drawable/hint_good_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/hint_good_3"
-                android:visibility="invisible"
-                android:background="@drawable/hint_good_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <SeekBar
-        android:splitTrack="false"
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="12dp"
-        android:minWidth="12dp"
-        android:maxHeight="12dp"
-        android:progress="3"
-        android:maxWidth="12dp"
-        android:layout_below="@+id/ll_emotion_hint"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="46dp"
-        android:min="0"
-        android:background="@null"
-        android:max="6"
-        android:progressDrawable="@drawable/custom_seekbar"
-        android:thumb="@drawable/button_slider_24_px" />
-<LinearLayout
-    android:layout_below="@+id/seekBar"
-    android:layout_centerHorizontal="true"
-    android:layout_marginHorizontal="46dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
+        android:layout_above="@+id/record_save_btn"
+        android:layout_marginBottom="56dp">
+
+        <LinearLayout
+            android:id="@+id/ll_emotion_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="46dp"
+            android:layout_marginTop="16dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_bad_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_bad_3"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_bad_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_bad_2"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_bad_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_bad_1"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_soso_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_soso_1"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_good_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_good_1"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_good_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_good_2"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/hint_good_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/hint_good_3"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_emotion_hint"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="46dp"
+            android:background="@null"
+            android:max="6"
+            android:maxWidth="12dp"
+            android:maxHeight="12dp"
+            android:min="0"
+            android:minWidth="12dp"
+            android:minHeight="12dp"
+            android:progress="3"
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:splitTrack="false"
+            android:thumb="@drawable/button_slider_24_px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="46dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/under_seekbar_dot" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="@drawable/under_seekbar_dot"
-            android:layout_width="4dp"
-            android:layout_height="4dp" />
-    </RelativeLayout>
-</LinearLayout>
     <Button
         android:id="@+id/record_save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="24dp"
@@ -273,6 +309,5 @@
         android:text="기록하기"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="15sp"
-    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:textSize="15sp" />
 </RelativeLayout>

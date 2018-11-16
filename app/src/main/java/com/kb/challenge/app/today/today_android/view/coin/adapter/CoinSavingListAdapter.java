@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -55,12 +58,18 @@ public class CoinSavingListAdapter extends RecyclerView.Adapter<CoinSavingListAd
         public TextView coin_saving_date;
         public TextView coin_saving_amount;
         public TextView coin_saving_msg;
+        public ImageView img_coin_pig;
+        public RelativeLayout rl_coin_goal_box;
+        public Button coin_btn_withdrawal;
 
         public ViewHolder(View itemView) {
             super(itemView);
             coin_saving_msg = (TextView)itemView.findViewById(R.id.coin_saving_msg);
             coin_saving_date = (TextView) itemView.findViewById(R.id.coin_saving_date);
             coin_saving_amount = (TextView) itemView.findViewById(R.id.coin_saving_amount);
+            coin_btn_withdrawal = (Button) itemView.findViewById(R.id.coin_btn_withdrawal);
+            rl_coin_goal_box = (RelativeLayout) itemView.findViewById(R.id.rl_coin_goal_box);
+            img_coin_pig = (ImageView) itemView.findViewById(R.id.img_coin_pig);
         }
 
 

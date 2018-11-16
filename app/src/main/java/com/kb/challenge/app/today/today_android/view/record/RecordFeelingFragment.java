@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
@@ -27,6 +26,7 @@ import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
+import com.kb.challenge.app.today.today_android.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,6 +107,7 @@ public class RecordFeelingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recordFeeling();
+
             }
         });
 
