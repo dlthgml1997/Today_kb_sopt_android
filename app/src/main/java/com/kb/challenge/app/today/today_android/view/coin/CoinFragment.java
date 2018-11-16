@@ -134,6 +134,8 @@ public class CoinFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
                 startActivity(intent);
+
+                Log.v("눌림","눌림");
 //                deleteSavingList();
 //                getSavingList();
 //
@@ -258,6 +260,7 @@ public class CoinFragment extends Fragment {
             }
         });
     }
+
     public void deleteSavingList() {
         Log.v("deleteSavingList", "deleteSavingList process!!!");
         Call<BaseModel> requestDetail = networkService.deleteDeposit(SharedPreference.Companion.getInstance().getPrefStringData("data"));

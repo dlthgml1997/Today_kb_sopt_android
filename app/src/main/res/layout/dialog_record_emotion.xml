@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/dialog_record_emotion_rl"
@@ -16,7 +17,7 @@
             android:layout_centerHorizontal="true"
             android:text="이승언님,"
             android:fontFamily="@font/notosanskr_bold_hestia"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#424242"
             android:letterSpacing="-0.01"
             />
@@ -27,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:text="오늘의 감정을 기록하시겠어요?"
             android:fontFamily="@font/notosanskr_medium_hestia"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="#424242"
             android:letterSpacing="-0.01"
             />
@@ -42,7 +43,7 @@
             android:layout_marginBottom="32dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:letterSpacing="-0.01"
             />
         <TextView
@@ -54,7 +55,7 @@
         android:textColor="#bdbdbd"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/btn_save_dialog"
-        android:textSize="14dp"
+        android:textSize="14sp"
             android:layout_marginBottom="32dp"
         android:letterSpacing="-0.01"
         />
