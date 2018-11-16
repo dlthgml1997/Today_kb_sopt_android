@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.view.coin.CoinFragment;
+import com.kb.challenge.app.today.today_android.view.community.CommunityEmotionBox;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity
         CommunityFollowingFragment.OnFragmentInteractionListener,
         CommunityFollowerFragment.OnFragmentInteractionListener,
         MainBadFragment.OnFragmentInteractionListener,
-        RecordFeelingFragment.OnFragmentInteractionListener {
+        RecordFeelingFragment.OnFragmentInteractionListener,
+        CommunityEmotionBox.OnFragmentInteractionListener{
 
     Long backKeyPressedTime = 0L;
     private PagerAdapter adapter;
@@ -104,9 +106,9 @@ public class MainActivity extends AppCompatActivity
         settingIconAct.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tabLayout.getTabAt(0).setCustomView(mainIconAct);
-        tabLayout.getTabAt(1).setCustomView(commuIconAct);
-        tabLayout.getTabAt(2).setCustomView(coinIconAct);
-        tabLayout.getTabAt(3).setCustomView(settingIconAct);
+        tabLayout.getTabAt(1).setCustomView(commuIcon);
+        tabLayout.getTabAt(2).setCustomView(coinIcon);
+        tabLayout.getTabAt(3).setCustomView(settingIcon);
 
         //탭선택시
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

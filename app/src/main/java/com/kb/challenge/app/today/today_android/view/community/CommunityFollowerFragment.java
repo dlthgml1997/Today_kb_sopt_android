@@ -178,12 +178,9 @@ public class CommunityFollowerFragment extends Fragment implements Init {
                         CommunityFollowerListAdapter communityFollowerListAdapter = new CommunityFollowerListAdapter(getActivity(),followerDataList);
                         mRecyclerView.setAdapter(communityFollowerListAdapter);
                     }
-                    else if (response.body().getMessage().toString().equals("access denied")) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
 
                 }
+
             }
 
             @Override

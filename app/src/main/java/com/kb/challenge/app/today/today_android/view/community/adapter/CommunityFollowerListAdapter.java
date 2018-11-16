@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.provider.Telephony;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,6 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
     ArrayList<FollowerData> communityFollowingList;
     private NetworkService networkService;
     private String follow_id;
-    private BaseModel msg;
 
     @Override
     public void init() {
@@ -139,10 +139,10 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
                     Log.v("follow", "follow process2!!!");
                     Log.i("follow message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(context, LoginActivity.class);
-                        context.startActivity(intent);
-                    }
+                }
+
+                else if (response.body().getMessage().toString().equals("Already Following")){
+                    Toast.makeText(context, "이미 팔로우하고 있습니다.", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -164,10 +164,12 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
                     Log.v("follow", "follow process2!!!");
                     Log.v("cancel message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(context, LoginActivity.class);
-                        context.startActivity(intent);
-                    }
+                }
+                else if (response.body().getMessage().toString().equals("following does not exist")) {
+                    Toast.makeText(context, "팔로우 하고 있지 않습니다. ", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(context, "사용자가 존재하지 않습니다. ", Toast.LENGTH_LONG).show();
                 }
             }
 

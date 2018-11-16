@@ -3,8 +3,6 @@ package com.kb.challenge.app.today.today_android.view.community;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -19,8 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
@@ -28,6 +29,8 @@ import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse;
 
+import com.kb.challenge.app.today.today_android.model.community.FollowingData;
+import com.kb.challenge.app.today.today_android.model.community.FollowingListResponse;
 import com.kb.challenge.app.today.today_android.model.community.FriendsProfileData;
 import com.kb.challenge.app.today.today_android.model.community.FriendsProfileResponse;
 import com.kb.challenge.app.today.today_android.model.record.FeelingData;
@@ -36,7 +39,9 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowingListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
+import com.kb.challenge.app.today.today_android.view.dialog.RecordFeelingDialog;
 import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 
@@ -82,12 +87,20 @@ public class CommunityFragment extends Fragment implements Init {
     private ImageView community_my_profile_emotion_mark;
     private String getTime;
     private TextView community_my_profil_status_txt;
+    private ArrayList<FriendsProfileData> friendsProfileDataList;
+    private ArrayList<FollowingData> followingList;
+    private ArrayList<FriendsProfileData> friendsList = new ArrayList<>();
 
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
+        getFollowingList();
+        getTodayFeelingData();
+        //팔로워 리스트
+
     }
+
     public CommunityFragment() {
     }
 
@@ -125,31 +138,59 @@ public class CommunityFragment extends Fragment implements Init {
 
 
         //나의 프로필
-        community_my_profil_img = (ImageView)view.findViewById(R.id.community_my_profil_img);
+        community_my_profil_img = (ImageView) view.findViewById(R.id.community_my_profil_img);
 
         //나의 상태 메시지
-        community_my_profil_status_txt = (TextView)view.findViewById(R.id.community_my_profil_status_txt);
+        community_my_profil_status_txt = (TextView) view.findViewById(R.id.community_my_profil_status_txt);
 
         //이미지 크롭
         community_my_profil_img.setBackground(new ShapeDrawable(new OvalShape()));
-        if(Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21) {
             community_my_profil_img.setClipToOutline(true);
         }
         //팔로잉 보기
-        community_following_num_txt = (TextView)view.findViewById(R.id.community_following_num_txt);
+        community_following_num_txt = (TextView) view.findViewById(R.id.community_following_num_txt);
         //팔로워보기
-        community_follower_num_txt = (TextView)view.findViewById(R.id.community_follower_num_txt);
+        community_follower_num_txt = (TextView) view.findViewById(R.id.community_follower_num_txt);
 
         //프로필 유저 이름
-        community_user_name = (TextView)view.findViewById(R.id.community_user_name);
+        community_user_name = (TextView) view.findViewById(R.id.community_user_name);
 
         //프로필 id
-        community_id = (TextView)view.findViewById(R.id.community_id);
+        community_id = (TextView) view.findViewById(R.id.community_id);
 
         //사용자의 감정 이미지 아이콘
-        community_my_profile_emotion_mark = (ImageView)view.findViewById(R.id.community_my_profile_emotion_mark);
+        community_my_profile_emotion_mark = (ImageView) view.findViewById(R.id.community_my_profile_emotion_mark);
 
-        getTodayFeelingData();
+        ImageView community_btn_emotion_box = (ImageView)view.findViewById(R.id.community_btn_emotion_box);
+
+        //감정박스 보기 (프래그먼트 전환)
+        community_btn_emotion_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                transaction.replace(R.id.root_frame2, new CommunityEmotionBox());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+
+/** * Fragment의 변경사항을 반영시킨다. */
+                transaction.commit();
+            }
+        });
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(getActivity(), new LinearLayoutManager(getActivity()).getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+
+        getFriendsList();
+        //팔로워 리스트
+
+
         //프로필 정보 가져오는 통신 메소드 호출
         getProfileData();
 
@@ -183,7 +224,7 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
 
-        ImageView community_btn_search_id = (ImageView)view.findViewById(R.id.community_btn_search_id);
+        ImageView community_btn_search_id = (ImageView) view.findViewById(R.id.community_btn_search_id);
 
         community_btn_search_id.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,14 +238,6 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.community_friends_list);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-        getFriendsList();
 
         return view;
 
@@ -248,6 +281,7 @@ public class CommunityFragment extends Fragment implements Init {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     public void getProfileData() {
         Log.v("getProfileData process", "getProfileData process!!!");
         Call<CommuProfileResponse> requestDetail = networkService.getUserProfile(SharedPreference.Companion.getInstance().getPrefStringData("data"));
@@ -258,14 +292,14 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("getProfileData", "getProfileData process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    if(response.body().getMessage().toString().equals("success")) {
+                    if (response.body().getMessage().toString().equals("success")) {
                         ArrayList<CommuProfileData> commuProfileDataList = response.body().getData();
                         Glide.with(getActivity())
                                 .load(commuProfileDataList.get(0).getProfile_url())
                                 .into(community_my_profil_img);
 
                         community_my_profil_img.setBackground(new ShapeDrawable(new OvalShape()));
-                        if(Build.VERSION.SDK_INT >= 21) {
+                        if (Build.VERSION.SDK_INT >= 21) {
                             community_my_profil_img.setClipToOutline(true);
                         }
                         community_id.setText(commuProfileDataList.get(0).getId());
@@ -288,9 +322,10 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
     }
+
     public void getTodayFeelingData() {
         Log.v("getTodayFeelingData", "getTodayFeelingData process!!!");
-        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), "2018-11-15");
+        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), "2018-11-16");
         requestDetail.enqueue(new Callback<FeelingDataResponse>() {
             @Override
             public void onResponse(Call<FeelingDataResponse> call, Response<FeelingDataResponse> response) {
@@ -298,48 +333,38 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("getTodayFeelingData", "getProfileData process2!!!");
                     Log.v("feeling message", response.body().getMessage().toString());
 
-                    if(response.body().getMessage().toString().equals("success")) {
                         ArrayList<FeelingData> feelingDataList = response.body().getData();
-                        Log.v("feeling data", feelingDataList.toString());
-                        if (feelingDataList.get(0).getBad()!= null) {
-                            Log.v("feeling data bad",emotion_mark_resource.length-feelingDataList.get(0).getBad()-3 +"");
-                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[emotion_mark_resource.length-feelingDataList.get(0).getBad()-3]);
-                            community_my_profil_status_txt.setText(feelingMsg[feelingMsg.length-feelingDataList.get(0).getBad()-3]);
+
+                        if (feelingDataList.isEmpty()) {
+                            Log.v("감정기록 다이얼로그 뜨기", "감정기록 다이얼로그 뜨기");
+                            RecordFeelingDialog dialog = new RecordFeelingDialog();
+                            dialog.show(getActivity().getFragmentManager(), "example");
                         }
-                        else if (feelingDataList.get(0).getGood()!= null) {
-                            Log.v("feeling data good",feelingDataList.get(0).getGood()+ 3 +"");
-                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[feelingDataList.get(0).getGood()+ 3]);
-                            community_my_profil_status_txt.setText(feelingMsg[feelingDataList.get(0).getGood()+ 3]);
+                        else if (feelingDataList.get(0).getBad() != null) {
+                            Log.v("feeling data bad", emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3 + "");
+                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3]);
+                            community_my_profil_status_txt.setText(feelingMsg[feelingMsg.length - feelingDataList.get(0).getBad() - 3]);
+                        } else if (feelingDataList.get(0).getGood() != null) {
+                            Log.v("feeling data good", feelingDataList.get(0).getGood() + 3 + "");
+                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[feelingDataList.get(0).getGood() + 3]);
+                            community_my_profil_status_txt.setText(feelingMsg[feelingDataList.get(0).getGood() + 3]);
                         }
 
-                    }
-                    else if (response.body().getMessage().toString().equals("get today's feeling fail")) {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.replace(R.id.root_frame2, new RecordFeelingFragment());
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.addToBackStack(null);
-
-                        transaction.commit();
-                    }
-
-                    else if (response.body().getMessage().toString().equals("access denied")) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
 
                 }
             }
 
             @Override
             public void onFailure(Call<FeelingDataResponse> call, Throwable t) {
-                Log.v("profile err", "profile err");
                 Log.i("err", t.getMessage());
             }
         });
     }
+
     public void getFriendsList() {
         Log.v("getFriendsList process", "getFriendsList process!!!");
         Log.v("getdate", getTime);
+
         Call<FriendsProfileResponse> requestDetail = networkService.getFollowingsFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
         requestDetail.enqueue(new Callback<FriendsProfileResponse>() {
             @Override
@@ -349,20 +374,33 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("friends list message", response.body().getMessage().toString());
 
                     if (response.body().getMessage().toString().equals("success")) {
-                        ArrayList<FriendsProfileData> friendsProfileDataList = response.body().getData();
+                        friendsProfileDataList = response.body().getData();
+
+                        //profile 이미지, id, name, good, bad, comment
+
                         Log.v("friendsProfileDataList", friendsProfileDataList.toString());
 
-                        CommunityFriendListAdapter communityFriendListAdapter = new CommunityFriendListAdapter(getActivity(),friendsProfileDataList);
+                        if (friendsList != null) {
+                            for (int i = 0; i < friendsList.size(); i++) {
+                                for (int j =0; j < friendsProfileDataList.size(); j++) {
+                                    if (friendsList.get(i).getId().equals(friendsProfileDataList.get(j).getId())) {
+                                        if (friendsProfileDataList.get(j).getGood() != null)
+                                            friendsList.get(i).setGood(friendsProfileDataList.get(j).getGood());
+                                        else if (friendsProfileDataList.get(j).getBad() != null)
+                                            friendsList.get(i).setBad(friendsProfileDataList.get(j).getBad());
+                                        if (friendsProfileDataList.get(j).getComment() != null)
+                                            friendsList.get(i).setComment(friendsProfileDataList.get(j).getComment());
+                                    }
+                                }
+                            }
+                        }
+
+                        Log.v("friends list", friendsList.toString());
+
+                        CommunityFriendListAdapter communityFriendListAdapter = new CommunityFriendListAdapter(getActivity(), friendsList);
 
                         mRecyclerView.setAdapter(communityFriendListAdapter);
-
-
                     }
-                    else if (response.body().getMessage().toString().equals("access denied")) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
-
                 }
             }
 
@@ -372,4 +410,36 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
     }
+    public void getFollowingList() {
+        Log.v("getFollowerList process", "getFollowerList process!!!");
+        Call<FollowingListResponse> requestDetail = networkService.getFollowingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<FollowingListResponse>() {
+            @Override
+            public void onResponse(Call<FollowingListResponse> call, Response<FollowingListResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getFollowerList", "getFollowerList process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                    if (response.body().getMessage().toString().equals("success")) {
+                        followingList = response.body().getData();
+                        //프로필 이미지, id, name
+                        Log.v("followerDataList", followingList.toString());
+
+                        friendsList = new ArrayList<>();
+
+                        for (int i= 0; i < followingList.size(); i++) {
+                            friendsList.add(new FriendsProfileData(followingList.get(i).getProfile_img(), followingList.get(i).getId(), followingList.get(i).getName(), null, null, null) );
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FollowingListResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
 }

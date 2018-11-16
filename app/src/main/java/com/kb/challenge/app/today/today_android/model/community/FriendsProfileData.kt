@@ -6,8 +6,8 @@ package com.kb.challenge.app.today.today_android.model.community
 data class FriendsProfileData (
         var profile_img : String,
         var id : String,
-        var name : String,
+        var name : String? = null,
         var good : Int? = null,
         var bad : Int? = null,
-        var comment : String
+        var comment : String ?= null
 )

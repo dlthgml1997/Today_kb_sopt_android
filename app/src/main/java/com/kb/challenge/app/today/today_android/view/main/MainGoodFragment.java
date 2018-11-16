@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
@@ -24,6 +25,8 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,15 +72,7 @@ public class MainGoodFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 200) {
-            Log.v("yong", data.getStringExtra("result"));
-        }
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +93,8 @@ public class MainGoodFragment extends Fragment {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
 
+        TextView main_name_txt = (TextView)view.findViewById(R.id.main_name_txt);
+
         deposit_spinner = (Spinner) view.findViewById(R.id.deposit_spinner);
         //스피너 어댑터 설정
 
@@ -105,12 +102,19 @@ public class MainGoodFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deposit_spinner.setAdapter(adapter);
 
+        int good = getArguments().getInt("feeling_data");
+        String user_name = getArguments().getString("user_name");
+        main_name_txt.setText(user_name + "님!");
+
+        Log.v("good", good + "");
+        deposit_spinner.setSelection(good);
+
         //스피너 이벤트 발생
         deposit_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //각 항목 클릭시 포지션값을 토스트에 띄운다.
-                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -119,7 +123,7 @@ public class MainGoodFragment extends Fragment {
             }
         });
 
-        Button btn_main_deposit = (Button) view.findViewById(R.id.btn_main_deposit);
+        TextView btn_main_deposit = (TextView) view.findViewById(R.id.btn_main_deposit);
 
         btn_main_deposit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,23 +187,16 @@ public class MainGoodFragment extends Fragment {
                     Log.v("saving process2", "saving process2!!!");
                     Log.v("message", response.body().getMessage().toString());
 
-                    if (response.body().getMessage().toString().equals("success")) {
-
-
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                        transaction.replace(R.id.root_frame, new MainDepositFragment());
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.addToBackStack(null);
+                    transaction.replace(R.id.root_frame, new MainDepositFragment());
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.addToBackStack(null);
 
 /** * Fragment의 변경사항을 반영시킨다. */
-                        transaction.commit();
-                    }
-                    else if (response.body().getMessage().toString().equals("access denied")){
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    transaction.commit();
                 }
+
             }
 
             @Override
