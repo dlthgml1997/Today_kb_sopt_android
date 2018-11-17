@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/community_user_img"
         android:letterSpacing="-0.02"
         android:text="오늘은"

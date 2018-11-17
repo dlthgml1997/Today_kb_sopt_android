@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:background="@drawable/button_border"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="304dp"
@@ -12,7 +13,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="29dp"
             android:textSize="20sp"
             android:textColor="#424242"
             android:letterSpacing="-0.025"
@@ -24,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:textSize="16sp"
             android:textColor="#424242"
             android:letterSpacing="-0.02"
@@ -62,7 +63,8 @@
             android:layout_height="wrap_content"
             android:text="저장 및 적금"
             android:layout_marginRight="32dp"
-            android:textColor="@color/azure"
+            android:textColor="#03a5ff"
+            android:fontFamily="@font/notosanskr_medium_hestia"
             android:layout_marginBottom="32dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"

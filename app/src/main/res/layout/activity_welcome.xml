@@ -30,7 +30,7 @@
                 android:textColor="#424242"
                 android:letterSpacing="-0.02"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:fontFamily="@font/notosanskr_regular_hestia"
                 android:text="오늘은 서비스를 사용하기 위한"/>
             <TextView
@@ -39,7 +39,7 @@
                 android:textColor="#424242"
                 android:letterSpacing="-0.02"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:fontFamily="@font/notosanskr_regular_hestia"
                 android:text="초기 설정을 시작합니다"/>
     </LinearLayout>

@@ -37,7 +37,7 @@
             android:id="@+id/coin_cur_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15,000"
+            android:text="0"
             android:textSize="32dp"
             android:textColor="#424242"
             android:letterSpacing="-0.041"
@@ -116,10 +116,9 @@
         <Button
             android:id="@+id/coin_btn_withdrawal"
             android:layout_width="96dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="인출"
             android:layout_alignParentBottom="true"
-
             android:layout_marginRight="18dp"
             android:background="@drawable/button_border2"/>
         <ImageView

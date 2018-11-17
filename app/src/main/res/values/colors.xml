@@ -12,5 +12,6 @@
     <color name="sky">#79d0ff</color>
     <color name="sapphire">#1e53b0</color>
     <color name="cursorColor">#e6e6e6</color>
-    <color name="errorcursor">#fca4a3</color>
+    <color name="errorcursor">#ff7371</color>
+
 </resources>

@@ -4,6 +4,7 @@ package com.kb.challenge.app.today.today_android.view.coin;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -124,8 +125,9 @@ public class CoinFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         getSavingDetail();
-
+        //changeGoalBackground();
         getSavingList();
+
 
         Button coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
@@ -176,14 +178,6 @@ public class CoinFragment extends Fragment {
 
 
     public void changeGoalBackground() { //목표금액이랑 지금 금액 같아지면 배경변경
-        if (coin_cur_money == coin_target_money_txt) {
-            rl_coin_goal_box.setBackgroundResource(R.drawable.img_coin_pig_success);
-            img_coin_pig.setVisibility(View.INVISIBLE);
-            coin_btn_withdrawal.setText("목표달성! 인출하기");
-            ic_qna_coin.setImageResource(R.drawable.ic_coin_coin_white_16_px);
-
-
-        }
 
     }
 
@@ -236,6 +230,13 @@ public class CoinFragment extends Fragment {
                     Log.v("coin saving list", coinSavingItems.toString());
                     Log.v("totalMoney", totalMoney + " ");
                     coin_cur_money.setText(String.valueOf(totalMoney));
+
+                    if (Integer.parseInt(coin_cur_money.getText().toString()) >= Integer.parseInt(coin_target_money_txt.getText().toString())) {
+                        rl_coin_goal_box.setBackgroundResource(R.drawable.img_coin_pig_success);
+                        img_coin_pig.setVisibility(View.INVISIBLE);
+                        coin_btn_withdrawal.setText("목표달성! 인출하기");
+                        ic_qna_coin.setImageResource(R.drawable.ic_coin_coin_white_16_px);
+                    }
 
                     CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(), coinSavingItems);
 

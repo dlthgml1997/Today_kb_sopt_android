@@ -29,7 +29,6 @@
 
 
         <EditText
-
             android:inputType="textVisiblePassword"
             android:id="@+id/login_edit_id"
             android:letterSpacing="-0.019"
@@ -40,7 +39,6 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="16dp"
             android:textColorHighlight="#e6e6e6"
-            android:textCursorDrawable="@drawable/cursor"
             android:layout_marginTop="48dp"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:hint="아이디"
@@ -67,8 +65,6 @@
             android:textColor="#ff6e6e"/>
         </LinearLayout>
         <EditText
-            android:background="@null"
-            android:textCursorDrawable="@drawable/cursor"
             android:inputType="textPassword"
             android:id="@+id/login_edit_passwd"
             android:layout_width="match_parent"
@@ -78,6 +74,7 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="16dp"
             android:letterSpacing="-0.019"
+            android:textColorHighlight="#e6e6e6"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:hint="비밀번호"
             android:textColorHint="#c9c9c9"
@@ -134,7 +131,6 @@
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/notosanskr_regular_hestia"
             android:text="계정이 없으신가요?"
-
             android:letterSpacing="-0.017"
             android:textColor="#424242"
             android:textSize="13sp" />
