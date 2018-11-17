@@ -332,6 +332,11 @@ public class CommunityFragment extends Fragment implements Init {
 
     public void getTodayFeelingData() {
         Log.v("getTodayFeelingData", "getTodayFeelingData process!!!");
+        //통신할 때 보낼 오늘의 날짜
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        getTime = sdf.format(date);
         Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
         requestDetail.enqueue(new Callback<FeelingDataResponse>() {
             @Override
@@ -358,6 +363,7 @@ public class CommunityFragment extends Fragment implements Init {
                                     Fragment fragment = new RecordFeelingFragment();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("user_name", user_name);
+                                    Log.v("feeling record로 이동", user_name);
                                     fragment.setArguments(bundle);
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.root_frame2, fragment, "feeling_record");

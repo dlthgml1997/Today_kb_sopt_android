@@ -1,6 +1,5 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.model.login.LoginData;
 import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
@@ -21,7 +20,7 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,8 +86,12 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
     public void signIn() {
         Log.v("login process", "login process!!!");
-        final LoginData loginData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString());
-        Call<LoginResponse> requestDetail = networkService.login(loginData);
+        String fcm_token = FirebaseInstanceId.getInstance().getToken();
+
+        Log.v("fcm_token", fcm_token);
+        SharedPreference.Companion.getInstance().setPrefData("fcm_token", fcm_token);
+        final LoginData signupData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString(), fcm_token);
+        Call<LoginResponse> requestDetail = networkService.login(signupData);
         requestDetail.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

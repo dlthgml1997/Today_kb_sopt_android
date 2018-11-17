@@ -10,23 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.login.LoginData;
-import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
 import com.kb.challenge.app.today.today_android.model.login.SignupData;
-import com.kb.challenge.app.today.today_android.model.setting.SignupAndSettingData;
+import com.kb.challenge.app.today.today_android.model.login.LoginResponse;
+import com.kb.challenge.app.today.today_android.model.login.SignupCheckData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
-
-import org.w3c.dom.Text;
-
-import java.sql.Time;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,10 +34,11 @@ public class SignUpActivity extends AppCompatActivity implements Init {
     private EditText signup_edit_id;
     private EditText signup_edit_passwd;
     private EditText signup_edit_passwd_again;
-    private LoginData signupData;
+    private SignupData signupData;
     private BaseModel msg;
     private LinearLayout ll_act_signup_id_error;
     private LinearLayout ll_act_signup_password_error;
+    private LoginData loginData;
 
     @Override
     public void init() {
@@ -67,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity implements Init {
             @Override
             public void onClick(View view) {
                 Log.v("id & passwd", signup_edit_id.getText().toString() + "&" + signup_edit_passwd.getText().toString());
-                signupData = new LoginData(signup_edit_id.getText().toString(), signup_edit_passwd.getText().toString());
+                signupData = new SignupData(signup_edit_id.getText().toString(), signup_edit_passwd.getText().toString());
                 if (!signup_edit_passwd.getText().toString().equals(signup_edit_passwd_again.getText().toString())){
                     ll_act_signup_password_error.setVisibility(View.VISIBLE);
                 }
@@ -90,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity implements Init {
     public void signupCheckID() {
         Log.v("check process", "check process!!!");
 
-        SignupData data = new SignupData(signupData.getId());
+        SignupCheckData data = new SignupCheckData(signupData.getId());
         Call<BaseModel> requestDetail = networkService.signupCheckId(data);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
@@ -115,7 +111,13 @@ public class SignUpActivity extends AppCompatActivity implements Init {
     }
     public void signIn() {
         Log.v("login process", "login process!!!");
-        Call<LoginResponse> requestDetail = networkService.login(signupData);
+        String fcm_token = FirebaseInstanceId.getInstance().getToken();
+
+        Log.v("fcm_token", fcm_token);
+        SharedPreference.Companion.getInstance().setPrefData("fcm_token", fcm_token);
+
+        final LoginData loginData = new LoginData(signupData.getId(),signupData.getPasswd(), fcm_token);
+        Call<LoginResponse> requestDetail = networkService.login(loginData);
         requestDetail.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
