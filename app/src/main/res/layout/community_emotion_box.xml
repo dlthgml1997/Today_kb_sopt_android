@@ -30,7 +30,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="28dp"
         />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:backgroundTint="#eeeeee"
+        />
     <android.support.v7.widget.RecyclerView
         android:layout_below="@id/community_emotion_profile_img"
         android:layout_width="match_parent"

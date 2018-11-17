@@ -93,7 +93,7 @@
             android:textSize="14sp"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:textColor="#4a90e2"
-            android:letterSpacing="-0.18"
+            android:letterSpacing="-0.018"
             />
         <TextView
             android:id="@+id/btn_do_not_deposit"
@@ -104,7 +104,7 @@
             android:textSize="14sp"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:textColor="@color/very_light_pink"
-            android:letterSpacing="-0.18"
+            android:letterSpacing="-0.018"
             />
     </LinearLayout>
 </RelativeLayout>

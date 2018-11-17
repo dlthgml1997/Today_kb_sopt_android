@@ -72,9 +72,9 @@ interface NetworkService {
     @PUT("user")
     fun userSetting(
             @Header("authorization") token : String,
-            @Part("name") name :String,
+            @Part("name") name :RequestBody,
             @Part profile_url : MultipartBody.Part,
-            @Part("goal") goal:String,
+            @Part("goal") goal:RequestBody,
             @Part("goal_money") goal_money:Int,
             @Part("push_time") push_time: Time
             ) :Call<BaseModel>

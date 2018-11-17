@@ -154,7 +154,7 @@ public class CommunityEmotionBox extends Fragment implements Init {
         String getTime = sdf.format(date);
 
         Log.v("getEmotionBoxList", "getEmotionBoxList process!!!");
-        Call<EmotionBoxResponse> requestDetail = networkService.getEmotionBoxList(SharedPreference.Companion.getInstance().getPrefStringData("data"), "2018-11-16");
+        Call<EmotionBoxResponse> requestDetail = networkService.getEmotionBoxList(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
         requestDetail.enqueue(new Callback<EmotionBoxResponse>() {
             @Override
             public void onResponse(Call<EmotionBoxResponse> call, Response<EmotionBoxResponse> response) {

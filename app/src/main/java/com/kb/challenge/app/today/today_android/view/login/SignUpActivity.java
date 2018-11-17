@@ -128,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity implements Init {
 
                     Log.v("token", loginResponse.getToken());
                     SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
-                    startActivity(new Intent(SignUpActivity.this, FirstSettingActivity.class));
+                    startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
 
                 }
             }

@@ -196,15 +196,18 @@ public class FirstSettingActivity extends AppCompatActivity implements
         Time time_data = new Time(h, m, 00);
         Log.v("push time", time_data + " ");
 
-        String userName_trim = userName.replaceAll("\"", "");
-        String title_trim = title.replaceAll("\"", "");
-        Log.v("user trim & title trim", userName_trim + "&" + title_trim);
 
-        userSettingData = new UserSettingData(userName_trim, title_trim, amount, time_data);
+        RequestBody name_body =
+                RequestBody.create(MediaType.parse("text/plain"), userName);
+        RequestBody title_body =
+                RequestBody.create(MediaType.parse("text/plain"), title);
+
+
+        userSettingData = new UserSettingData(userName, title, amount, time_data);
 
         Log.v("usersetting data", userSettingData.toString());
 
-        Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), userName, profile_image, title, amount, time_data);
+        Call<BaseModel> requestDetail = networkService.userSetting(SharedPreference.Companion.getInstance().getPrefStringData("data"), name_body, profile_image, title_body, amount, time_data);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {

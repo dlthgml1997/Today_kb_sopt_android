@@ -93,6 +93,9 @@ public class CommunityFragment extends Fragment implements Init {
     private ArrayList<FriendsProfileData> friendsList = new ArrayList<>();
     private String user_name;
 
+    public final static int[] profile_emotion_mark_resource = {R.drawable.img_sns_profile_emotion_bad_1_40_px,R.drawable.img_sns_profile_emotion_bad_2_40_px,R.drawable.img_sns_profile_emotion_bad_3_40_px,R.drawable.img_sns_profile_emotion_soso_0_40_px,R.drawable.img_sns_profile_emotion_good_1_40_px,R.drawable.img_sns_profile_emotion_good_2_40_px,R.drawable.img_sns_profile_emotion_good_3_40_px };
+
+
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -329,7 +332,7 @@ public class CommunityFragment extends Fragment implements Init {
 
     public void getTodayFeelingData() {
         Log.v("getTodayFeelingData", "getTodayFeelingData process!!!");
-        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), "2018-11-16");
+        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
         requestDetail.enqueue(new Callback<FeelingDataResponse>() {
             @Override
             public void onResponse(Call<FeelingDataResponse> call, Response<FeelingDataResponse> response) {
@@ -338,7 +341,7 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("feeling message", response.body().getMessage().toString());
 
                         final ArrayList<FeelingData> feelingDataList = response.body().getData();
-
+                        Log.v("feeling data list!!!", feelingDataList.toString());
                         if (feelingDataList.isEmpty()) {
                             Log.v("감정기록 다이얼로그 뜨기", "감정기록 다이얼로그 뜨기");
 //                            RecordFeelingDialog dialog = new RecordFeelingDialog();
@@ -368,12 +371,12 @@ public class CommunityFragment extends Fragment implements Init {
                             go_to_record_feeling_dialog.show();
                         }
                         else if (feelingDataList.get(0).getBad() != null) {
-                            Log.v("feeling data bad", emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3 + "");
-                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3]);
+                            Log.v("feeling data bad", profile_emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3 + "");
+                            community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[profile_emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3]);
                             community_my_profil_status_txt.setText(feelingMsg[feelingMsg.length - feelingDataList.get(0).getBad() - 3]);
                         } else if (feelingDataList.get(0).getGood() != null) {
                             Log.v("feeling data good", feelingDataList.get(0).getGood() + 3 + "");
-                            community_my_profile_emotion_mark.setBackgroundResource(emotion_mark_resource[feelingDataList.get(0).getGood() + 3]);
+                            community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[feelingDataList.get(0).getGood() + 3]);
                             community_my_profil_status_txt.setText(feelingMsg[feelingDataList.get(0).getGood() + 3]);
                         }
 

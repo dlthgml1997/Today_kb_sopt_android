@@ -3,6 +3,8 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -76,6 +78,12 @@ public class CommunityFriendListAdapter extends RecyclerView.Adapter<CommunityFr
         Glide.with(context)
                 .load(friendsProfileDataList.get(i).getProfile_img())
                 .into(viewHolder.community_user_img);
+
+        viewHolder.community_user_img.setBackground(new ShapeDrawable(new OvalShape()));
+        if(Build.VERSION.SDK_INT >= 21) {
+            viewHolder.community_user_img.setClipToOutline(true);
+        }
+
         viewHolder.community_user_id_txt.setText(friendsProfileDataList.get(i).getName());
         viewHolder.community_status_txt.setText(friendsProfileDataList.get(i).getComment());
         if (friendsProfileDataList.get(i).getBad()!= null)

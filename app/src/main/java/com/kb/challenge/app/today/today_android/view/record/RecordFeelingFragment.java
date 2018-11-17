@@ -251,12 +251,14 @@ public class RecordFeelingFragment extends Fragment {
                 case 2:
                     SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - progress_status - 3));
                     new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
+                    break;
                 case 3:
                 case 4:
                 case 5:
                 case 6:
                     SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - 3));
                     new FeelingData(seekBar.getMax() - 3, null, feelingMsg[3]);
+                    break;
             }
         }
 

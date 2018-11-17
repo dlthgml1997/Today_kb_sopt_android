@@ -49,7 +49,8 @@ public class CommunitySearchListAdapter extends RecyclerView.Adapter<CommunitySe
         if(Build.VERSION.SDK_INT >= 21) {
             holder.community_search_following_img.setClipToOutline(true);
         }
-        holder.community_search_following_id.setText(searchUserList.get(position).getName());
+        holder.community_search_following_name.setText(searchUserList.get(position).getName());
+        holder.community_search_following_id.setText(searchUserList.get(position).getUser_ID());
     }
 
 
@@ -61,10 +62,11 @@ public class CommunitySearchListAdapter extends RecyclerView.Adapter<CommunitySe
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView community_search_following_id;
         public ImageView community_search_following_img;
-
+        public TextView community_search_following_name;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            community_search_following_name = (TextView)itemView.findViewById(R.id.community_search_following_name);
             community_search_following_id = (TextView) itemView.findViewById(R.id.community_search_following_id);
             community_search_following_img = (ImageView)itemView.findViewById(R.id.community_search_following_img);
         }
