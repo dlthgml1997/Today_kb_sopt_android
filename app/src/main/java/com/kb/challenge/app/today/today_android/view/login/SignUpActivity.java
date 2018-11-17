@@ -72,6 +72,7 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                     ll_act_signup_password_error.setVisibility(View.VISIBLE);
                 }
                 else {
+                    ll_act_signup_password_error.setVisibility(View.INVISIBLE);
                     signupCheckID();
                 }
             }
@@ -98,9 +99,9 @@ public class SignUpActivity extends AppCompatActivity implements Init {
                 if (response.isSuccessful()) {
                     Log.v("check process2", "check process2!!!");
                     Log.v("check message", response.body().getMessage().toString());
+                    ll_act_signup_id_error.setVisibility(View.INVISIBLE);
                     if (response.body().getMessage().toString().equals("success"))
                         signup();
-
                 }
                 else {
                     ll_act_signup_id_error.setVisibility(View.VISIBLE);

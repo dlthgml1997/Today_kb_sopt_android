@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
    <LinearLayout
+       android:layout_marginTop="49dp"
        android:id="@+id/ll"
        android:layout_centerHorizontal="true"
        android:orientation="vertical"
@@ -50,24 +51,9 @@
            android:layout_height="wrap_content"
            android:layout_centerHorizontal="true"
            android:layout_gravity="center"
-           android:layout_marginTop="24dp"
-           android:id="@+id/pig"
-           android:src="@drawable/img_createaccount_pig" />
+           android:layout_marginTop="8dp"
+           android:id="@+id/account_create_view"
+           android:src="@drawable/img_createaccount_g" />
 
    </LinearLayout>
-    <RelativeLayout
-        android:layout_below="@+id/ll"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/rl_account_create"
-        android:layout_width="278dp"
-        android:layout_height="236dp">
-        <ImageView
-            android:src="@drawable/img_linkaccount_g"
-            android:id="@+id/account_create_view"
-            android:layout_width="238dp"
-            android:layout_height="161dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            />
     </RelativeLayout>
-</RelativeLayout>

@@ -66,8 +66,8 @@
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="31dp"
-                android:layout_marginTop="31dp"
+                android:layout_marginBottom="29dp"
+                android:layout_marginTop="29dp"
                 android:background="#e6e6e6" />
 
             <View
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="8dp"
                 android:background="#e6e6e6" />
 
         </RelativeLayout>

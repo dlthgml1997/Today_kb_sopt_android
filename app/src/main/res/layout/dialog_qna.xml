@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_border">
     <RelativeLayout
+        android:background="#FFFFFF"
         android:layout_width="304dp"
         android:layout_height="300dp"
         >

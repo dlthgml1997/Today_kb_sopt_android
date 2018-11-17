@@ -34,17 +34,29 @@
     <TextView
         android:layout_above="@+id/rl_withdraw_yes_or_no"
         android:id="@+id/txt_confirm_withdraw"
-        android:fontFamily="@font/notosanskr_medium_hestia"
-        android:layout_marginBottom="56dp"
+        android:fontFamily="@font/notosanskr_regular_hestia"
         android:layout_below="@+id/img_goal_pig"
         android:textSize="20dp"
         android:textColor="#545454"
-        android:letterSpacing="-0.01"
+        android:letterSpacing="-0.024"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="정말 인출하실건가요?"/>
+
+    <TextView
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:layout_marginBottom="56dp"
+        android:layout_below="@+id/txt_confirm_withdraw"
+        android:textSize="11sp"
+        android:textColor="#bdbdbd"
+        android:letterSpacing="-0.014"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="아니오를 누르면 인출하기가 취소됩니다"/>
     <RelativeLayout
+        android:layout_marginTop="77dp"
         android:id="@+id/rl_withdraw_yes_or_no"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
