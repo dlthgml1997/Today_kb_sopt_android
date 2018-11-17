@@ -6,19 +6,13 @@ import com.kb.challenge.app.today.today_android.model.coin.CoinDetailResponse
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse
 import com.kb.challenge.app.today.today_android.model.community.*
-import com.kb.challenge.app.today.today_android.model.login.LoginData
-import com.kb.challenge.app.today.today_android.model.login.LoginResponse
-import com.kb.challenge.app.today.today_android.model.login.SignupData
-import com.kb.challenge.app.today.today_android.model.login.UserNameData
+import com.kb.challenge.app.today.today_android.model.login.*
 import com.kb.challenge.app.today.today_android.model.record.FeelingData
 import com.kb.challenge.app.today.today_android.model.record.FeelingDataResponse
-import com.kb.challenge.app.today.today_android.model.setting.SignupAndSettingData
-import com.kb.challenge.app.today.today_android.model.setting.UserSettingData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.sql.Date
 import java.sql.Time
 
 interface NetworkService {
@@ -88,13 +82,13 @@ interface NetworkService {
     //09.회원가입
     @POST("signup")
     fun signup(
-            @Body loginData: LoginData
+            @Body signupData: SignupData
     ) :Call<BaseModel>
 
     //10.아이디 중복체크
     @POST("signup/check")
     fun signupCheckId(
-            @Body id : SignupData
+            @Body id : SignupCheckData
     ) :Call<BaseModel>
 
     @POST("follow/{id}")
@@ -144,7 +138,7 @@ interface NetworkService {
     @POST("box")
     fun sendCheerupMsg(
             @Header("authorization") token : String,
-            @Body loginData : LoginData
+            @Body signupData : SignupData
     )
 
     @GET("user/name")

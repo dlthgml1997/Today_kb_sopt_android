@@ -1,5 +1,5 @@
 
-package com.kb.challenge.app.today.today_android.view.main;
+package com.kb.challenge.app.today.today_android;
 
 
 import android.content.Intent;
@@ -24,9 +24,15 @@ import com.kb.challenge.app.today.today_android.view.community.CommunityFollower
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
 import com.kb.challenge.app.today.today_android.view.login.SplashActivity;
+import com.kb.challenge.app.today.today_android.view.main.CustomViewPager;
+import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
+import com.kb.challenge.app.today.today_android.view.main.MainDepositFragment;
+import com.kb.challenge.app.today.today_android.view.main.MainFragment;
+import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Stack;
 
@@ -41,7 +47,10 @@ public class MainActivity extends AppCompatActivity
         CommunityFollowerFragment.OnFragmentInteractionListener,
         MainBadFragment.OnFragmentInteractionListener,
         RecordFeelingFragment.OnFragmentInteractionListener,
-        CommunityEmotionBox.OnFragmentInteractionListener{
+        CommunityEmotionBox.OnFragmentInteractionListener {
+
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     Long backKeyPressedTime = 0L;
     private PagerAdapter adapter;
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() != 0)
+        if (getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
         else {
             super.onBackPressed();
@@ -157,10 +166,12 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
     public void inVisibleTabLayout() {
         ((ViewGroup) tabLayout).setVisibility(View.GONE);
 
     }
+
     public void visibleTabLayout() {
         ((ViewGroup) tabLayout).setVisibility(View.VISIBLE);
 

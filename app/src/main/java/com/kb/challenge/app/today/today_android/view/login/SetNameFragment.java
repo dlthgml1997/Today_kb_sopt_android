@@ -141,9 +141,9 @@ public class SetNameFragment extends Fragment {
                                 break;
 
                         }
+                        dialog.dismiss();
                     }
                 });
-
                 builder.show();
             }
         });

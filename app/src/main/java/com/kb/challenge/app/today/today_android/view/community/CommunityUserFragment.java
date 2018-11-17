@@ -1,14 +1,12 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
@@ -23,8 +21,7 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,8 +101,9 @@ public class CommunityUserFragment extends Fragment implements Init {
         community_ic_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().popBackStack();
                 ((MainActivity) getActivity()).visibleTabLayout();
+                getFragmentManager().popBackStack();
+
             }
         });
         return view;
@@ -118,6 +116,7 @@ public class CommunityUserFragment extends Fragment implements Init {
     @Override
     public void onDetach() {
         super.onDetach();
+        ((MainActivity) getActivity()).visibleTabLayout();
 
     }
     public void follow() {

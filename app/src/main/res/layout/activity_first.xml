@@ -4,19 +4,30 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_background">
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="61dp"
+        android:layout_height="75dp"
+        android:src="@drawable/logo_start_white"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="46dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <Button
         android:id="@+id/btn_login"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="37dp"
+        android:background="@drawable/button_border"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_width="327dp"
+        android:layout_width="312dp"
         android:layout_height="48dp"
-        android:backgroundTint="#2699fb"
-        android:text="로그인 또는 시작하기"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
+        android:backgroundTint="#ffffff"
+        android:text="시작하기"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:textColor="#000000"
+        android:letterSpacing="-0.019"
+        android:textAlignment="center"
         android:textSize="15sp"
         />
 

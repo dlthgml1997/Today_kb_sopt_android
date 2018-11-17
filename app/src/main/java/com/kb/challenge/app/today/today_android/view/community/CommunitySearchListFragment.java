@@ -1,7 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +25,7 @@ import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunitySearchListAdapter;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
 import java.util.ArrayList;
 
@@ -96,7 +96,9 @@ public class CommunitySearchListFragment extends Fragment implements Init {
         community_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity) getActivity()).visibleTabLayout();
                 getFragmentManager().popBackStack();
+
             }
         });
 
@@ -174,6 +176,7 @@ public class CommunitySearchListFragment extends Fragment implements Init {
     @Override
     public void onDetach() {
         super.onDetach();
+        ((MainActivity) getActivity()).visibleTabLayout();
 
     }
 

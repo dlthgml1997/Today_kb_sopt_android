@@ -2,13 +2,10 @@ package com.kb.challenge.app.today.today_android.view.record;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +20,7 @@ import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.dialog.RecordCommentDialog;
-import com.kb.challenge.app.today.today_android.view.dialog.RecordFeelingEmotion;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.R;
@@ -121,11 +115,11 @@ public class RecordFeelingFragment extends Fragment {
                 final Dialog save_feeling_record_dialog = new Dialog(getActivity());
                 save_feeling_record_dialog.setContentView(R.layout.dialog_record_emotion);
 
-                TextView txt_name = (TextView)save_feeling_record_dialog.findViewById(R.id.txt_name);
+                TextView txt_name = (TextView) save_feeling_record_dialog.findViewById(R.id.txt_name);
 
                 txt_name.setText(user_name + "님,");
 
-                TextView btn_save_dialog = (TextView)save_feeling_record_dialog.findViewById(R.id.btn_save_dialog);
+                TextView btn_save_dialog = (TextView) save_feeling_record_dialog.findViewById(R.id.btn_save_dialog);
 
                 btn_save_dialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -136,7 +130,7 @@ public class RecordFeelingFragment extends Fragment {
                     }
                 });
 
-                TextView btn_cancel_dialog = (TextView)save_feeling_record_dialog.findViewById(R.id.btn_cancel_dialog);
+                TextView btn_cancel_dialog = (TextView) save_feeling_record_dialog.findViewById(R.id.btn_cancel_dialog);
 
                 btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -244,24 +238,23 @@ public class RecordFeelingFragment extends Fragment {
     public void recordFeeling() {
         Log.v("feeling save process", "feeling save process!!!");
         feelingData = new FeelingData(0, null, feelingMsg[3]);
-        if (!SharedPreference.Companion.getInstance().getPrefStringData("user_id").isEmpty()) {
-            switch (progress_status) {
-                case 0:
-                case 1:
-                case 2:
-                    SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - progress_status - 3));
-                    new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
-                    break;
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                    SharedPreference.Companion.getInstance().setPrefData(SharedPreference.Companion.getInstance().getPrefStringData("user_id") + "" + "feeling_score", (seekBar.getMax() - 3));
-                    new FeelingData(seekBar.getMax() - 3, null, feelingMsg[3]);
-                    break;
-            }
+
+        switch (progress_status) {
+            case 0:
+            case 1:
+            case 2:
+                feelingData = new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                feelingData = new FeelingData(progress_status - 3, null, feelingMsg[3]);
+                break;
+
         }
 
+        Log.v("feeling data!!!!!!!!", feelingData.toString());
         //감정기록하기 (token 값, feelingdata)
         final Call<BaseModel> requestDetail = networkService.recordFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), feelingData);
         requestDetail.enqueue(new Callback<BaseModel>() {
@@ -290,7 +283,7 @@ public class RecordFeelingFragment extends Fragment {
                             Fragment fragment = new MainGoodFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             Bundle bundle = new Bundle(2); // 파라미터는 전달할 데이터 개수
-                            bundle.putInt("feeling_data", seekBar.getMax() - 3); // key , value
+                            bundle.putInt("feeling_data", progress_status - 3); // key , value
                             bundle.putString("user_name", user_name);
                             fragment.setArguments(bundle);
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */

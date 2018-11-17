@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="#ffffff"
-        android:letterSpacing="-0.18"
+        android:letterSpacing="-0.018"
         android:text="티끌모으는 습관"
         android:fontFamily="@font/notosanskr_medium_hestia"
         android:layout_marginTop="314dp"/>

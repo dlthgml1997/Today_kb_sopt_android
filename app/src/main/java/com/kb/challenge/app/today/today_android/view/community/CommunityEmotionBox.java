@@ -1,7 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,15 +16,12 @@ import android.widget.ImageView;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.model.community.EmotionBoxData;
 import com.kb.challenge.app.today.today_android.model.community.EmotionBoxResponse;
-import com.kb.challenge.app.today.today_android.model.community.FollowListResponse;
-import com.kb.challenge.app.today.today_android.model.community.FollowerData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityEmotionBoxListAdapter;
-import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowerListAdapter;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,9 +1,12 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
+//<<<<<<< HEAD
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+//=======
+//>>>>>>> c9c5b33b13021c924671d48fb9016a3cdcb7122a
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,23 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
-import com.kb.challenge.app.today.today_android.model.setting.SignupAndSettingData;
 import com.kb.challenge.app.today.today_android.model.setting.UserSettingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
-import java.io.File;
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -36,8 +34,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.io.InputStream;
 
 public class FirstSettingActivity extends AppCompatActivity implements
         PickTimeFragment.OnTimePickerSetListener,
