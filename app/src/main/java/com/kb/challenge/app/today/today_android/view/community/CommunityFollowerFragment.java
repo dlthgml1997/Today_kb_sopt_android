@@ -173,7 +173,7 @@ public class CommunityFollowerFragment extends Fragment implements Init {
 
                     if (response.body().getMessage().toString().equals("success")) {
                         ArrayList<FollowerData> followerDataList = response.body().getData();
-                        Log.v("followerDataList", followerDataList.toString());
+                        Log.v("followerDataList22323", followerDataList.toString());
 
                         CommunityFollowerListAdapter communityFollowerListAdapter = new CommunityFollowerListAdapter(getActivity(),followerDataList);
                         mRecyclerView.setAdapter(communityFollowerListAdapter);
@@ -185,7 +185,7 @@ public class CommunityFollowerFragment extends Fragment implements Init {
 
             @Override
             public void onFailure(Call<FollowListResponse> call, Throwable t) {
-                Log.i("err", t.getMessage());
+                Log.i("get follow list err", t.getMessage());
             }
         });
     }

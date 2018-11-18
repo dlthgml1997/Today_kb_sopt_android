@@ -2,6 +2,7 @@ package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,7 +37,9 @@ public class FirstSettingActivity extends AppCompatActivity implements
         PickTimeFragment.OnTimePickerSetListener,
         SetNameFragment.OnEditNameSetListener,
         SetTitleFragment.OnEditTitleSetListener, Init,
-        SetNameFragment.OnProfileImageSetListener {
+        SetNameFragment.OnProfileImageSetListener,
+        SetNameFragment.OnFragmentInteractionListener,
+        SetTitleFragment.OnFragmentInteractionListener{
     // private  CustomViewPager mPager;
 
     int position = 0;
@@ -53,6 +56,10 @@ public class FirstSettingActivity extends AppCompatActivity implements
     private Button btn_act_firstsetting_next;
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -261,7 +268,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container2);
         Log.v("setting fragment back", fragment.getClass().getName());
-        
+
         if (getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
         else {

@@ -105,10 +105,8 @@ public class CommunityFragment extends Fragment implements Init {
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
-        getFollowingList();
         getTodayFeelingData();
-        //팔로워 리스트
-
+        getFollowingList();
     }
 
     public CommunityFragment() {
@@ -197,7 +195,7 @@ public class CommunityFragment extends Fragment implements Init {
                 new DividerItemDecoration(getActivity(), new LinearLayoutManager(getActivity()).getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        //팔로워 리스트
+        //팔로워들의 감정 리스트
         getFriendsList();
 
         //프로필 정보 가져오는 통신 메소드 호출
@@ -388,16 +386,16 @@ public class CommunityFragment extends Fragment implements Init {
                         //감정기록이 없으면 메인페이지로 이동!
 
 
-                    } else if (feelingDataList.get(feelingDataList.size() -1).getBad() != null) {
-                        feeling_bad = profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() -1).getBad() - 3;
-                        Log.v("feeling data bad", profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() -1).getBad() - 3 + "");
+                    } else if (feelingDataList.get(feelingDataList.size() - 1).getBad() != null) {
+                        feeling_bad = profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() - 1).getBad() - 3;
+                        Log.v("feeling data bad", profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() - 1).getBad() - 3 + "");
                         community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[feeling_bad]);
-                        community_my_profil_status_txt.setText(feelingDataList.get(feelingDataList.size()-1).getComment());
-                    } else if (feelingDataList.get(feelingDataList.size() -1).getGood() != null) {
-                        feeling_good = feelingDataList.get(feelingDataList.size() -1).getGood() + 3;
-                        Log.v("feeling data good", feelingDataList.get(feelingDataList.size() -1).getGood() + 3 + "");
-                        community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[feelingDataList.get(feelingDataList.size() -1).getGood() + 3]);
-                        community_my_profil_status_txt.setText(feelingDataList.get(feelingDataList.size()-1).getComment());
+                        community_my_profil_status_txt.setText(feelingDataList.get(feelingDataList.size() - 1).getComment());
+                    } else if (feelingDataList.get(feelingDataList.size() - 1).getGood() != null) {
+                        feeling_good = feelingDataList.get(feelingDataList.size() - 1).getGood() + 3;
+                        Log.v("feeling data good", feelingDataList.get(feelingDataList.size() - 1).getGood() + 3 + "");
+                        community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[feelingDataList.get(feelingDataList.size() - 1).getGood() + 3]);
+                        community_my_profil_status_txt.setText(feelingDataList.get(feelingDataList.size() - 1).getComment());
                     }
                 }
             }
@@ -409,6 +407,7 @@ public class CommunityFragment extends Fragment implements Init {
         });
     }
 
+    //친구들의 감정
     public void getFriendsList() {
         Log.v("getFriendsList process", "getFriendsList process!!!");
         Log.v("getdate", getTime);
@@ -444,6 +443,12 @@ public class CommunityFragment extends Fragment implements Init {
                         }
 
                         Log.v("friends list", friendsList.toString());
+
+                        for (int i = 0; i < friendsList.size(); i++) {
+                            if (friendsList.get(i).getBad() == null && friendsList.get(i).getGood() == null) {
+                                friendsList.remove(i);
+                            }
+                        }
 
                         CommunityFriendListAdapter communityFriendListAdapter = new CommunityFriendListAdapter(getActivity(), friendsList);
 

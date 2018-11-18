@@ -2,7 +2,6 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +18,10 @@ import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.FollowingData;
-import com.kb.challenge.app.today.today_android.model.community.FollowingItem;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -69,6 +65,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
     public void onBindViewHolder(final CommunityFollowingListAdapter.ViewHolder viewHolder, int i) {
         final int pos = i;
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
+
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
 
 
@@ -139,7 +136,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
 
                 }
 
-                else if (response.body().getMessage().toString().equals("Already Following")){
+                else {
                     Toast.makeText(context, "이미 팔로우하고 있습니다.", Toast.LENGTH_LONG).show();
                 }
             }

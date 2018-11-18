@@ -2,9 +2,9 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.provider.Telephony;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +22,6 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -66,15 +65,17 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
         final int pos = i;
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
 
-        follow_id = communityFollowingList.get(i).getId();
-        Log.i("id2323", follow_id);
+        viewHolder.community_following_img.setBackground(new ShapeDrawable(new OvalShape()));
+        if (Build.VERSION.SDK_INT >= 21) {
+            viewHolder.community_following_img.setClipToOutline(true);
+        }
 
         Glide.with(context)
                 .load(communityFollowingList.get(i).getProfile_img())
                 .into(viewHolder.community_following_img);
 
         //맞팔일 경우!
-        if (communityFollowingList.get(i).getFollowing()) {
+        if (communityFollowingList.get(pos).getFollowing()) {
             //팔로우 버튼 비활성화
             viewHolder.community_btn_follow.setVisibility(View.GONE);
             //팔로잉 버튼 활성화
@@ -90,6 +91,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                follow_id = communityFollowingList.get(pos).getId();
                 viewHolder.community_btn_follow.setVisibility(View.GONE);
                 viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
                 //팔로우하기
@@ -100,6 +102,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
         viewHolder.community_btn_follower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                follow_id = communityFollowingList.get(pos).getId();
                 viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
                 viewHolder.community_btn_follower.setVisibility(View.GONE);
                 cancelFollow();
@@ -123,8 +126,10 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             community_following_name = (TextView)itemView.findViewById(R.id.community_following_name);
             community_following_id = (TextView) itemView.findViewById(R.id.community_following_id);
+
             community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
             community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
             community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
@@ -144,7 +149,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
 
                 }
 
-                else if (response.body().getMessage().toString().equals("Already Following")){
+                else {
                     Toast.makeText(context, "이미 팔로우하고 있습니다.", Toast.LENGTH_LONG).show();
                 }
             }

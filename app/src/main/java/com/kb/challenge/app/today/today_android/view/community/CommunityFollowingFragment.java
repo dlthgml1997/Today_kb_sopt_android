@@ -82,15 +82,6 @@ public class CommunityFollowingFragment extends Fragment implements Init {
         return fragment;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == 200) {
-
-        }
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

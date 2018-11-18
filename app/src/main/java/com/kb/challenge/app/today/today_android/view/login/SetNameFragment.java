@@ -45,6 +45,7 @@ import com.kb.challenge.app.today.today_android.BuildConfig;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.utils.PermissionUtils;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.main.MainFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,10 +68,22 @@ public class SetNameFragment extends Fragment {
     private ImageView iv_setname_user_image;
     private OnEditNameSetListener onEditNameSetListener;
     private static OnProfileImageSetListener onProfileImageSetListener;
+    private SetNameFragment.OnFragmentInteractionListener mListener;
     private EditText et_setname_user_name;
     public final int CAMERA_CODE = 1111;
     public final int GALLERY_CODE = 1112;
     MultipartBody.Part image;
+
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,9 +105,10 @@ public class SetNameFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                onEditNameSetListener.onNameSet(et_setname_user_name.getText().toString());
-                ((FirstSettingActivity)getActivity()).changeBtnAct();
-
+                if (!et_setname_user_name.getText().toString().equals("")) {
+                    onEditNameSetListener.onNameSet(et_setname_user_name.getText().toString());
+                    ((FirstSettingActivity) getActivity()).changeBtnAct();
+                }
             }
 
             @Override
@@ -195,7 +209,7 @@ public class SetNameFragment extends Fragment {
                         // 이미지 표시
                         iv_setname_user_image.setImageBitmap(cropBitmap);
                         iv_setname_user_image.setBackground(new ShapeDrawable(new OvalShape()));
-                        if(Build.VERSION.SDK_INT >= 21) {
+                        if (Build.VERSION.SDK_INT >= 21) {
                             iv_setname_user_image.setClipToOutline(true);
                         }
 
@@ -204,7 +218,7 @@ public class SetNameFragment extends Fragment {
                         f.createNewFile();
 
 //Convert bitmap to byte array
-                        Bitmap bitmap =img;
+                        Bitmap bitmap = img;
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
                         byte[] bitmapdata = bos.toByteArray();
@@ -240,7 +254,7 @@ public class SetNameFragment extends Fragment {
                     Bitmap cropBitmap = cropCircle(imageBitmap);
                     iv_setname_user_image.setImageBitmap(cropBitmap);
                     iv_setname_user_image.setBackground(new ShapeDrawable(new OvalShape()));
-                    if(Build.VERSION.SDK_INT >= 21) {
+                    if (Build.VERSION.SDK_INT >= 21) {
                         iv_setname_user_image.setClipToOutline(true);
                     }
 
@@ -250,7 +264,7 @@ public class SetNameFragment extends Fragment {
                     Log.v("profile_img ", imageBitmap.toString());
 
                     File photo = new File(data.toString());
-                    image = MultipartBody.Part.createFormData("profile_url",photo.getName(),temp);
+                    image = MultipartBody.Part.createFormData("profile_url", photo.getName(), temp);
                     onProfileImageSetListener.onProfileImageSet(image);
                     break;
 
@@ -262,7 +276,7 @@ public class SetNameFragment extends Fragment {
 
     public Bitmap cropCircle(Bitmap bitmap) {
 
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(output);
 
@@ -311,6 +325,12 @@ public class SetNameFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement onEditNameSetListener");
         }
+        if (context instanceof SetNameFragment.OnFragmentInteractionListener) {
+            mListener = (SetNameFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -318,6 +338,7 @@ public class SetNameFragment extends Fragment {
         super.onDetach();
         onEditNameSetListener = null;
         onProfileImageSetListener = null;
+        mListener = null;
     }
 
 }

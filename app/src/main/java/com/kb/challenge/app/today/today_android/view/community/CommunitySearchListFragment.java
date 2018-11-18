@@ -67,6 +67,8 @@ public class CommunitySearchListFragment extends Fragment implements Init {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MainActivity) getActivity()).inVisibleTabLayout();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_user, container, false);
 
@@ -129,6 +131,7 @@ public class CommunitySearchListFragment extends Fragment implements Init {
 
                     //현재 터치된 곳의 position을 가져오고
                     int currentPosition = rv.getChildAdapterPosition(childView);
+
                     Log.v("current position", currentPosition + "");
                     if (searchUserList != null) {
                         Log.v("fragment 전환!", "fragment 전환!!");
