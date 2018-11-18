@@ -132,8 +132,7 @@ public class CoinFragment extends Fragment {
         getSavingDetail();
         //changeGoalBackground();
         getSavingList();
-
-
+        
         Button coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +142,7 @@ public class CoinFragment extends Fragment {
 
                 with_draw_confirm_dialog.setTitle("withdraw Dialog");
 
-                TextView btn_cancel_dialog = (TextView)with_draw_confirm_dialog.findViewById(R.id.btn_cancel_dialog);
+                TextView btn_cancel_dialog = (TextView) with_draw_confirm_dialog.findViewById(R.id.btn_cancel_dialog);
 
                 btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -152,15 +151,15 @@ public class CoinFragment extends Fragment {
                     }
                 });
 
-                TextView btn_withdraw_dialog = (TextView)with_draw_confirm_dialog.findViewById(R.id.btn_withdraw_dialog);
+                TextView btn_withdraw_dialog = (TextView) with_draw_confirm_dialog.findViewById(R.id.btn_withdraw_dialog);
 
                 btn_withdraw_dialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         with_draw_confirm_dialog.dismiss();
                         Intent intent = new Intent(getActivity(), ConfirmWithdrawActivity.class);
-                        intent.putExtra("goal",coin_name_txt.getText().toString() );
-                        intent.putExtra("goal_money",coin_target_money_txt.getText().toString() );
+                        intent.putExtra("goal", coin_name_txt.getText().toString());
+                        intent.putExtra("goal_money", coin_target_money_txt.getText().toString());
                         startActivity(intent);
                     }
                 });
@@ -188,6 +187,7 @@ public class CoinFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof CoinFragment.OnFragmentInteractionListener) {
             mListener = (CoinFragment.OnFragmentInteractionListener) context;
         } else {
@@ -280,7 +280,6 @@ public class CoinFragment extends Fragment {
                         });
 
                     }
-
                     CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(), coinSavingItems);
 
                     mRecyclerView.setAdapter(coinSavingListAdapter);

@@ -50,12 +50,10 @@ public class MainDepositFragment extends Fragment implements Init {
 
     private NetworkService networkService;
 
-    private int total_money;
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
-        getSavingList();
     }
 
     public MainDepositFragment() {
@@ -71,6 +69,7 @@ public class MainDepositFragment extends Fragment implements Init {
     // TODO: Rename and change types and number of parameters
     public static MainDepositFragment newInstance(/*String param1, String param2*/) {
         MainDepositFragment fragment = new MainDepositFragment();
+
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -94,13 +93,13 @@ public class MainDepositFragment extends Fragment implements Init {
 
         View view = inflater.inflate(R.layout.main_record_good_deposit, container, false);
 
-        init();
         txt_good_deposit_user_name= (TextView)view.findViewById(R.id.txt_good_deposit_user_name );
 
         txt_good_deposit_total_money= (TextView)view.findViewById(R.id.txt_good_deposit_total_money );
 
         Bundle bundle = getArguments();
         String user_name = bundle.getString("user_name");
+        int total_money = bundle.getInt("total_money");
 
         Log.v("user_name, total", user_name + " " + total_money);
 
@@ -148,28 +147,29 @@ public class MainDepositFragment extends Fragment implements Init {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    public void getSavingList() {
-        Log.v("savingList process", "savingList process!!!");
-        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
-        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
-            @Override
-            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.v("savingList process2", "savingList process2!!!");
-                    Log.v("saving list get message", response.body().getMessage().toString());
-                    Log.v("coin saving list res", response.body().toString());
 
-                    total_money = response.body().getTotalMoney();
-                    Log.v("total toatl", total_money + "");
-                    txt_good_deposit_total_money.setText(String.valueOf(total_money));
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
-                Log.i("err saving", t.getMessage());
-            }
-        });
-    }
+//    public void getSavingList() {
+//        Log.v("savingList process", "savingList process!!!");
+//        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+//        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
+//            @Override
+//            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
+//                if (response.isSuccessful()) {
+//                    Log.v("savingList process2", "savingList process2!!!");
+//                    Log.v("saving list get message", response.body().getMessage().toString());
+//                    Log.v("coin saving list res", response.body().toString());
+//
+//                    total_money = response.body().getTotalMoney();
+//                    Log.v("total toatl", total_money + "");
+//                    txt_good_deposit_total_money.setText(String.valueOf(total_money));
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
+//                Log.i("err saving", t.getMessage());
+//            }
+//        });
+//    }
 }

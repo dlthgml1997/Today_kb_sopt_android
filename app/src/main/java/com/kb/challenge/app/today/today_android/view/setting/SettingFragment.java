@@ -2,11 +2,10 @@ package com.kb.challenge.app.today.today_android.view.setting;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import com.kb.challenge.app.today.today_android.view.login.FirstActivity;
  * Created by shineeseo on 2018. 11. 6..
  */
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends Fragment{
     private TextView tv_main_setting_logout;
     private TextView tv_main_setting_push;
 
@@ -34,7 +33,10 @@ public class SettingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    int hour;
+    int min;
     private SettingFragment.OnFragmentInteractionListener mListener;
+
 
     public SettingFragment() {
         // Required empty public constructor
@@ -78,12 +80,6 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreference.Companion.getInstance().removeData("data");
-                SharedPreference.Companion.getInstance().removeData("user_id");
-                SharedPreference.Companion.getInstance().removeData("user_name");
-                SharedPreference.Companion.getInstance().removeData("goal_amount");
-                SharedPreference.Companion.getInstance().removeData("goal_title");
-                SharedPreference.Companion.getInstance().removeData("user_name");
-                SharedPreference.Companion.getInstance().removeData("feeling_score");
 
                 Intent intent = new Intent(getActivity(), FirstActivity.class);
                 startActivity(intent);
@@ -97,7 +93,14 @@ public class SettingFragment extends Fragment {
         tv_main_setting_push.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
+                transaction.replace(R.id.root_frame, PickTimeFragment_setting.newInstance());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
 
+/** * Fragment의 변경사항을 반영시킨다. */
+                transaction.commit();
             }
         });
         return view;

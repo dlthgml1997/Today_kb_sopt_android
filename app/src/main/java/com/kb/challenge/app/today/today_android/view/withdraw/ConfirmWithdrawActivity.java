@@ -137,13 +137,6 @@ public class ConfirmWithdrawActivity extends AppCompatActivity {//implements Con
     }
 
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.root_frame, fragment);
-        fragmentTransaction.commit();
-    }
-
     //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {

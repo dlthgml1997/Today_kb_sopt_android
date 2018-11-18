@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements Init {
 
         } else {
             Log.v("토큰 존재", SharedPreference.Companion.getInstance().getPrefStringData("data"));
+
             startActivity(new Intent(this, MainActivity.class));
 
             finish();
@@ -89,8 +90,6 @@ public class LoginActivity extends AppCompatActivity implements Init {
         Log.v("login process", "login process!!!");
         String fcm_token = FirebaseInstanceId.getInstance().getToken();
 
-        Log.v("fcm_token", fcm_token);
-        SharedPreference.Companion.getInstance().setPrefData("fcm_token", fcm_token);
         final LoginData signupData = new LoginData(login_edit_id.getText().toString(), login_edit_passwd.getText().toString(), fcm_token);
         Call<LoginResponse> requestDetail = networkService.login(signupData);
         requestDetail.enqueue(new Callback<LoginResponse>() {
@@ -131,4 +130,5 @@ public class LoginActivity extends AppCompatActivity implements Init {
             }
         });
     }
+
 }

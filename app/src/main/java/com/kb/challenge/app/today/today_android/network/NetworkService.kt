@@ -7,6 +7,7 @@ import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse
 import com.kb.challenge.app.today.today_android.model.community.*
 import com.kb.challenge.app.today.today_android.model.login.*
+import com.kb.challenge.app.today.today_android.model.push.PushTimeData
 import com.kb.challenge.app.today.today_android.model.record.FeelingData
 import com.kb.challenge.app.today.today_android.model.record.FeelingDataResponse
 import okhttp3.MultipartBody
@@ -157,4 +158,9 @@ interface NetworkService {
             @Header("authorization") token : String,
             @Body emotionData : SendEmotionData
     ):Call<BaseModel>
+
+    @GET("user/time")
+    fun getPushTime(
+            @Header("authorization") token : String
+    ) :Call<PushTimeData>
 }
