@@ -6,6 +6,7 @@
     android:background="@color/dandelion">
 
     <ImageView
+        android:id="@+id/img_logo"
         android:layout_width="89dp"
         android:layout_height="98dp"
         android:layout_marginBottom="16dp"
@@ -14,14 +15,28 @@
         android:layout_marginTop="200dp"/>
 
     <TextView
-        android:layout_centerInParent="true"
+        android:id="@+id/txt1"
+        android:layout_below="@+id/img_logo"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:textSize="14sp"
         android:textColor="#ffffff"
         android:letterSpacing="-0.018"
-        android:text="티끌모으는 습관"
+        android:text="나누는 즐거움"
         android:fontFamily="@font/notosanskr_medium_hestia"
-        android:layout_marginTop="314dp"/>
+        />
+
+    <TextView
+        android:layout_below="@+id/txt1"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:letterSpacing="-0.018"
+        android:text="모으는 습관"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        />
 
 </RelativeLayout>

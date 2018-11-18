@@ -16,7 +16,11 @@
         <item name="android:statusBarColor">@color/dandelion</item>
         <item name="windowNoTitle">true</item>
     </style>
+<style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+    <item name="android:colorControlNormal">#e6e6e6</item>
+    <item name="android:colorControlActivated">@color/dandelion</item>
 
+</style>
     <style name="NotoSansTextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/notosans</item>
     </style>

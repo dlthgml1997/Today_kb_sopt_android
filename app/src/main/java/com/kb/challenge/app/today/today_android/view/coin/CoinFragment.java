@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -108,6 +110,9 @@ public class CoinFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        Window window1 = getActivity().getWindow();
+        int whitecolor = getResources().getColor(R.color.colorBackground);
+        window1.setStatusBarColor(whitecolor);
         View view = inflater.inflate(R.layout.fragment_coin, container, false);
 
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -160,7 +165,6 @@ public class CoinFragment extends Fragment {
                     }
                 });
                 with_draw_confirm_dialog.show();
-
             }
         });
 
@@ -177,7 +181,7 @@ public class CoinFragment extends Fragment {
     }
 
 
-    public void changeGoalBackground() { //목표금액이랑 지금 금액 같아지면 배경변경
+    public void setStatusbarColor() { //평소 스태터스바
 
     }
 
@@ -230,12 +234,51 @@ public class CoinFragment extends Fragment {
                     Log.v("coin saving list", coinSavingItems.toString());
                     Log.v("totalMoney", totalMoney + " ");
                     coin_cur_money.setText(String.valueOf(totalMoney));
-
+//목표 달성시
                     if (Integer.parseInt(coin_cur_money.getText().toString()) >= Integer.parseInt(coin_target_money_txt.getText().toString())) {
                         rl_coin_goal_box.setBackgroundResource(R.drawable.img_coin_pig_success);
                         img_coin_pig.setVisibility(View.INVISIBLE);
                         coin_btn_withdrawal.setText("목표달성! 인출하기");
                         ic_qna_coin.setImageResource(R.drawable.ic_coin_coin_white_16_px);
+                        coin_btn_withdrawal.setBackgroundResource(R.drawable.button_border3);
+                        Window window = getActivity().getWindow();
+//                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUND);
+                        int color = getResources().getColor(R.color.dandelion);
+                        window.setStatusBarColor(color);
+
+                        coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {  // 목적 달성시 뜨는 다이얼로그
+                                final Dialog dialog_congratulation = new Dialog(getActivity());
+                                dialog_congratulation.setContentView(R.layout.dialog_congratulation);
+
+                                dialog_congratulation.setTitle("congratulation");
+
+                                TextView btn_cancel_dialog_con = (TextView)dialog_congratulation.findViewById(R.id.btn_cancel_dialog);
+
+                                btn_cancel_dialog_con.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog_congratulation.dismiss();
+                                    }
+                                });
+
+                                TextView btn_withdraw_dialog_con = (TextView)dialog_congratulation.findViewById(R.id.btn_withdraw_dialog);
+
+                                btn_withdraw_dialog_con.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog_congratulation.dismiss();
+                                        deleteSavingList();
+
+                                    }
+                                });
+
+                                dialog_congratulation.show();
+
+                            }
+                        });
+
                     }
 
                     CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(), coinSavingItems);
@@ -271,6 +314,27 @@ public class CoinFragment extends Fragment {
 
             @Override
             public void onFailure(Call<CoinDetailResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
+
+    public void deleteSavingList() {
+        Log.v("deleteSavingList", "deleteSavingList process!!!");
+        Call<BaseModel> requestDetail = networkService.deleteDeposit(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("deleteSavingList", "deleteSavingList process2!!!");
+                    Log.v("message", response.body().getMessage().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
                 Log.i("err", t.getMessage());
             }
         });

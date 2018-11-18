@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txt_ok_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:textColor="#424242"
+        android:letterSpacing="-0.02"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:textSize="16sp"
+        android:layout_marginRight="16dp"
+        />
+    <ImageView
+        android:id="@+id/community_back_btn_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_32_px"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        />
+    <TextView
+        android:id="@+id/community_status_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/community_back_btn_status"
+        android:layout_marginLeft="16dp"
+        android:letterSpacing="-0.025"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:layout_marginTop="13dp"
+        android:text="상태메시지 변경"
+        android:textSize="20sp"
+        android:textColor="#424242" />
+
+    <TextView
+        android:id="@+id/txt_status_massage"
+        android:layout_below="@+id/community_status_txt"
+        android:layout_marginTop="46dp"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:letterSpacing="-0.018"
+        android:layout_marginLeft="16dp"
+        android:textColor="#9e9e9e"
+        android:text="상태메시지"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edit_status_change"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:letterSpacing="-0.023"
+        android:maxLength="15"
+        android:layout_below="@+id/txt_status_massage"
+        android:layout_marginHorizontal="16dp"
+        android:hint="건드리면 물어요"
+        android:textColorHint="#bdbdbd"
+        android:fontFamily="@font/notosanskr_regular_hestia"
+        android:textColor="#545454"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_status_change"
+        android:layout_alignParentRight="true"
+        android:text="15자 메시지"
+        android:textColor="#c9c9c9"
+        android:textSize="11sp"
+        android:layout_marginRight="16dp"
+        android:letterSpacing="-0.014"
+
+        />
+</RelativeLayout>

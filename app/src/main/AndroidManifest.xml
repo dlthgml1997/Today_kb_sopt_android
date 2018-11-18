@@ -32,7 +32,8 @@
         </activity>
 
         <activity android:name=".view.withdraw.ConfirmWithdrawActivity"></activity>
-        <activity android:name=".view.login.FirstActivity"></activity>
+        <activity android:name=".view.login.FirstActivity"
+            android:theme="@style/Splash"></activity>
         <activity android:name=".view.login.LoginActivity"></activity>
         <activity android:name=".view.login.WelcomeActivity"></activity>
         <activity android:name=".view.login.SignUpActivity"></activity>
