@@ -198,6 +198,12 @@ public class CoinFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getSavingList();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -270,6 +276,7 @@ public class CoinFragment extends Fragment {
                                     public void onClick(View view) {
                                         dialog_congratulation.dismiss();
                                         deleteSavingList();
+                                        onResume();
 
                                     }
                                 });

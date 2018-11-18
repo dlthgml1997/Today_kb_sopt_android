@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.main;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +18,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse;
 import com.kb.challenge.app.today.today_android.model.login.UserNameData;
+import com.kb.challenge.app.today.today_android.model.record.FeelingData;
+import com.kb.challenge.app.today.today_android.model.record.FeelingDataResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
@@ -29,11 +33,16 @@ import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragmen
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment.feelingMsg;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -57,13 +66,16 @@ public class MainFragment extends Fragment implements Init {
     private NetworkService networkService;
 
     private String user_name;
+    private int total_money;
 
     private TextView main_name_txt;
+
 
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
         SharedPreference.Companion.getInstance();
+        getSavingList();
 
     }
 
@@ -121,6 +133,7 @@ public class MainFragment extends Fragment implements Init {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        show_record_feeling_dialog();
     }
 
     @Override
@@ -178,6 +191,39 @@ public class MainFragment extends Fragment implements Init {
         }
     }
 
+    public void show_record_feeling_dialog() {
+        final Dialog go_to_record_feeling_dialog = new Dialog(getActivity());
+        go_to_record_feeling_dialog.setContentView(R.layout.dialog_record_feeling_main);
+
+        TextView btn_ok_dialog = (TextView) go_to_record_feeling_dialog.findViewById(R.id.btn_ok_dialog);
+
+        btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment fragment = new RecordFeelingFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("user_name", user_name);
+                Log.v("feeling record로 이동", user_name);
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.root_frame, fragment);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
+                go_to_record_feeling_dialog.dismiss();
+
+            }
+        });
+        go_to_record_feeling_dialog.show();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTodayFeelingData();
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -213,12 +259,16 @@ public class MainFragment extends Fragment implements Init {
                     Log.v("name", user_name);
                     if (user_name != null)
                         main_name_txt.setText(user_name);
-                    else {
-                        Intent intent = new Intent(getActivity(), FirstSettingActivity.class);
-                        startActivity(intent);
-                    }
+
 
                 }
+                else {
+                    //사용자 이름 설정이 없으면 설정 페이지로 이동
+                    Intent intent = new Intent(getActivity(), FirstSettingActivity.class);
+                    getActivity().startActivity(intent);
+
+                }
+
 
             }
 
@@ -229,4 +279,86 @@ public class MainFragment extends Fragment implements Init {
         });
     }
 
+
+    //오늘의 감정이 존재하면 -> 감정에 따라 다른 프레그먼트로 전환됨.
+    public void getTodayFeelingData() {
+        Log.v("main feeling", "main feeling process!!!");
+        //통신할 때 보낼 오늘의 날짜
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String getTime = sdf.format(date);
+
+        Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
+        requestDetail.enqueue(new Callback<FeelingDataResponse>() {
+            @Override
+            public void onResponse(Call<FeelingDataResponse> call, Response<FeelingDataResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("main feeling", "main feeling process2!!!");
+                    Log.v("main feeling message", response.body().getMessage().toString());
+
+                    ArrayList<FeelingData> feelingDataList = response.body().getData();
+                    Log.v("main feeling data!!!", feelingDataList.toString());
+
+                    if (!feelingDataList.isEmpty()) {
+                        if (feelingDataList.get(feelingDataList.size() - 1).getBad() != null) {
+                            Fragment fragment = new MainBadFragment();
+                            Bundle bundle = new Bundle(1);
+                            bundle.putString("user_name", user_name);
+                            fragment.setArguments(bundle);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.root_frame, fragment);
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            transaction.addToBackStack(null);
+
+                            transaction.commit();
+
+                        } else if (feelingDataList.get(feelingDataList.size() - 1).getGood() != null) {
+                            //total money, username 필요
+                            Fragment fragment = new MainDepositFragment();
+                            Bundle bundle = new Bundle(2);
+                            bundle.putString("user_name", user_name);
+                            bundle.putInt("total_money", total_money);
+                            fragment.setArguments(bundle);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.root_frame, fragment);
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            transaction.addToBackStack(null);
+
+                            transaction.commit();
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FeelingDataResponse> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+    public void getSavingList() {
+        Log.v("savingList process", "savingList process!!!");
+        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
+            @Override
+            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("savingList process2", "savingList process2!!!");
+                    Log.v("saving list get message", response.body().getMessage().toString());
+                    Log.v("coin saving list res", response.body().toString());
+
+                    total_money = response.body().getTotalMoney();
+                    Log.v("total toatl", total_money + "");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
+                Log.i("err saving", t.getMessage());
+            }
+        });
+    }
 }

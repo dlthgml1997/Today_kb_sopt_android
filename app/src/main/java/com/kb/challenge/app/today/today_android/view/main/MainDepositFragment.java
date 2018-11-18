@@ -103,9 +103,8 @@ public class MainDepositFragment extends Fragment implements Init {
 
         Log.v("user_name, total", user_name + " " + total_money);
 
-
-
         txt_good_deposit_user_name.setText(user_name);
+        txt_good_deposit_total_money.setText(total_money + "");
         return view;
 
     }

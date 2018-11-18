@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.kb.challenge.app.today.today_android.MainActivity;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
@@ -44,6 +45,7 @@ import com.kb.challenge.app.today.today_android.view.community.adapter.Community
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
 import com.kb.challenge.app.today.today_android.view.dialog.RecordFeelingDialog;
 import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
+import com.kb.challenge.app.today.today_android.view.main.RootFragment;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 
 import org.w3c.dom.Text;
@@ -201,7 +203,7 @@ public class CommunityFragment extends Fragment implements Init {
         //프로필 정보 가져오는 통신 메소드 호출
         getProfileData();
 
-        //팔로우 보기 -> 프래그먼트 전환
+        //팔로우 보기(나를 좋아하는 사람. 나도 좋아할 수도 있음(노란색 버튼)) -> 프래그먼트 전환
         community_following_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,7 +218,7 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
 
-        //팔로워 보기 -> 프래그먼트 전환
+        //팔로워 보기(내가 좋아하는 사람 (흰색 버튼들)) -> 프래그먼트 전환
         community_follower_num_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,6 +233,7 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
 
+        //사용자 검색
         ImageView community_btn_search_id = (ImageView) view.findViewById(R.id.community_btn_search_id);
 
         community_btn_search_id.setOnClickListener(new View.OnClickListener() {
@@ -382,38 +385,14 @@ public class CommunityFragment extends Fragment implements Init {
                     feelingDataList = response.body().getData();
                     Log.v("feeling data list!!!", feelingDataList.toString());
                     if (feelingDataList.isEmpty()) {
-                        Log.v("감정기록 다이얼로그 뜨기", "감정기록 다이얼로그 뜨기");
-//                            RecordFeelingDialog dialog = new RecordFeelingDialog();
-//                            dialog.show(getActivity().getFragmentManager(), "example");
-                        final Dialog go_to_record_feeling_dialog = new Dialog(getActivity());
-                        go_to_record_feeling_dialog.setContentView(R.layout.dialog_record_feeling_main);
+                        //감정기록이 없으면 메인페이지로 이동!
 
-                        TextView btn_ok_dialog = (TextView) go_to_record_feeling_dialog.findViewById(R.id.btn_ok_dialog);
 
-                        btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                go_to_record_feeling_dialog.dismiss();
-                                Fragment fragment = new RecordFeelingFragment();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("user_name", user_name);
-                                Log.v("feeling record로 이동", user_name);
-                                fragment.setArguments(bundle);
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.root_frame, fragment);
-                                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                                transaction.addToBackStack(null);
-
-                                transaction.commit();
-
-                            }
-                        });
-                        go_to_record_feeling_dialog.show();
                     } else if (feelingDataList.get(feelingDataList.size() -1).getBad() != null) {
                         feeling_bad = profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() -1).getBad() - 3;
                         Log.v("feeling data bad", profile_emotion_mark_resource.length - feelingDataList.get(feelingDataList.size() -1).getBad() - 3 + "");
-                        community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[profile_emotion_mark_resource.length - feelingDataList.get(0).getBad() - 3]);
-                        community_my_profil_status_txt.setText(feelingMsg[feelingMsg.length - feelingDataList.get(0).getBad() - 3]);
+                        community_my_profile_emotion_mark.setBackgroundResource(profile_emotion_mark_resource[feeling_bad]);
+                        community_my_profil_status_txt.setText(feelingDataList.get(feelingDataList.size()-1).getComment());
                     } else if (feelingDataList.get(feelingDataList.size() -1).getGood() != null) {
                         feeling_good = feelingDataList.get(feelingDataList.size() -1).getGood() + 3;
                         Log.v("feeling data good", feelingDataList.get(feelingDataList.size() -1).getGood() + 3 + "");

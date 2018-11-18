@@ -42,7 +42,6 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
     ArrayList<FollowingData> communityFollowingList;
     private NetworkService networkService;
     private String follow_id;
-    private BaseModel msg;
 
     @Override
     public void init() {
@@ -71,8 +70,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         final int pos = i;
         Log.v("communityFriendsList", communityFollowingList.size() + " ");
         viewHolder.community_following_id.setText(communityFollowingList.get(i).getId());
-        follow_id = viewHolder.community_following_id.getText().toString();
-        Log.i("id2323", follow_id);
+
 
         Glide.with(context)
                 .load(communityFollowingList.get(i).getProfile_img())
@@ -85,15 +83,18 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.v("position", pos + "");
+                follow_id = communityFollowingList.get(pos).getId();
                 viewHolder.community_btn_follow.setVisibility(View.GONE);
                 viewHolder.community_btn_follower.setVisibility(View.VISIBLE);
-
+                follow();
             }
         });
         viewHolder.community_btn_follower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v("position", pos + "");
+                follow_id = communityFollowingList.get(pos).getId();
                 viewHolder.community_btn_follow.setVisibility(View.VISIBLE);
                 viewHolder.community_btn_follower.setVisibility(View.GONE);
                 cancelFollow();
@@ -124,6 +125,32 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
             community_btn_follower = (ImageView) itemView.findViewById(R.id.community_btn_follower);
         }
     }
+
+    public void follow() {
+        Log.v("follow process", "follow process!!!");
+        Log.i("맞팔할 id", follow_id);
+        Call<BaseModel> requestDetail = networkService.followUser(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("follow", "follow process2!!!");
+                    Log.i("follow message", response.body().getMessage().toString());
+
+                }
+
+                else if (response.body().getMessage().toString().equals("Already Following")){
+                    Toast.makeText(context, "이미 팔로우하고 있습니다.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
+
 
     public void cancelFollow() {
         Log.v("cancelFollow process", "cancelFollow process!!!");

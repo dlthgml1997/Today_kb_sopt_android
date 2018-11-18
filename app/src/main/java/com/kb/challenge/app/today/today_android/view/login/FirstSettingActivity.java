@@ -1,12 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
-//<<<<<<< HEAD
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-//=======
-//>>>>>>> c9c5b33b13021c924671d48fb9016a3cdcb7122a
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -264,6 +259,9 @@ public class FirstSettingActivity extends AppCompatActivity implements
     //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container2);
+        Log.v("setting fragment back", fragment.getClass().getName());
+        
         if (getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
         else {
