@@ -37,7 +37,7 @@ import retrofit2.Response;
  * Created by shineeseo on 2018. 11. 9..
  */
 
-public class CommunityFollowingListAdapter extends RecyclerView.Adapter<CommunityFollowingListAdapter.ViewHolder>  implements Init {
+public class CommunityFollowingListAdapter extends RecyclerView.Adapter<CommunityFollowingListAdapter.ViewHolder> implements Init {
     Context context;
     ArrayList<FollowingData> communityFollowingList;
     private NetworkService networkService;
@@ -64,6 +64,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         CommunityFollowingListAdapter.ViewHolder viewHolder = new CommunityFollowingListAdapter.ViewHolder(v);
         return viewHolder;
     }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final CommunityFollowingListAdapter.ViewHolder viewHolder, int i) {
@@ -78,7 +79,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
                 .into(viewHolder.community_following_img);
 
         viewHolder.community_following_img.setBackground(new ShapeDrawable(new OvalShape()));
-        if(Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21) {
             viewHolder.community_following_img.setClipToOutline(true);
         }
         viewHolder.community_btn_follow.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +100,7 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
             }
         });
 
+        viewHolder.community_following_name.setText(communityFollowingList.get(i).getName());
     }
 
     @Override
@@ -111,20 +113,22 @@ public class CommunityFollowingListAdapter extends RecyclerView.Adapter<Communit
         public ImageView community_btn_follow;
         public ImageView community_btn_follower;
         public ImageView community_following_img;
-
+        public TextView community_following_name;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            community_following_name = (TextView) itemView.findViewById(R.id.community_following_name);
             community_following_id = (TextView) itemView.findViewById(R.id.community_following_id);
-            community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
-            community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
-            community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
+            community_following_img = (ImageView) itemView.findViewById(R.id.community_following_img);
+            community_btn_follow = (ImageView) itemView.findViewById(R.id.community_btn_follow);
+            community_btn_follower = (ImageView) itemView.findViewById(R.id.community_btn_follower);
         }
     }
+
     public void cancelFollow() {
         Log.v("cancelFollow process", "cancelFollow process!!!");
         Log.v("follow id", follow_id);
-        Call<BaseModel> requestDetail = networkService.cancelFollow(SharedPreference.Companion.getInstance().getPrefStringData("data"),follow_id);
+        Call<BaseModel> requestDetail = networkService.cancelFollow(SharedPreference.Companion.getInstance().getPrefStringData("data"), follow_id);
         requestDetail.enqueue(new Callback<BaseModel>() {
             @Override
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {

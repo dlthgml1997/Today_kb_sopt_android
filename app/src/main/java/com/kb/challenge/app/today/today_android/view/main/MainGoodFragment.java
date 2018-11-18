@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.coin.CoinSavingData;
+import com.kb.challenge.app.today.today_android.model.coin.CoinSavingResponse;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
