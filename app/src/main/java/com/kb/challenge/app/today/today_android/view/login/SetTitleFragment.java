@@ -27,13 +27,13 @@ public class SetTitleFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settitle, container, false);
+        final View view = inflater.inflate(R.layout.fragment_settitle, container, false);
         et_set_title_hole = (EditText)view.findViewById(R.id.et_set_title_hole);
 
-        ll_settitle_over_amount_error = view.findViewById(R.id.ll_settitle_over_amount_error);
+        ll_settitle_over_amount_error = (LinearLayout) view.findViewById(R.id.ll_settitle_over_amount_error);
 
         et_set_title_amount = (EditText)view.findViewById(R.id.et_set_title_amount);
-        et_set_title_amount.addTextChangedListener(new CustomTextWatcher(et_set_title_amount,ll_settitle_over_amount_error));
+       // et_set_title_amount.addTextChangedListener(new CustomTextWatcher(et_set_title_amount,ll_settitle_over_amount_error));
 
         et_set_title_hole.addTextChangedListener(new TextWatcher() {
 
@@ -64,7 +64,15 @@ public class SetTitleFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                onEditTitleSetListener.onAmountSet(Integer.parseInt(et_set_title_amount.getText().toString()));
+
+               if (Integer.parseInt(et_set_title_amount.getText().toString()) > 300000) {
+                   ll_settitle_over_amount_error.setVisibility(View.VISIBLE);
+               }
+               else {
+                   ll_settitle_over_amount_error.setVisibility(View.INVISIBLE);
+               }
+               if (et_set_title_amount.getText() != null)
+                    onEditTitleSetListener.onAmountSet(Integer.parseInt(et_set_title_amount.getText().toString()));
                 ((FirstSettingActivity)getActivity()).changeBtnAct();
             }
 

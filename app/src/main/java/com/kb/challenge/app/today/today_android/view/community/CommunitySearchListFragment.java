@@ -1,5 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -27,6 +29,8 @@ import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunitySearchListAdapter;
 import com.kb.challenge.app.today.today_android.MainActivity;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -39,7 +43,6 @@ public class CommunitySearchListFragment extends Fragment implements Init {
     private EditText search_user_id_edit_txt;
     private  ArrayList<SearchUserData> searchUserList;
     private RecyclerView.OnItemTouchListener onItemTouchListener;
-
     public static CommunitySearchListFragment newInstance(/*String param1, String param2*/) {
         CommunitySearchListFragment fragment = new CommunitySearchListFragment();
         Bundle args = new Bundle();
@@ -67,6 +70,8 @@ public class CommunitySearchListFragment extends Fragment implements Init {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_user, container, false);
 
+
+        출처: http://itpangpang.xyz/304 [ITPangPang]
         init();
 
         search_user_id_edit_txt = (EditText) view.findViewById(R.id.search_user_id_edit_txt);
@@ -139,7 +144,6 @@ public class CommunitySearchListFragment extends Fragment implements Init {
                         transaction.replace(R.id.root_frame2, fragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.addToBackStack(null);
-
                         transaction.commit();
 
                     }
@@ -166,6 +170,10 @@ public class CommunitySearchListFragment extends Fragment implements Init {
 
         return view;
 
+    }
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override

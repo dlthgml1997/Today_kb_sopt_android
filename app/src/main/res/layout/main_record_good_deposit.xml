@@ -96,7 +96,7 @@
             android:lineSpacingExtra="5sp"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:gravity="center_horizontal"
-            android:text="6,234 원"
+            android:text="6,250 원"
             />
     </RelativeLayout>
 <RelativeLayout

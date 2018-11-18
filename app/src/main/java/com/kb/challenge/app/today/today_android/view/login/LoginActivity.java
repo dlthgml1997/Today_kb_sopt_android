@@ -1,6 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -104,15 +105,21 @@ public class LoginActivity extends AppCompatActivity implements Init {
                     Log.v("token", loginResponse.getToken());
                     SharedPreference.Companion.getInstance().setPrefData("data", loginResponse.getToken());
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-
+                    LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
+                    ll_act_login_id_error.setVisibility(View.INVISIBLE);
+                    LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
+                    ll_act_login_password_error.setVisibility(View.INVISIBLE);
                 } else {
 
                     LinearLayout ll_act_login_id_error = (LinearLayout) findViewById(R.id.ll_act_login_id_error);
                     ll_act_login_id_error.setVisibility(View.VISIBLE);
+//                    EditText login_edit_id= (EditText)findViewById(R.id.login_edit_id);
+//                    login_edit_id.setHighlightColor(Color.parseColor("#fxa4a3"));
 
                     LinearLayout ll_act_login_password_error = (LinearLayout) findViewById(R.id.ll_act_login_password_error);
                     ll_act_login_password_error.setVisibility(View.VISIBLE);
+//                    EditText login_edit_passwd= (EditText)findViewById(R.id.login_edit_passwd);
+//                    login_edit_passwd.setHighlightColor(Color.parseColor("#fxa4a3"));
 
                 }
             }

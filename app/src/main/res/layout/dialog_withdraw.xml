@@ -5,6 +5,7 @@
     <RelativeLayout
         android:layout_width="304dp"
         android:layout_height="274dp"
+        android:background="@drawable/button_border"
         >
         <ImageView
             android:id="@+id/img_dialog_success"

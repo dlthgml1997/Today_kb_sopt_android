@@ -23,15 +23,14 @@ public class AccountCreateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account2, container, false);
-        rl_account_create = v.findViewById(R.id.rl_account_create);
+
         account_create_view = v.findViewById(R.id.account_create_view);
-        pig= v.findViewById(R.id.pig);
+        pig= v.findViewById(R.id.account_create_view);
         pig.bringToFront();
         account_create_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rl_account_create.setBackgroundResource(R.drawable.img_linkaccount_active);
-                account_create_view.setImageResource(0);
+                pig.setImageResource(R.drawable.img_createaccount_active);
 
                 pig.bringToFront();
                 ((FirstSettingActivity)getActivity()).changeBtnAct();

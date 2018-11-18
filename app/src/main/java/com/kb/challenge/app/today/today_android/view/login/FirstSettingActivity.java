@@ -1,6 +1,12 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
+//<<<<<<< HEAD
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+//=======
+//>>>>>>> c9c5b33b13021c924671d48fb9016a3cdcb7122a
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -221,13 +227,12 @@ public class FirstSettingActivity extends AppCompatActivity implements
 
 
     public void changeBtnAct() {
-
+        btn_act_firstsetting_next_active.setTextColor(Color.parseColor("#424242"));
         btn_act_firstsetting_next_active.setVisibility(View.VISIBLE);
         btn_act_firstsetting_next.setVisibility(View.GONE);
     }
 
     public void changeBtn() {
-
         btn_act_firstsetting_next_active.setVisibility(View.GONE);
         btn_act_firstsetting_next.setVisibility(View.VISIBLE);
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     >
     <ImageView
-        android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
         android:id="@+id/community_user_img"
         android:layout_width="44dp"
         android:layout_height="44dp"
@@ -29,7 +29,7 @@
         android:layout_height="24dp"
         android:layout_marginLeft="2dp"
         android:layout_toRightOf="@id/community_user_id_txt"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/img_sns_emotion_good_2_20_px"
 
         />
@@ -65,4 +65,10 @@
         android:layout_marginRight="16dp"
         android:visibility="gone"/>
 
+    <View
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/community_status_txt"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee"/>
 </RelativeLayout>

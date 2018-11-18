@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/record_feeling_hello_txt"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/img_emotion_soso_0" />
 
 
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_emotion"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/img_text_soso_0" />
 
     <RelativeLayout
