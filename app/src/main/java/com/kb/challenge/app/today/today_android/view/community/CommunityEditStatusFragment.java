@@ -22,8 +22,10 @@ import android.widget.TextView;
 
 import com.kb.challenge.app.today.today_android.MainActivity;
 import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.SearchUserData;
 import com.kb.challenge.app.today.today_android.model.community.SearchUserResponse;
+import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
@@ -41,6 +43,7 @@ public class CommunityEditStatusFragment extends Fragment implements Init {
     private EditText edit_status_change;
     private TextView txt_ok_status;
     private ImageView community_back_btn_status;
+    private int feeling_data;
 
     public static CommunityEditStatusFragment newInstance(/*String param1, String param2*/) {
         CommunityEditStatusFragment fragment = new CommunityEditStatusFragment();
@@ -69,32 +72,20 @@ public class CommunityEditStatusFragment extends Fragment implements Init {
 
         init();
 
+        Bundle bundle = getArguments();
+
+        feeling_data = bundle.getInt("feeling_data");
         edit_status_change = (EditText) view.findViewById(R.id.edit_status_change);
 
-        edit_status_change.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        edit_status_change.setHint(bundle.getString("hint"));
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String txt_status = edit_status_change.getText().toString();
-                // 저장해두고 확인 누르면 상태메시지로 보내기...?
-            }
-        });
 
         //확인 버튼 눌렀을 때
-        txt_ok_status=(TextView)view.findViewById(R.id.txt_ok_status);
+        txt_ok_status = (TextView) view.findViewById(R.id.txt_ok_status);
         txt_ok_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //txt_status를 서버로 보내기..
+                recordFeeling();
                 //서버로 보낸 후 뒤로가기
                 ((MainActivity) getActivity()).visibleTabLayout();
                 getFragmentManager().popBackStack();
@@ -124,6 +115,7 @@ public class CommunityEditStatusFragment extends Fragment implements Init {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        ((MainActivity) getActivity()).inVisibleTabLayout();
     }
 
     @Override
@@ -133,4 +125,27 @@ public class CommunityEditStatusFragment extends Fragment implements Init {
 
     }
 
+    public void recordFeeling() {
+        //감정기록하기 (token 값, feelingdata)
+        FeelingData feelingData;
+        if (feeling_data < 3)
+            feelingData = new FeelingData(null, 6-feeling_data-3, edit_status_change.getText().toString());
+        else
+            feelingData = new FeelingData(feeling_data-3, null, edit_status_change.getText().toString());
+        final Call<BaseModel> requestDetail = networkService.recordFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), feelingData);
+        requestDetail.enqueue(new Callback<BaseModel>() {
+            @Override
+            public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
+                if (response.isSuccessful()) {
+                    Log.v("edit status messge", "edit status message process2!!!");
+                    Log.v("edit message", response.body().getMessage().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseModel> call, Throwable t) {
+                Log.i("err", t.getMessage());
+            }
+        });
+    }
 }

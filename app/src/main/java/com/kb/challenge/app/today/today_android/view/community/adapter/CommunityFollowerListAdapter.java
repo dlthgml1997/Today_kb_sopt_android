@@ -103,6 +103,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
             }
         });
 
+        viewHolder.community_following_name.setText(communityFollowingList.get(i).getName());
     }
 
     @Override
@@ -115,10 +116,16 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
         public ImageView community_following_img;
         public ImageView community_btn_follower;
         public ImageView community_btn_follow;
+        public TextView community_following_name;
 
         public ViewHolder(View itemView) {
             super(itemView);
+<<<<<<< HEAD
             community_following_id = (TextView) itemView.findViewById(R.id.community_following_user_name);
+=======
+            community_following_name = (TextView)itemView.findViewById(R.id.community_following_name);
+            community_following_id = (TextView) itemView.findViewById(R.id.community_following_id);
+>>>>>>> 6fbff1dbe4feab08dcf63ca1c123a7386f59cc9f
             community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
             community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
             community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
