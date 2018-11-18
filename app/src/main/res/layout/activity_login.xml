@@ -28,7 +28,8 @@
             android:textSize="28sp" />
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
+            style="@style/EditTextStyle"
             android:inputType="textVisiblePassword"
             android:id="@+id/login_edit_id"
             android:letterSpacing="-0.019"
@@ -38,7 +39,6 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="16dp"
-            android:textColorHighlight="#e6e6e6"
             android:layout_marginTop="48dp"
             android:fontFamily="@font/notosanskr_medium_hestia"
             android:hint="아이디"

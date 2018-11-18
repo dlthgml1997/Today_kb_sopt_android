@@ -70,8 +70,6 @@ public class CommunitySearchListFragment extends Fragment implements Init {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_user, container, false);
 
-
-        출처: http://itpangpang.xyz/304 [ITPangPang]
         init();
 
         search_user_id_edit_txt = (EditText) view.findViewById(R.id.search_user_id_edit_txt);
@@ -120,6 +118,7 @@ public class CommunitySearchListFragment extends Fragment implements Init {
 
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                hideKeyboardFrom(getActivity(),getView());
                 //손으로 터치한 곳의 좌표를 토대로 해당 Item의 View를 가져옴
                 View childView = rv.findChildViewUnder(e.getX(), e.getY());
 

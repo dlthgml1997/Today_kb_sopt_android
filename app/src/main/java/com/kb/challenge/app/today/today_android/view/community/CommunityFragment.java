@@ -245,6 +245,20 @@ public class CommunityFragment extends Fragment implements Init {
             }
         });
 
+        ImageView img_status_edit = (ImageView) view.findViewById(R.id.img_status_edit);
+
+        img_status_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.root_frame2, new CommunityEditStatusFragment());
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
+            }
+        });
+
 
         return view;
 

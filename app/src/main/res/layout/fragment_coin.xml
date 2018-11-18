@@ -106,25 +106,29 @@
             android:text="원"/>
     </LinearLayout>
     <RelativeLayout
-        android:layout_marginBottom="24dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginBottom="23dp"
         android:id="@+id/ll_btn_coin_withdraw"
         android:layout_below="@+id/ll_txt_coin_goal"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="131dp">
+        android:layout_height="140dp">
         <Button
             android:id="@+id/coin_btn_withdrawal"
-            android:layout_width="96dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인출"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="18dp"
+            android:textSize="13sp"
+            android:paddingHorizontal="36dp"
+            android:letterSpacing="-0.017"
+            android:fontFamily="@font/notosanskr_bold_hestia"
             android:background="@drawable/button_border2"/>
         <ImageView
+            android:layout_alignParentBottom="true"
             android:id="@+id/img_coin_pig"
             android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:src="@drawable/img_coin_pig"/>
     </RelativeLayout>
