@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import android.util.Log;
@@ -21,6 +22,9 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
+import com.kb.challenge.app.today.today_android.view.login.DotFirstFragment;
+import com.kb.challenge.app.today.today_android.view.login.FirstSettingActivity;
+import com.kb.challenge.app.today.today_android.view.login.SetNameFragment;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 
 import org.w3c.dom.Text;
@@ -195,18 +199,25 @@ public class MainFragment extends Fragment implements Init {
         void onFragmentInteraction(Uri uri);
     }
     public void getUserNameProperty() {
-        Log.v("saving process", "saving process!!!");
+        Log.v("getUserNameProperty", "getUserNameProperty process!!!");
 
         Call<UserNameData> requestDetail = networkService.getUserName(SharedPreference.Companion.getInstance().getPrefStringData("data"));
         requestDetail.enqueue(new Callback<UserNameData>() {
             @Override
             public void onResponse(Call<UserNameData> call, Response<UserNameData> response) {
                 if (response.isSuccessful()) {
-                    Log.v("saving process2", "saving process2!!!");
-                    Log.v("message", response.body().getMessage().toString());
+                    Log.v("getUserNameProperty", "saving process2!!!");
+                    Log.v("name message", response.body().getMessage().toString());
 
                     user_name = response.body().getName();
-                    main_name_txt.setText(user_name);
+                    Log.v("name", user_name);
+                    if (user_name != null)
+                        main_name_txt.setText(user_name);
+                    else {
+                        Intent intent = new Intent(getActivity(), FirstSettingActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
 
             }

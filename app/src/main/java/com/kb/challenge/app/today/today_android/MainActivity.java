@@ -21,6 +21,7 @@ import com.kb.challenge.app.today.today_android.view.community.CommunityEmotionB
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
+import com.kb.challenge.app.today.today_android.view.login.SetNameFragment;
 import com.kb.challenge.app.today.today_android.view.main.CustomViewPager;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainDepositFragment;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         MainBadFragment.OnFragmentInteractionListener,
         RecordFeelingFragment.OnFragmentInteractionListener,
         CommunityEmotionBox.OnFragmentInteractionListener, Init,
-        PickTimeFragment_setting.OnFragmentInteractionListener{
+        PickTimeFragment_setting.OnFragmentInteractionListener {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();

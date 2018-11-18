@@ -13,8 +13,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
@@ -264,8 +266,11 @@ public class FirstSettingActivity extends AppCompatActivity implements
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() != 0)
             getFragmentManager().popBackStack();
-        else
+        else {
             super.onBackPressed();
+
+        }
+
     }
 
 }

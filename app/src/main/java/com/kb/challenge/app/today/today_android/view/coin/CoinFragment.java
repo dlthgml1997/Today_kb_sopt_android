@@ -127,7 +127,7 @@ public class CoinFragment extends Fragment {
         getSavingDetail();
         //changeGoalBackground();
         getSavingList();
-        
+
         Button coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override

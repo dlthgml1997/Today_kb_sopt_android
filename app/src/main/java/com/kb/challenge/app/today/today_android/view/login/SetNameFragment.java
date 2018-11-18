@@ -206,7 +206,7 @@ public class SetNameFragment extends Fragment {
 //Convert bitmap to byte array
                         Bitmap bitmap =img;
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
                         byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
@@ -319,4 +319,5 @@ public class SetNameFragment extends Fragment {
         onEditNameSetListener = null;
         onProfileImageSetListener = null;
     }
+
 }
