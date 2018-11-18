@@ -2,9 +2,7 @@ package com.kb.challenge.app.today.today_android.view.community.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.provider.Telephony;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -121,7 +118,7 @@ public class CommunityFollowerListAdapter extends RecyclerView.Adapter<Community
 
         public ViewHolder(View itemView) {
             super(itemView);
-            community_following_id = (TextView) itemView.findViewById(R.id.community_following_id);
+            community_following_id = (TextView) itemView.findViewById(R.id.community_following_user_name);
             community_following_img = (ImageView)itemView.findViewById(R.id.community_following_img);
             community_btn_follow = (ImageView)itemView.findViewById(R.id.community_btn_follow);
             community_btn_follower = (ImageView)itemView.findViewById(R.id.community_btn_follower);
