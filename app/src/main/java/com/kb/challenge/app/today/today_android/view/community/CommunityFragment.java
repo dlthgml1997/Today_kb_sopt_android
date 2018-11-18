@@ -92,6 +92,7 @@ public class CommunityFragment extends Fragment implements Init {
     private ArrayList<FollowingData> followingList;
     private ArrayList<FriendsProfileData> friendsList = new ArrayList<>();
     private String user_name;
+    private ArrayList<FeelingData> feelingDataList;
 
     public final static int[] profile_emotion_mark_resource = {R.drawable.img_sns_profile_emotion_bad_1_40_px,R.drawable.img_sns_profile_emotion_bad_2_40_px,R.drawable.img_sns_profile_emotion_bad_3_40_px,R.drawable.img_sns_profile_emotion_soso_0_40_px,R.drawable.img_sns_profile_emotion_good_1_40_px,R.drawable.img_sns_profile_emotion_good_2_40_px,R.drawable.img_sns_profile_emotion_good_3_40_px };
 
@@ -107,6 +108,7 @@ public class CommunityFragment extends Fragment implements Init {
     }
 
     public CommunityFragment() {
+
     }
 
     public static CommunityFragment newInstance(/*String param1, String param2*/) {
@@ -337,6 +339,8 @@ public class CommunityFragment extends Fragment implements Init {
         Date date = new Date(now);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         getTime = sdf.format(date);
+
+        Log.v("오늘의 날짜의 감정", getTime);
         Call<FeelingDataResponse> requestDetail = networkService.getTodayFeeling(SharedPreference.Companion.getInstance().getPrefStringData("data"), getTime);
         requestDetail.enqueue(new Callback<FeelingDataResponse>() {
             @Override
@@ -345,7 +349,7 @@ public class CommunityFragment extends Fragment implements Init {
                     Log.v("getTodayFeelingData", "getProfileData process2!!!");
                     Log.v("feeling message", response.body().getMessage().toString());
 
-                        final ArrayList<FeelingData> feelingDataList = response.body().getData();
+                        feelingDataList = response.body().getData();
                         Log.v("feeling data list!!!", feelingDataList.toString());
                         if (feelingDataList.isEmpty()) {
                             Log.v("감정기록 다이얼로그 뜨기", "감정기록 다이얼로그 뜨기");
@@ -366,7 +370,7 @@ public class CommunityFragment extends Fragment implements Init {
                                     Log.v("feeling record로 이동", user_name);
                                     fragment.setArguments(bundle);
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.root_frame2, fragment, "feeling_record");
+                                    transaction.replace(R.id.root_frame, fragment);
                                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                                     transaction.addToBackStack(null);
 

@@ -2,6 +2,7 @@ package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +12,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
@@ -112,9 +118,6 @@ public class SignUpActivity extends AppCompatActivity implements Init {
     public void signIn() {
         Log.v("login process", "login process!!!");
         String fcm_token = FirebaseInstanceId.getInstance().getToken();
-
-        Log.v("fcm_token", fcm_token);
-        SharedPreference.Companion.getInstance().setPrefData("fcm_token", fcm_token);
 
         final LoginData loginData = new LoginData(signupData.getId(),signupData.getPasswd(), fcm_token);
         Call<LoginResponse> requestDetail = networkService.login(loginData);

@@ -2,28 +2,25 @@
 package com.kb.challenge.app.today.today_android;
 
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.kb.challenge.app.today.today_android.R;
+import com.kb.challenge.app.today.today_android.model.push.PushTimeData;
+import com.kb.challenge.app.today.today_android.network.ApplicationController;
+import com.kb.challenge.app.today.today_android.network.NetworkService;
+import com.kb.challenge.app.today.today_android.utils.Init;
+import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.coin.CoinFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityEmotionBox;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
-import com.kb.challenge.app.today.today_android.view.login.SplashActivity;
 import com.kb.challenge.app.today.today_android.view.main.CustomViewPager;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainDepositFragment;
@@ -31,10 +28,12 @@ import com.kb.challenge.app.today.today_android.view.main.MainFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
+import com.kb.challenge.app.today.today_android.view.setting.PickTimeFragment_setting;
 import com.kb.challenge.app.today.today_android.view.setting.SettingFragment;
-import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.Stack;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener,
@@ -47,7 +46,8 @@ public class MainActivity extends AppCompatActivity
         CommunityFollowerFragment.OnFragmentInteractionListener,
         MainBadFragment.OnFragmentInteractionListener,
         RecordFeelingFragment.OnFragmentInteractionListener,
-        CommunityEmotionBox.OnFragmentInteractionListener {
+        CommunityEmotionBox.OnFragmentInteractionListener, Init,
+        PickTimeFragment_setting.OnFragmentInteractionListener{
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -56,6 +56,14 @@ public class MainActivity extends AppCompatActivity
     private PagerAdapter adapter;
     private CustomViewPager viewPager;
     private TabLayout tabLayout;
+    private NetworkService networkService;
+
+    @Override
+    public void init() {
+        networkService = ApplicationController.Companion.getInstance().getNetworkService();
+        SharedPreference.Companion.getInstance();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -71,6 +79,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        init();
+        getPushTime();
 
         //tablayout, viewPager 적용
         adapter = new PagerAdapter(getSupportFragmentManager());
@@ -182,5 +193,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void getPushTime() {
+        Log.v("getPushTime process", "getPushTime process!!!");
+        Call<PushTimeData> requestDetail = networkService.getPushTime(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<PushTimeData>() {
+            @Override
+            public void onResponse(Call<PushTimeData> call, Response<PushTimeData> response) {
+                if (response.isSuccessful()) {
+                    Log.v("getPushTime process2", "savingList process2!!!");
+                    Log.v("getPushTime message", response.body().getMessage().toString());
 
+                    PushTimeData pushTimeData = response.body();
+                    new AlarmHATT(getApplicationContext()).Alarm(Integer.parseInt(pushTimeData.getHour()), Integer.parseInt(pushTimeData.getMinute()), Integer.parseInt(pushTimeData.getSecond()));
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PushTimeData> call, Throwable t) {
+                Log.i("err saving", t.getMessage());
+            }
+        });
+    }
 }

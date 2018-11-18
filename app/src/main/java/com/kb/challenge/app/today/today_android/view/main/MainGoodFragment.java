@@ -58,6 +58,7 @@ public class MainGoodFragment extends Fragment {
     private int totalMoney;
     private String user_name;
     private String comment;
+    private int total_money;
 
     public MainGoodFragment() {
         // Required empty public constructor
@@ -161,7 +162,7 @@ public class MainGoodFragment extends Fragment {
                     public void onClick(View view) {
                         comment = deposit_edit_comment.getText().toString();
                         Log.v("deposit comment", comment);
-
+                        getSavingList();
                         savingMoney();
                         send_deposit_comment_dialog.dismiss();
                     }
@@ -247,6 +248,7 @@ public class MainGoodFragment extends Fragment {
                     Fragment fragment = new MainDepositFragment();
                     Bundle bundle = new Bundle(1);
                     bundle.putString("user_name", user_name);
+                    bundle.putInt("total_money", total_money);
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
 /** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
@@ -266,5 +268,27 @@ public class MainGoodFragment extends Fragment {
             }
         });
     }
+    public void getSavingList() {
+        Log.v("savingList process", "savingList process!!!");
+        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
+        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
+            @Override
+            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.v("savingList process2", "savingList process2!!!");
+                    Log.v("saving list get message", response.body().getMessage().toString());
+                    Log.v("coin saving list res", response.body().toString());
 
+                    total_money = response.body().getTotalMoney();
+                    Log.v("total toatl", total_money + "");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
+                Log.i("err saving", t.getMessage());
+            }
+        });
+    }
 }

@@ -124,9 +124,8 @@ public class RecordFeelingFragment extends Fragment {
                 btn_save_dialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        save_feeling_record_dialog.dismiss();
                         recordFeeling();
-
+                        save_feeling_record_dialog.dismiss();
                     }
                 });
 
@@ -243,13 +242,13 @@ public class RecordFeelingFragment extends Fragment {
             case 0:
             case 1:
             case 2:
-                feelingData = new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[0]);
+                feelingData = new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[seekBar.getMax() - progress_status - 3]);
                 break;
             case 3:
             case 4:
             case 5:
             case 6:
-                feelingData = new FeelingData(progress_status - 3, null, feelingMsg[3]);
+                feelingData = new FeelingData(progress_status - 3, null, feelingMsg[progress_status - 3]);
                 break;
 
         }
@@ -262,7 +261,7 @@ public class RecordFeelingFragment extends Fragment {
             public void onResponse(Call<BaseModel> call, Response<BaseModel> response) {
                 if (response.isSuccessful()) {
                     Log.v("feeling save process", "feeling save process!!!");
-                    Log.v("message", response.body().getMessage().toString());
+                    Log.v("feeling save message", response.body().getMessage().toString());
                     if (response.body().getMessage().toString().equals("success")) {
                         Log.v("feeling record", progress_status + " ");
                         if (progress_status < 3) {

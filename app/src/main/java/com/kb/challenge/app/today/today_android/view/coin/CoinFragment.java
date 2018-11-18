@@ -126,7 +126,6 @@ public class CoinFragment extends Fragment {
         getSavingDetail();
 
         getSavingList();
-
         Button coin_btn_withdrawal = (Button) view.findViewById(R.id.coin_btn_withdrawal);
         coin_btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +189,7 @@ public class CoinFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof CoinFragment.OnFragmentInteractionListener) {
             mListener = (CoinFragment.OnFragmentInteractionListener) context;
         } else {
@@ -236,7 +236,7 @@ public class CoinFragment extends Fragment {
                     Log.v("coin saving list", coinSavingItems.toString());
                     Log.v("totalMoney", totalMoney + " ");
                     coin_cur_money.setText(String.valueOf(totalMoney));
-
+                    
                     CoinSavingListAdapter coinSavingListAdapter = new CoinSavingListAdapter(getActivity(), coinSavingItems);
 
                     mRecyclerView.setAdapter(coinSavingListAdapter);
