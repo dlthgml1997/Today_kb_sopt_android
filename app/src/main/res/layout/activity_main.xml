@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabLayout" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:backgroundTint="#ffdb08"
+        app:tabIndicatorColor="@android:color/transparent"></android.support.design.widget.TabLayout>
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/fragment_tab"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+    </FrameLayout>
+</RelativeLayout>

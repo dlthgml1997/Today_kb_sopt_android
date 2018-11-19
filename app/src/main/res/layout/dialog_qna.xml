@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_border">
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="304dp"
+        android:layout_height="300dp"
+        >
+        <ImageView
+            android:id="@+id/img_dialog_success"
+            android:src="@drawable/img_withdrawal_dialog"
+            android:layout_marginTop="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="28dp"
+            android:layout_below="@id/img_dialog_success"
+            android:id="@+id/txt_cong_2"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:textSize="16sp"
+            android:textColor="#545454"
+            android:letterSpacing="-0.01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지금 확인 버튼을 누르시면"
+            />
+        <TextView
+            android:layout_below="@+id/txt_cong_2"
+            android:id="@+id/txt_cong_3"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:textSize="16sp"
+            android:textColor="#545454"
+            android:letterSpacing="-0.01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연결된 계좌로 바로 이체됩니다"
+            />
+
+        <TextView
+            android:id="@+id/btn_cancel_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:layout_marginRight="32dp"
+            android:textColor="#bdbdbd"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/btn_withdraw_confirm"
+            android:textSize="14sp"
+            android:layout_marginBottom="28dp"
+            android:letterSpacing="-0.01"
+            />
+        <TextView
+            android:id="@+id/btn_withdraw_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인출"
+            android:layout_marginRight="24dp"
+            android:textColor="#03a5ff"
+            android:layout_marginBottom="28dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:textSize="14sp"
+            android:letterSpacing="-0.01"
+            />
+    </RelativeLayout>
+</RelativeLayout>

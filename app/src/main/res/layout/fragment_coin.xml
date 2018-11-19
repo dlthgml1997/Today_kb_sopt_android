@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:id="@+id/rl_coin_goal_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<TextView
+    android:id="@+id/coin_name_txt"
+    android:layout_marginTop="24dp"
+    android:layout_marginLeft="16dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:text="롱패딩 장만"
+    android:textSize="32dp"
+    android:textColor="#424242"
+    android:letterSpacing="-0.01"
+    android:fontFamily="@font/notosanskr_bold_hestia"
+    />
+
+    <LinearLayout
+        android:id="@+id/ll_coin_title_setting"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/coin_name_txt"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/coin_cur_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="32dp"
+            android:textColor="#424242"
+            android:letterSpacing="-0.041"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            />
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 원"
+            android:textSize="32dp"
+            android:textColor="#424242"
+            android:letterSpacing="-0.041"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            />
+    <ImageView
+        android:layout_marginTop="4dp"
+        android:id="@+id/img_coin_setting_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_coin_setting_24_px"
+        android:layout_marginLeft="8dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_txt_coin_goal"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_coin_title_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:id="@+id/ic_qna_coin"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_qna_coin_16_px"/>
+        <TextView
+            android:id="@+id/txt_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#757575"
+            android:letterSpacing="-0.019"
+            android:fontFamily="@font/notosanskr_regular_hestia"
+            android:layout_marginLeft="8dp"
+            android:text="목표금액 "/>
+        <TextView
+            android:id="@+id/coin_target_money_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#757575"
+            android:letterSpacing="-0.019"
+            android:fontFamily="@font/notosanskr_regular_hestia"
+            android:text="300,000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#757575"
+            android:letterSpacing="-0.019"
+            android:fontFamily="@font/notosanskr_regular_hestia"
+            android:text="원"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="23dp"
+        android:id="@+id/ll_btn_coin_withdraw"
+        android:layout_below="@+id/ll_txt_coin_goal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <Button
+            android:id="@+id/coin_btn_withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인출"
+            android:layout_alignParentBottom="true"
+            android:textSize="13sp"
+            android:paddingHorizontal="36dp"
+            android:letterSpacing="-0.017"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            android:background="@drawable/button_border2"/>
+        <ImageView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/img_coin_pig"
+            android:layout_alignParentRight="true"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_coin_pig"/>
+    </RelativeLayout>
+    </RelativeLayout>
+<TextView
+    android:layout_below="@+id/rl_coin_goal_box"
+    android:id="@+id/txt_coin_list"
+    android:layout_width="match_parent"
+    android:layout_height="27dp"
+    android:background="#eeeeee"
+    android:text="감정기록 저금 내역"
+    android:textSize="11sp"
+android:textColor="#757575"
+    android:paddingTop="3dp"
+    android:paddingLeft="16dp"
+    android:fontFamily="@font/notosanskr_regular_hestia"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/txt_coin_list"
+        android:id="@+id/coin_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

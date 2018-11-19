@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="304dp"
+        android:layout_height="274dp"
+        android:background="@drawable/button_border"
+        >
+        <ImageView
+            android:id="@+id/img_dialog_success"
+            android:src="@drawable/img_withdrawal_dialog"
+            android:layout_marginTop="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="148dp"
+            android:layout_height="97dp" />
+        <TextView
+            android:id="@+id/dialog_go_record_feeling_txt"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/img_dialog_success"
+            android:layout_marginTop="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#545454"
+            android:letterSpacing="-0.02"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:text="먼저, 오늘의 감정을 입력해주세요"/>
+
+        <TextView
+            android:id="@+id/btn_ok_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="감정기록하러가기"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/azure"
+            android:layout_alignParentBottom="true"
+            android:textSize="14sp"
+            android:layout_marginBottom="32dp"
+            android:letterSpacing="-0.018"
+            />
+    </RelativeLayout>
+</RelativeLayout>

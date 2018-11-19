@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+   <LinearLayout
+       android:layout_marginTop="49dp"
+       android:id="@+id/ll"
+       android:layout_centerHorizontal="true"
+       android:orientation="vertical"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+    <TextView
+        android:layout_gravity="center"
+       android:letterSpacing="-0.01"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:text="저금통으로 사용할"
+       android:textSize="24sp"
+       android:textColor="#424242"
+       />
+       <LinearLayout
+           android:layout_gravity="center"
+           android:orientation="horizontal"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+       <TextView
+           android:letterSpacing="-0.01"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:text="가상계좌를 개설"
+           android:textSize="24sp"
+           android:textStyle="bold"
+           android:textColor="#424242"
+           />
+           <TextView
+               android:letterSpacing="-0.01"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerHorizontal="true"
+               android:text="할게요"
+               android:textSize="24sp"
+               android:textColor="#424242"
+               />
+       </LinearLayout>
+
+       <ImageView
+
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:layout_gravity="center"
+           android:layout_marginTop="8dp"
+           android:id="@+id/account_create_view"
+           android:src="@drawable/img_createaccount_g" />
+
+   </LinearLayout>
+    </RelativeLayout>

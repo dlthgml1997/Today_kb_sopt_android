@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_background">
+    <ImageView
+        android:id="@+id/logo_start"
+        android:layout_width="61dp"
+        android:layout_height="75dp"
+        android:src="@drawable/logo_start_white"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="46dp"
+        />
+
+    <ImageView
+        android:layout_marginLeft="24dp"
+        android:layout_below="@+id/txt_1"
+        android:layout_marginTop="49dp"
+        android:layout_width="109.2dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/stroke_1"/>
+    <TextView
+        android:layout_marginTop="44dp"
+        android:id="@+id/txt_1"
+        android:layout_below="@+id/logo_start"
+        android:text="나누는"
+        android:textSize="40sp"
+        android:fontFamily="@font/notosanskr_light_hestia"
+        android:letterSpacing="-0.051"
+        android:textColor="#545454"
+        android:layout_marginLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        />
+    <TextView
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/logo_start"
+        android:layout_toRightOf="@+id/txt_1"
+        android:text=" 즐거움"
+        android:textSize="40sp"
+        android:fontFamily="@font/notosanskr_bold_hestia"
+        android:letterSpacing="-0.051"
+        android:textColor="#545454"
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        />
+    <TextView
+    android:id="@+id/txt_2"
+    android:layout_below="@+id/txt_1"
+    android:text="모으는"
+    android:textSize="40sp"
+    android:fontFamily="@font/notosanskr_light_hestia"
+    android:letterSpacing="-0.051"
+    android:textColor="#545454"
+    android:layout_marginLeft="24dp"
+    android:layout_width="wrap_content"
+    android:layout_height="59dp"
+    />
+    <TextView
+        android:layout_below="@+id/txt_1"
+        android:layout_toRightOf="@+id/txt_2"
+        android:text=" 습관"
+        android:textSize="40sp"
+        android:fontFamily="@font/notosanskr_bold_hestia"
+        android:letterSpacing="-0.051"
+        android:textColor="#545454"
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        />
+    <Button
+        android:id="@+id/btn_login"
+        android:background="@drawable/button_border"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="312dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#ffffff"
+        android:text="시작하기"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:textColor="#000000"
+        android:letterSpacing="-0.019"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        />
+
+</RelativeLayout>

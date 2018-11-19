@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_logo_35_px" />
+
+        <TextView
+            android:letterSpacing="-0.036"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            android:text="로그인"
+            android:textColor="#545454"
+            android:textSize="28sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            style="@style/EditTextStyle"
+            android:inputType="textVisiblePassword"
+            android:id="@+id/login_edit_id"
+            android:letterSpacing="-0.019"
+            android:layout_width="match_parent"
+            android:textColorHint="#c9c9c9"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:hint="아이디"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/ll_act_login_id_error"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:layout_width="14dp"
+                android:layout_height="13dp"
+                android:fontFamily="@font/notosanskr_medium_hestia"
+                android:src="@drawable/ic_warning"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginHorizontal="2dp"
+            android:text="존재하지 않는 아이디 입니다."
+            android:textColor="#ff6e6e"/>
+        </LinearLayout>
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/login_edit_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_edit_id"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="16dp"
+            android:letterSpacing="-0.019"
+            android:textColorHighlight="#e6e6e6"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:hint="비밀번호"
+            android:textColorHint="#c9c9c9"
+            android:textColor="#000000"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp" />
+        <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/ll_act_login_password_error"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="18dp"
+            android:layout_width="14dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_warning"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:layout_marginHorizontal="2dp"
+            android:text="존재하지 않는 비밀번호입니다."
+            android:textColor="#ff6e6e"/>
+    </LinearLayout>
+
+        <Button
+            android:letterSpacing="-0.019"
+            android:id="@+id/login_button_SignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/custom_button_radius"
+            android:backgroundTint="#ffdb08"
+            android:text="로그인" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:id="@+id/login_text_do_you_have_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/login_text_go_to_signup"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/notosanskr_regular_hestia"
+            android:text="계정이 없으신가요?"
+            android:letterSpacing="-0.017"
+            android:textColor="#424242"
+            android:textSize="13sp" />
+
+        <TextView
+            android:letterSpacing="-0.018"
+            android:id="@+id/login_text_go_to_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:text="오늘은 회원가입하기"
+            android:textColor="#03a5ff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>

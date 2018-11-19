@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel_32_px"
+        android:id="@+id/community_ic_cancel"
+        />
+    <ImageView
+        android:background="@drawable/seekbar_thumb"
+        android:id="@+id/img_search_user_follow"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="193dp"
+        />
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:text="서명윤"
+        android:textSize="24dp"
+        android:textColor="#545454"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:letterSpacing="-0.01"
+        android:id="@+id/community_user_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_search_user_follow"/>
+
+    <TextView
+        android:id="@+id/community_user_id_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#9e9e9e"
+        android:letterSpacing="-0.01"
+        android:fontFamily="@font/notosanskr_demilight_hestia"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/community_user_name_txt"
+        android:text="20shinee"
+        />
+
+    <Button
+        android:text="팔로우"
+        android:id="@+id/community_follow_btn"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#ffdb08"
+        android:background="@drawable/custom_button_radius"
+        android:layout_marginHorizontal="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"/>
+
+    <Button
+        android:text="팔로잉"
+        android:id="@+id/community_following_btn"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_border2"
+        android:layout_marginHorizontal="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        />
+</RelativeLayout>

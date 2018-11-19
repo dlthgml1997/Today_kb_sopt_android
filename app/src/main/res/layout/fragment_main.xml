@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#ffffff"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:layout_width="87dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/logo_main"
+            android:id="@+id/main_logo"
+            android:layout_marginLeft="20dp"/>
+
+        <RelativeLayout
+            android:id="@+id/relative_twice_layout"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/main_logo">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_main"/>
+            <TextView
+                android:id="@+id/main_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:layout_marginTop="41dp"
+                android:lineSpacingExtra="62sp"
+                android:letterSpacing="-0.035"
+                android:fontFamily="@font/notosanskr_bold_hestia"
+                android:layout_marginLeft="6dp"
+                android:text="오늘은"
+                android:textColor="#424242"
+                android:textSize="22sp" />
+            <TextView
+                android:layout_toRightOf="@+id/main_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:layout_marginTop="41dp"
+                android:lineSpacingExtra="62sp"
+                android:letterSpacing="-0.035"
+                android:fontFamily="@font/notosanskr_bold_hestia"
+                android:text="님!"
+                android:textColor="#424242"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/main_hello_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_below="@id/main_name_txt"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="6dp"
+                android:text="오늘은"
+                android:fontFamily="@font/notosanskr_bold_hestia"
+                android:letterSpacing="-0.048"
+                android:textColor="#424242"
+                android:textSize="30sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_below="@id/main_hello_txt"
+                android:layout_marginLeft="6dp"
+                android:text="기분이 어때요?"
+                android:fontFamily="@font/notosanskr_demilight_hestia"
+                android:letterSpacing="-0.048"
+                android:textColor="#424242"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="8dp"
+            android:id="@+id/main_view_1"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/dandelion"
+            android:layout_below="@id/relative_twice_layout"
+            android:layout_marginLeft="20dp"
+            />
+        <Button
+            android:background="@drawable/button_border"
+            android:id="@+id/btn_go_to_main"
+            android:layout_width="182dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/main_view_1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#ffde5f"
+            android:text="지금 감정 기록하기"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:letterSpacing="-0.019"
+            android:textSize="15sp"
+            android:fontFamily="@font/notosanskr_medium_hestia"/>
+    </RelativeLayout>
+
+</RelativeLayout>

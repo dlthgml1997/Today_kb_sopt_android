@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:theme="@style/Splash">
+    <RelativeLayout
+        android:id="@+id/rl_main_bad_img"
+        android:background="#ffdb08"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/main_bad_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_main_bad_1"
+            />
+        <ImageView
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_main_white"/>
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="24dp"
+    android:layout_below="@+id/rl_main_bad_img"
+    android:id="@+id/txt_main_bad_img"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txt_main_bad_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#424242"
+        android:letterSpacing="-0.02"
+        android:fontFamily="@font/notosanskr_bold_hestia"
+        android:text="이승언" />
+
+    <TextView
+        android:layout_toRightOf="@+id/txt_main_bad_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#424242"
+        android:letterSpacing="-0.02"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:text="님 힘내세요!" />
+<LinearLayout
+    android:layout_below="@+id/txt_main_bad_user_name"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#9e9e9e"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:letterSpacing="-0.01"
+        android:text="최근 "/>
+
+    <TextView
+        android:id="@+id/txt_main_bad_user_name2"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/txt_main_bad_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#9e9e9e"
+        android:letterSpacing="-0.01"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:text="이승언"/>
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/txt_main_bad_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:fontFamily="@font/notosanskr_medium_hestia"
+        android:textColor="#9e9e9e"
+        android:letterSpacing="-0.01"
+        android:text="님이 행복했던 3일"/>
+    </LinearLayout>
+</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/txt_main_bad_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_bad_recycler_view">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

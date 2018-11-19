@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="328dp"
+        android:layout_height="410dp"
+        android:background="@drawable/button_border">
+
+
+        <RelativeLayout
+            android:layout_width="280dp"
+            android:layout_height="186dp"
+            android:layout_below="@+id/rl_ment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/button_border"
+            android:backgroundTint="#f5f5f5">
+
+            <EditText
+                android:id="@+id/edit_cheerup_msg"
+                android:layout_width="241dp"
+                android:layout_height="98dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="19dp"
+                android:layout_marginTop="50dp"
+                android:background="@null"
+                android:fontFamily="@font/notosanskr_regular_hestia"
+                android:gravity="start"
+                android:hint="친구에게 위로의 한 마디 어떤가요?"
+                android:includeFontPadding="true"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="8dp"
+                android:lines="3"
+                android:maxHeight="104dp"
+                android:maxLength="50"
+                android:maxLines="3"
+                android:minLines="3"
+                android:textColor="#424242"
+                android:textColorHint="#9e9e9e"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="9dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/notosanskr_medium_hestia"
+                android:text="50자 메시지"
+                android:textColor="#bdbdbd"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="103dp"
+            android:layout_below="@+id/rl_ment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="38dp"
+            android:layout_marginTop="116dp">
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="29dp"
+                android:layout_marginTop="29dp"
+                android:background="#e6e6e6" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/line1"
+                android:background="#e6e6e6" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:background="#e6e6e6" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26.9dp"
+            android:src="@drawable/mail_1" />
+<RelativeLayout
+    android:layout_centerHorizontal="true"
+    android:id="@+id/rl_ment"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_dialog_cheerup_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.025"
+            android:text="승언"
+            android:textColor="#424242"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_toRightOf="@id/txt_dialog_cheerup_name"
+            android:id="@+id/txt_dialog_cheerup_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.025"
+            android:text="님은 오늘 "
+            android:textColor="#424242"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_toRightOf="@id/txt_dialog_cheerup_hello"
+            android:id="@+id/txt_dialog_cheerup_feeling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/notosanskr_bold_hestia"
+            android:letterSpacing="-0.025"
+            android:text="기분이 안좋아요"
+            android:textColor="#424242"
+            android:textSize="18sp" />
+</RelativeLayout>
+        <TextView
+            android:id="@+id/btn_cancel_dialog_cheerup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toLeftOf="@+id/btn_send_dialog_cheerup"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.01"
+            android:text="취소"
+            android:textColor="#bdbdbd"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btn_send_dialog_cheerup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="24dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.01"
+            android:text="메시지 보내기"
+            android:textColor="#03a5ff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>

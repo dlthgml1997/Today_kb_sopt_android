@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="92dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="28sp"
+                android:textColor="#424242"
+                android:letterSpacing="-0.036"
+                android:fontFamily="@font/notosanskr_bold_hestia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="처음 뵙겠습니다:)"/>
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textColor="#424242"
+                android:letterSpacing="-0.02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:fontFamily="@font/notosanskr_regular_hestia"
+                android:text="오늘은 서비스를 사용하기 위한"/>
+            <TextView
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textColor="#424242"
+                android:letterSpacing="-0.02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:fontFamily="@font/notosanskr_regular_hestia"
+                android:text="초기 설정을 시작합니다"/>
+    </LinearLayout>
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="23.6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_intro_girl"/>
+        <ImageView
+            android:id="@+id/btn_act_welcome_next"
+            android:background="@drawable/button_intro_next"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="80dp"
+            android:layout_height="120dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/relative_search_view"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp">
+    <ImageView
+        android:id="@+id/community_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_32_px"
+        android:layout_marginLeft="16dp"
+        />
+    <EditText
+        android:id="@+id/search_user_id_edit_txt"
+        android:hint="검색"
+        android:layout_toRightOf="@id/community_back_btn"
+        android:layout_marginLeft="16dp"
+        android:layout_width="252dp"
+        android:layout_height="29dp"
+        android:background="@null"/>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/relative_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_user_recycler_view"></android.support.v7.widget.RecyclerView>
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/community_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_32_px"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/community_emotion_profile_img"
+        android:layout_width="196dp"
+        android:layout_height="201.5dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/img_mailbox_mail"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/community_back_btn"
+        android:text="감정박스"
+        android:textSize="32sp"
+        android:textColor="#424242"
+        android:letterSpacing="-0.01"
+        android:fontFamily="@font/notosanskr_bold_hestia"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="28dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee"
+        android:layout_below="@id/community_emotion_profile_img"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/community_emotion_profile_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/community_emotion_box_recycler_view"
+        ></android.support.v7.widget.RecyclerView>
+</RelativeLayout>

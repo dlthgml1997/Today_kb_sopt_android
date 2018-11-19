@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "54620673319",
+    "firebase_url": "https://kb-today.firebaseio.com",
+    "project_id": "kb-today",
+    "storage_bucket": "kb-today.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54620673319:android:e66315f7676ce58c",
+        "android_client_info": {
+          "package_name": "com.kb.challenge.app.today.today_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54620673319-7mr6ru7oeo26882c87ab7ph7c6juq1qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ6dDh9TLkCd-ROnJc_TKsE970FcB_YpA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

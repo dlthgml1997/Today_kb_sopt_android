@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@drawable/button_border"
+        android:layout_width="304dp"
+        android:layout_height="365dp">
+
+        <ImageView
+            android:id="@+id/img_dialog_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/img_dialog_success" />
+
+        <TextView
+            android:id="@+id/txt_cong_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_dialog_success"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:letterSpacing="-0.01"
+            android:text="목표에 달성한 것을 축하드려요"
+            android:textColor="#545454"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_cong_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_cong_1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.01"
+            android:text="지금 확인 버튼을 누르시면"
+            android:textColor="#545454"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_cong_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_cong_2"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/notosanskr_medium_hestia"
+            android:letterSpacing="-0.01"
+            android:text="연결된 계좌로 바로 이체됩니다"
+            android:textColor="#545454"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/btn_cancel_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toLeftOf="@+id/btn_withdraw_dialog"
+            android:letterSpacing="-0.01"
+            android:text="취소"
+            android:textColor="#bdbdbd"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btn_withdraw_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="24dp"
+            android:letterSpacing="-0.01"
+            android:text="인출"
+            android:textColor="#03a5ff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>

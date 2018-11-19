@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_above="@+id/btn_act_firstsetting_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frag_container1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <!--com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+            android:id="@+id/viewpager1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            /-->
+        </FrameLayout>
+
+        <FrameLayout
+    android:id="@+id/frag_container2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--com.kb.challenge.app.today.today_android.view.main.CustomViewPager
+        android:id="@+id/viewpager1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /-->
+</FrameLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_act_firstsetting_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/custom_button_radius"
+        android:backgroundTint="#c9c9c9"
+        android:text="다음"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_act_firstsetting_next_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/custom_button_radius"
+        android:backgroundTint="@color/dandelion"
+        android:text="다음"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF" />
+</RelativeLayout>
