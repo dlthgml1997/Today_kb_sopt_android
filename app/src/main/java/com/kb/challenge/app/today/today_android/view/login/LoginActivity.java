@@ -1,7 +1,6 @@
 package com.kb.challenge.app.today.today_android.view.login;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,7 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.MainActivity;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

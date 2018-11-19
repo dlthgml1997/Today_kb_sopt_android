@@ -1,38 +1,24 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kb.challenge.app.today.today_android.MainActivity;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.base.BaseModel;
-import com.kb.challenge.app.today.today_android.model.community.SearchUserData;
-import com.kb.challenge.app.today.today_android.model.community.SearchUserResponse;
 import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.community.adapter.CommunitySearchListAdapter;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

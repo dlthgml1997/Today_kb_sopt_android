@@ -1,9 +1,7 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -18,16 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.kb.challenge.app.today.today_android.MainActivity;
 import com.kb.challenge.app.today.today_android.R;
-import com.kb.challenge.app.today.today_android.base.BaseModel;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileData;
 import com.kb.challenge.app.today.today_android.model.community.CommuProfileResponse;
 
@@ -41,17 +34,8 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFollowingListAdapter;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
-import com.kb.challenge.app.today.today_android.view.dialog.RecordFeelingDialog;
-import com.kb.challenge.app.today.today_android.view.login.LoginActivity;
-import com.kb.challenge.app.today.today_android.view.main.RootFragment;
-import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,9 +43,6 @@ import java.util.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter.emotion_mark_resource;
-import static com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment.feelingMsg;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -157,6 +138,13 @@ public class CommunityFragment extends Fragment implements Init {
         if (Build.VERSION.SDK_INT >= 21) {
             community_my_profil_img.setClipToOutline(true);
         }
+
+        community_my_profil_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         //팔로잉 보기
         community_following_num_txt = (TextView) view.findViewById(R.id.community_following_num_txt);
         //팔로워보기

@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.kb.challenge.app.today.today_android.MainActivity;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 
 public class SplashActivity extends Activity {
     private Intent intent;

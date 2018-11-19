@@ -1,5 +1,5 @@
 
-package com.kb.challenge.app.today.today_android;
+package com.kb.challenge.app.today.today_android.view.main;
 
 
 import android.net.Uri;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.kb.challenge.app.today.today_android.AlarmHATT;
+import com.kb.challenge.app.today.today_android.R;
 import com.kb.challenge.app.today.today_android.model.push.PushTimeData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
@@ -21,12 +23,6 @@ import com.kb.challenge.app.today.today_android.view.community.CommunityEmotionB
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowerFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFollowingFragment;
 import com.kb.challenge.app.today.today_android.view.community.CommunityFragment;
-import com.kb.challenge.app.today.today_android.view.login.SetNameFragment;
-import com.kb.challenge.app.today.today_android.view.main.CustomViewPager;
-import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
-import com.kb.challenge.app.today.today_android.view.main.MainDepositFragment;
-import com.kb.challenge.app.today.today_android.view.main.MainFragment;
-import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.view.main.adapter.PagerAdapter;
 import com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment;
 import com.kb.challenge.app.today.today_android.view.setting.PickTimeFragment_setting;

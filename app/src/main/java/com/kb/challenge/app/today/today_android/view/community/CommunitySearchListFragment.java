@@ -27,9 +27,7 @@ import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunitySearchListAdapter;
-import com.kb.challenge.app.today.today_android.MainActivity;
-
-import org.jetbrains.annotations.Nullable;
+import com.kb.challenge.app.today.today_android.view.main.MainActivity;
 
 import java.util.ArrayList;
 

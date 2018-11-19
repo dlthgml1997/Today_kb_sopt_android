@@ -42,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.POWER_SERVICE;
 import static com.kb.challenge.app.today.today_android.view.record.RecordFeelingFragment.feelingMsg;
 
 /**
@@ -70,6 +71,7 @@ public class MainFragment extends Fragment implements Init {
 
     private TextView main_name_txt;
 
+    private ArrayList<FeelingData> feelingDataList;
 
     @Override
     public void init() {
@@ -169,6 +171,7 @@ public class MainFragment extends Fragment implements Init {
                 transaction.commit();
             }
         });
+
         return view;
 
     }
@@ -192,6 +195,7 @@ public class MainFragment extends Fragment implements Init {
     }
 
     public void show_record_feeling_dialog() {
+        //감정기록이 없으면 다이얼로그 띄우기
         final Dialog go_to_record_feeling_dialog = new Dialog(getActivity());
         go_to_record_feeling_dialog.setContentView(R.layout.dialog_record_feeling_main);
 
@@ -297,7 +301,7 @@ public class MainFragment extends Fragment implements Init {
                     Log.v("main feeling", "main feeling process2!!!");
                     Log.v("main feeling message", response.body().getMessage().toString());
 
-                    ArrayList<FeelingData> feelingDataList = response.body().getData();
+                    feelingDataList = response.body().getData();
                     Log.v("main feeling data!!!", feelingDataList.toString());
 
                     if (!feelingDataList.isEmpty()) {
@@ -328,6 +332,9 @@ public class MainFragment extends Fragment implements Init {
                             transaction.commit();
 
                         }
+                    }
+                    else {
+                        show_record_feeling_dialog();
                     }
                 }
             }

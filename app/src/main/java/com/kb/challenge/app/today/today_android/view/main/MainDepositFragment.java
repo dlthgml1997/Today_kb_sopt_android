@@ -147,28 +147,4 @@ public class MainDepositFragment extends Fragment implements Init {
         void onFragmentInteraction(Uri uri);
     }
 
-//    public void getSavingList() {
-//        Log.v("savingList process", "savingList process!!!");
-//        Call<CoinSavingResponse> requestDetail = networkService.getSavingList(SharedPreference.Companion.getInstance().getPrefStringData("data"));
-//        requestDetail.enqueue(new Callback<CoinSavingResponse>() {
-//            @Override
-//            public void onResponse(Call<CoinSavingResponse> call, Response<CoinSavingResponse> response) {
-//                if (response.isSuccessful()) {
-//                    Log.v("savingList process2", "savingList process2!!!");
-//                    Log.v("saving list get message", response.body().getMessage().toString());
-//                    Log.v("coin saving list res", response.body().toString());
-//
-//                    total_money = response.body().getTotalMoney();
-//                    Log.v("total toatl", total_money + "");
-//                    txt_good_deposit_total_money.setText(String.valueOf(total_money));
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<CoinSavingResponse> call, Throwable t) {
-//                Log.i("err saving", t.getMessage());
-//            }
-//        });
-//    }
 }
