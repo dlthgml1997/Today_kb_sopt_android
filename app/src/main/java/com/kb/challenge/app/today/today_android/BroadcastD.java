@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
-
 /**
  * Created by shineeseo on 2018. 11. 18..
  */

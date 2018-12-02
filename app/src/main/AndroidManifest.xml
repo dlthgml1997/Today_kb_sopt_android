@@ -28,7 +28,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-        <activity android:name=".view.main.MainActivity">
+        <activity android:name=".MainActivity">
         </activity>
 
         <activity android:name=".view.withdraw.ConfirmWithdrawActivity"></activity>

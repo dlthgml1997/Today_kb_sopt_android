@@ -1,14 +1,30 @@
 package com.kb.challenge.app.today.today_android.view.community;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kb.challenge.app.today.today_android.R;
@@ -36,13 +53,22 @@ import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
 import com.kb.challenge.app.today.today_android.view.community.adapter.CommunityFriendListAdapter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by shineeseo on 2018. 11. 6..
@@ -59,6 +85,10 @@ public class CommunityFragment extends Fragment implements Init {
     private String mParam2;
 
     private static final String TAG_COMM = "CommunityFragment";
+    public final int CAMERA_CODE = 1111;
+    public final int GALLERY_CODE = 1112;
+    MultipartBody.Part image;
+
     private CommunityFragment.OnFragmentInteractionListener mListener;
     private NetworkService networkService;
     private TextView community_follower_num_txt;
@@ -142,9 +172,10 @@ public class CommunityFragment extends Fragment implements Init {
         community_my_profil_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
+
+
         //팔로잉 보기
         community_following_num_txt = (TextView) view.findViewById(R.id.community_following_num_txt);
         //팔로워보기
@@ -162,7 +193,9 @@ public class CommunityFragment extends Fragment implements Init {
         ImageView community_btn_emotion_box = (ImageView) view.findViewById(R.id.community_btn_emotion_box);
 
         //감정박스 보기 (프래그먼트 전환)
-        community_btn_emotion_box.setOnClickListener(new View.OnClickListener() {
+        community_btn_emotion_box.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -190,7 +223,9 @@ public class CommunityFragment extends Fragment implements Init {
         getProfileData();
 
         //팔로우 보기(나를 좋아하는 사람. 나도 좋아할 수도 있음(노란색 버튼)) -> 프래그먼트 전환
-        community_following_num_txt.setOnClickListener(new View.OnClickListener() {
+        community_following_num_txt.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -205,7 +240,9 @@ public class CommunityFragment extends Fragment implements Init {
         });
 
         //팔로워 보기(내가 좋아하는 사람 (흰색 버튼들)) -> 프래그먼트 전환
-        community_follower_num_txt.setOnClickListener(new View.OnClickListener() {
+        community_follower_num_txt.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -222,7 +259,9 @@ public class CommunityFragment extends Fragment implements Init {
         //사용자 검색
         ImageView community_btn_search_id = (ImageView) view.findViewById(R.id.community_btn_search_id);
 
-        community_btn_search_id.setOnClickListener(new View.OnClickListener() {
+        community_btn_search_id.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -237,7 +276,9 @@ public class CommunityFragment extends Fragment implements Init {
         //상태 메시지 수정
         ImageView img_status_edit = (ImageView) view.findViewById(R.id.img_status_edit);
 
-        img_status_edit.setOnClickListener(new View.OnClickListener() {
+        img_status_edit.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 Fragment fragment = new CommunityEditStatusFragment();
@@ -262,6 +303,7 @@ public class CommunityFragment extends Fragment implements Init {
         return view;
 
     }
+
 
     @Override
     public void onResume() {
@@ -306,6 +348,7 @@ public class CommunityFragment extends Fragment implements Init {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
     }
 
     public void getProfileData() {

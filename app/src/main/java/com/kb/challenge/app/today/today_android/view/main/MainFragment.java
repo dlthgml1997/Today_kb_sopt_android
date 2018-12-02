@@ -208,7 +208,6 @@ public class MainFragment extends Fragment implements Init {
                 Fragment fragment = new RecordFeelingFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("user_name", user_name);
-                Log.v("feeling record로 이동", user_name);
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.root_frame, fragment);

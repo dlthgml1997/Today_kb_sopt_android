@@ -93,14 +93,7 @@ public class SettingFragment extends Fragment{
         tv_main_setting_push.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-/** * R.id.container(activity_main.xml)에 띄우겠다. * 파라미터로 오는 fragmentId에 따라 다음에 보여질 Fragment를 설정한다. */
-                transaction.replace(R.id.root_frame, PickTimeFragment_setting.newInstance());
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.addToBackStack(null);
 
-/** * Fragment의 변경사항을 반영시킨다. */
-                transaction.commit();
             }
         });
         return view;

@@ -20,7 +20,7 @@ import com.kb.challenge.app.today.today_android.model.record.FeelingData;
 import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 import com.kb.challenge.app.today.today_android.view.main.MainBadFragment;
 import com.kb.challenge.app.today.today_android.view.main.MainGoodFragment;
 import com.kb.challenge.app.today.today_android.R;
@@ -242,13 +242,13 @@ public class RecordFeelingFragment extends Fragment {
             case 0:
             case 1:
             case 2:
-                feelingData = new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[seekBar.getMax() - progress_status - 3]);
+                feelingData = new FeelingData(null, seekBar.getMax() - progress_status - 3, feelingMsg[progress_status]);
                 break;
             case 3:
             case 4:
             case 5:
             case 6:
-                feelingData = new FeelingData(progress_status - 3, null, feelingMsg[progress_status - 3]);
+                feelingData = new FeelingData(progress_status - 3, null, feelingMsg[progress_status]);
                 break;
 
         }

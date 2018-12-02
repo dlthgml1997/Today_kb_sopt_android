@@ -64,7 +64,7 @@ import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SetNameFragment extends Fragment {
+public class SetNameFragment extends Fragment{
     private ImageView iv_setname_user_image;
     private OnEditNameSetListener onEditNameSetListener;
     private static OnProfileImageSetListener onProfileImageSetListener;
@@ -74,11 +74,6 @@ public class SetNameFragment extends Fragment {
     public final int GALLERY_CODE = 1112;
     MultipartBody.Part image;
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -340,5 +335,7 @@ public class SetNameFragment extends Fragment {
         onProfileImageSetListener = null;
         mListener = null;
     }
+
+
 
 }

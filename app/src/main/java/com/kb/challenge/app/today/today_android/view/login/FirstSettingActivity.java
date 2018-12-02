@@ -19,7 +19,7 @@ import com.kb.challenge.app.today.today_android.network.ApplicationController;
 import com.kb.challenge.app.today.today_android.network.NetworkService;
 import com.kb.challenge.app.today.today_android.utils.Init;
 import com.kb.challenge.app.today.today_android.utils.SharedPreference;
-import com.kb.challenge.app.today.today_android.view.main.MainActivity;
+import com.kb.challenge.app.today.today_android.MainActivity;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -37,7 +37,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
         SetTitleFragment.OnEditTitleSetListener, Init,
         SetNameFragment.OnProfileImageSetListener,
         SetNameFragment.OnFragmentInteractionListener,
-        SetTitleFragment.OnFragmentInteractionListener{
+        SetTitleFragment.OnFragmentInteractionListener {
     // private  CustomViewPager mPager;
 
     int position = 0;
@@ -58,6 +58,7 @@ public class FirstSettingActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
 
     }
+
     @Override
     public void init() {
         networkService = ApplicationController.Companion.getInstance().getNetworkService();
@@ -261,19 +262,13 @@ public class FirstSettingActivity extends AppCompatActivity implements
     }
 
 
-    //초기설정에서 뒤로가기 버튼 누르면 이전으로 가게끔
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container2);
-        Log.v("setting fragment back", fragment.getClass().getName());
-
-        if (getFragmentManager().getBackStackEntryCount() != 0)
+        if(getFragmentManager().getBackStackEntryCount() > 0)
             getFragmentManager().popBackStack();
         else {
             super.onBackPressed();
-
         }
-
     }
 
 }
